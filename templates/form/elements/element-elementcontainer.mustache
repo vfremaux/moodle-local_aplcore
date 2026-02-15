@@ -1,0 +1,66 @@
+
+
+<!-- form/elements/element-elementcontainer -->
+{{#hascards}}
+<div class="card elementcontainer-element">
+    {{#name}}
+    <div class="card-title">
+        <h{{titlelevel}}><a class="btn btn-icon icons-collapse-expand fheader collapsed"
+           style="display: inline-block"
+           data-toggle="collapse"
+           href="#cardset{{id}}" role="button">
+           <span class="collapsed-icon justify-content-center align-items-center" style="line-height: 36px">
+               <span class="dir-rtl-hide">
+                   <i class="fa fa-chevron-right fa-fw"></i>
+               </span>
+               <span class="dir-ltr-hide">
+                   <i class="fa fa-chevron-left fa-fw"></i>
+               </span>
+           </span>
+           <span class="expanded-icon justify-content-center align-items-center" style="line-height: 36px">
+               <i class="fa fa-chevron-down fa-fw"></i>
+           </span>
+        </a> {{{name}}}</h{{titlelevel}}>
+    </div>
+    {{/name}}
+    <div id="cardset{{id}}" class="collapse">
+        <div class="d-flex flex-wrap justify-content-start flex-row">
+        {{#elements}}
+            <div class="col">
+                {{{html}}}
+            </div>
+        {{/elements}}
+        </div>
+    </div>
+</div>
+{{/hascards}}
+{{#istable}}
+<div class="card elementcontainer-element">
+    {{#name}}
+    <div class="card-title">
+        <h{{titlelevel}}><a class="btn btn-icon icons-collapse-expand fheader collapsed"
+           style="display: inline-block"
+           data-toggle="collapse"
+           href="#table{{id}}" role="button">
+           <span class="collapsed-icon justify-content-center align-items-center" style="line-height: 36px">
+               <span class="dir-rtl-hide">
+                   <i class="fa fa-chevron-right fa-fw"></i>
+               </span>
+               <span class="dir-ltr-hide">
+                   <i class="fa fa-chevron-left fa-fw"></i>
+               </span>
+           </span>
+           <span class="expanded-icon justify-content-center align-items-center" style="line-height: 36px">
+               <i class="fa fa-chevron-down fa-fw"></i>
+           </span>
+        </a> {{{name}}}</h{{titlelevel}}>
+    </div>
+    {{/name}}
+    <table class="generaltable collapse" id="table{{id}}">
+        {{#elements}}
+                {{{html}}}
+        {{/elements}}
+    </table>
+</div>
+{{/istable}}
+<!-- /form/elements/element-elementcontainer -->

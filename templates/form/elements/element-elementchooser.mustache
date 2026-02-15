@@ -1,0 +1,70 @@
+
+
+<!-- form/elements/element-elementchooser -->
+{{#iscard}}
+<div class="card elementchooser-element"  style="min-height: 180px; max-width: 280px">
+    {{#idnumber}}
+        <div class="idnumber-stamp" style="float:right; clear:none;" title="{{idnumber}}">ID Number</div>
+    {{/idnumber}}
+    {{#hasicon}}
+    <div class="element-icon">
+        {{{pixicon}}}
+    </div>
+    {{/hasicon}}
+    <div class="align-center">
+        <h{{titlelevel}}>{{modtype}}</h{{titlelevel}}>
+        {{#subtype}}
+        <p class="subtype"><b>{{subtype}}</b></p>
+        {{/subtype}}
+        {{#ismodinstance}}
+        <p class="instancename">{{instancename}}</p>
+        {{/ismodinstance}}
+    </div>
+    <div class="element-content {{#description}}p-3{{/description}}">
+        {{{description}}}
+    </div>
+    <div class="mt-auto pt-2 text-center">
+        <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_vflibs{{/str}}</a>
+        {{#ismodinstance}}
+        <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_vflibs{{/str}}</a>
+        {{/ismodinstance}}
+    </div>
+</div>
+{{/iscard}}
+{{^iscard}}
+<tr class="">
+    {{#pixicon}}
+    <td class="element-icon">
+        {{{pixicon}}}
+    </td>
+    {{/pixicon}}
+    <td class="modtype">
+        <span class="mod-type"><b>{{modtype}}</b></span>
+        {{#subtype}}
+        <br><span class="subtype">{{subtype}}</span>
+        {{/subtype}}
+    </td>
+    {{#ismodinstance}}
+    <td class="instancename">
+        {{{instancename}}}
+        {{#idnumber}}
+            <span class="idnumber-stamp p-1" title="{{idnumber}}">ID</span>
+        {{/idnumber}}
+    </td>
+    {{/ismodinstance}}
+    <td class="element-content {{#description}}p-1{{/description}}" style="max-width: 600px">
+        <div style="width: 80%;max-width: 600px; max-height: 200px; overflow-y:hidden;overflow-x:scroll">
+        {{{description}}}
+        </div>
+    </td>
+    <td>
+        <div class="pt-2 text-right">
+            <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_vflibs{{/str}}</a>
+            {{#ismodinstance}}
+            <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_vflibs{{/str}}</a>
+            {{/ismodinstance}}
+        </div>
+    </td>
+</tr>
+{{/iscard}}
+<!-- /form/elements/element-elementchooser -->
