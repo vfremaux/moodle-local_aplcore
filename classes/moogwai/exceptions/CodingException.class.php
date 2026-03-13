@@ -1,6 +1,6 @@
 <?php
 
-namespace local_vflibs\moogwai\exceptions;
+namespace local_aplcore\moogwai\exceptions;
 
 use coding_exception;
 

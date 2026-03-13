@@ -7,13 +7,13 @@
  * @package     moogwai_backoffice
  */
 
-namespace local_vflibs\moogwai;
+namespace local_aplcore\moogwai;
 
 defined('MOOGWAI_INTERNAL') || die();
 require_once($CFG->dirroot.'/lib/filelib.php');
 
 use stdClass;
-use local_vflibs\moogwai\exceptions\CodingException;
+use local_aplcore\moogwai\exceptions\CodingException;
 
 class controller_base implements controller {
 

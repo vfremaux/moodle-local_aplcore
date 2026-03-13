@@ -1,9 +1,9 @@
 <?php
 // This file is part of Moogwai - private project
 
-namespace local_vflibs\moogwai\form;
+namespace local_aplcore\moogwai\form;
 
-use local_vflibs\moogwai\exceptions\CodingException;
+use local_aplcore\moogwai\exceptions\CodingException;
 
 /**
  * A wizard route is a simple structure with routing information.

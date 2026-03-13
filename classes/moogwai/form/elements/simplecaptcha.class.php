@@ -1,12 +1,12 @@
 <?php
 // This file is part of Moogwai - private project
 
-namespace local_vflibs\moogwai\form\elements;
+namespace local_aplcore\moogwai\form\elements;
 
 require_once("HTML/QuickForm/text.php");
 
 use HTML_QuickForm_input;
-use local_vflibs\core\output\templatable;
+use local_aplcore\core\output\templatable;
 use core\output\renderer_base;
 use MoodleQuickForm;
 

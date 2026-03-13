@@ -7,14 +7,14 @@
  * @package     moogwai_backoffice
  */
 
-namespace local_vflibs\moogwai\form;
+namespace local_aplcore\moogwai\form;
 
 defined('MOOGWAI_INTERNAL') || die();
 
 use stdClass;
-use local_vflibs\moogwai\moogwai_url;
-use local_vflibs\moogwai\controller_base;
-use local_vflibs\moogwai\exceptions\CodingException;
+use local_aplcore\moogwai\moogwai_url;
+use local_aplcore\moogwai\controller_base;
+use local_aplcore\moogwai\exceptions\CodingException;
 
 class controller_wizard extends controller_base {
 

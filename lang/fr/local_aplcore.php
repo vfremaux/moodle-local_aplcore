@@ -23,48 +23,43 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL
  */
 
-// Privacy
-$string['privacy:metadata'] = 'Le plugin APLCore ne détient pas de données utilisateur.';
-
-$string['pluginname'] = 'Surcharges core pour les plugins APL';
-
+$string['activate'] = 'Activer';
 $string['activationoption'] = 'Option d\'activation';
+$string['activationoption_help'] = 'Ce plugin peut avoir plusieurs options d\'activation dans le catalogue du fournisseur. Choissisez celle qui contient le mieux à votre situation.';
+$string['chooseoption'] = 'Choisir une option d\'activation...';
+$string['configdocbaseurl'] = 'Url de base de la documentation';
+$string['configdocbaseurl_desc'] = 'Url de base du volume de documentation source.';
+$string['configdoccustomerid'] = 'ID d\'abonné à la documentation';
+$string['configdoccustomerid_desc'] = 'Identifiant d\'abonné à la documentation';
+$string['configdoccustomerpublickey'] = 'Clef publique de documentation';
+$string['configdoccustomerpublickey_desc'] = 'La clef publique  d\'encodage des tickets d\'accès à la documentation. Cette clef vous est fournie par l\'éditeur de la documentation.';
+$string['configeditorplugins'] = 'Catalogue de plugins pour documentation additionnelle';
+$string['continue'] = 'Continuer';
 $string['emulatecommunity'] = '<a name="getsupportlicense"></a>Emuler la version communautaire';
-$string['emulatecommunity_desc'] = 'Bascule le code sur la version communautaire. Le résultat est plus compatible avec d\'autres installations, 
-mais certaines fonctionnalités avancées ne seront plus disponibles.';
+$string['emulatecommunity_desc'] = 'Bascule le code sur la version communautaire. Le résultat est plus compatible avec d\'autres installations, mais certaines fonctionnalités avancées ne seront plus disponibles.';
+$string['erroremptydistributorkey'] = 'Clef du distributeur non fournie';
+$string['erroremptyprovider'] = 'Fournisseur non spécifié';
+$string['errorjson'] = 'Erreur : La réponse JSON est vide ou n\'est pas interprétable.';
+$string['errornodistributorkey'] = 'Clef distributeru non fournie';
+$string['errornokeygenerated'] = 'Erreur : La clef n\'est pas générée ou n\'est pas conforme.';
+$string['errornooptions'] = 'Erreur : Aucune option d\'activation trouvée.';
+$string['errorresponse'] = 'Erreur : La réponse est valide mais en erreur : {$a}';
 $string['getlicensekey'] = 'Obtenir une clef de license support';
-$string['getlicensekey_desc'] = '<a name="getsupportlicense"></a>Dans certains cas, les intégrateurs (ou administrateurs) peuvent obtenir directement une clef de license support auprès
-d\'un fournisseur pour activer les parties "pro" du plugin.
-<br><a href="{$a}">Enregistrer le plugin</a>';
-$string['licensestatus'] = 'Etat de license pro';
+$string['getlicensekey_desc'] = '<a name="getsupportlicense"></a>Dans certains cas, les intégrateurs (ou administrateurs) peuvent obtenir directement une clef de license support auprès d\'un fournisseur pour activer les parties "pro" du plugin. <br><a href="{$a}">Enregistrer le plugin</a>';
 $string['licensekey'] = 'Clef de license pro';
 $string['licensekey_desc'] = 'Entrez ici la clef de produit que vous avez reçu de votre distributeur.';
 $string['licenseprovider'] = 'Fournisseur version Pro';
 $string['licenseprovider_desc'] = 'Entrez la clef de votre distributeur.';
-$string['provider'] = 'Fournisseur de support';
-$string['partnerkey'] = 'Clef distributeur partenaire';
-$string['specificprosettings'] = 'Réglages spécifiques version "pro"';
-$string['errorjson'] = 'Erreur : La réponse JSON est vide ou n\'est pas interprétable.';
-$string['errorresponse'] = 'Erreur : La réponse est valide mais en erreur : {$a}';
-$string['errornokeygenerated'] = 'Erreur : La clef n\'est pas générée ou n\'est pas conforme.';
-$string['errornooptions'] = 'Erreur : Aucune option d\'activation trouvée.';
-$string['erroremptydistributorkey'] = 'Clef du distributeur non fournie';
-$string['errornodistributorkey'] = 'Clef distributeru non fournie';
-$string['erroremptyprovider'] = 'Fournisseur non spécifié';
-$string['options'] = 'Options d\'activation';
-$string['start'] = 'Identification du distributeur';
-$string['continue'] = 'Continuer';
-$string['activate'] = 'Activer';
-$string['chooseoption'] = 'Choisir une option d\'activation...';
+$string['licensestatus'] = 'Etat de license pro';
 $string['noproaccess'] = 'Ceci est une partie "pro" limitée du plugin qui n\'est pas activée.';
-
-$string['provider_help'] = 'Code du fournisseur du support. Ce code identifie le prestataire fournissant le support de niveau 3 et la garantie de continuité du plugin.';
+$string['options'] = 'Options d\'activation';
+$string['partnerkey'] = 'Clef distributeur partenaire';
 $string['partnerkey_help'] = 'La clef partenaire a été fournie à l\'acteur désigné pour installer le plugin.';
+$string['pluginname'] = 'Surcharges core pour les plugins APL';
+$string['privacy:metadata'] = 'Le plugin APLCore ne détient pas de données utilisateur.';
+$string['provider'] = 'Fournisseur de support';
+$string['provider_help'] = 'Code du fournisseur du support. Ce code identifie le prestataire fournissant le support de niveau 3 et la garantie de continuité du plugin.';
+$string['specificprosettings'] = 'Réglages spécifiques version "pro"';
+$string['start'] = 'Identification du distributeur';
 
-$string['emulatecommunity_desc'] = 'Si elle est activée, cette option force le composant à fonctionner en
-version communautaire. Le fonctionnement sera plus compatible avec d\'autres installations, mais certaines
-fonctionnalités ne seront plus disponibles.';
-
-$string['activationoption_help'] = 'Ce plugin peut avoir plusieurs options d\'activation dans le catalogue du fournisseur. Choissisez celle qui contient le mieux à votre situation.';
-
-include(__DIR__.'/pro_additional_strings.php');
+require(__DIR__.'/pro_additional_strings.php');

@@ -15,10 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Modified version of course selector
+ *
  * @package local_aplcore
- * @author valery.fremaux@gmail.com
+ * @author Valery Fremaux valery.fremaux@gmail.com
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
-defined('MOODLE_INTERNAL') || die;
+
+// phpcs:disable moodle.Commenting.ValidTags.Invalid
 
 /*
  * The default size of a course selector.
@@ -31,33 +36,35 @@ define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
  * In your theme, you must give each course-selector a defined width. If the
  * course selector has name="myid", then the div myid_wrapper must have a width
  * specified.
+ * @SuppressWarnings(PHPMD.TooManyFields)
+ * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class course_selector_base {
 
     /**
-     * @var string The control name (and id) in the HTML.
+     * @var string $name The control name (and id) in the HTML.
      */
     protected $name;
 
     /**
-     * @var array Extra fields to search on and return in addition to shortname and fullname.
+     * @var array $extrafield Extra fields to search on and return in addition to shortname and fullname.
      * course fields should be prefixed with c. and category fields with cc.
      */
     protected $extrafields;
 
     /**
-     * @var object Context used for capability checks regarding this selector (does
+     * @var object $category Context used for capability checks regarding this selector (does
      * not necessarily restrict user list)
      */
     protected $category;
 
     /**
-     * not necessarily restrict user list)
+     * @var bool $recursive not necessarily restrict user list)
      */
     protected $recursive = true;
 
     /**
-     * @var boolean Whether the conrol should allow selection of many users, or just one.
+     * @var bool $multiselect Whether the conrol should allow selection of many users, or just one.
      */
     protected $multiselect = true;
 
@@ -69,7 +76,7 @@ abstract class course_selector_base {
     /**
      * @var array A list of userids that should not be returned by this control.
      */
-    protected $exclude = array();
+    protected $exclude = [];
 
     /**
      * @var array|null A list of the users who are selected.
@@ -77,18 +84,18 @@ abstract class course_selector_base {
     protected $selected = null;
 
     /**
-     * @var boolean When the search changes, do we keep previously selected options that do
+     * @var bool When the search changes, do we keep previously selected options that do
      * not match the new search term?
      */
     protected $preserveselected = false;
 
     /**
-     * @var boolean If only one user matches the search, should we select them automatically.
+     * @var bool If only one user matches the search, should we select them automatically.
      */
     protected $autoselectunique = false;
 
     /**
-     * @var boolean When searching, do we only match the starts of fields (better performance)
+     * @var bool When searching, do we only match the starts of fields (better performance)
      * or do we match occurrences anywhere?
      */
     protected $searchanywhere = false;
@@ -99,7 +106,7 @@ abstract class course_selector_base {
     protected $validatingcourseids = null;
 
     /**
-     * @var boolean Used to ensure we only output the search options for one user selector on
+     * @var bool Used to ensure we only output the search options for one user selector on
      * each page.
      */
     private static $searchoptionsoutput = false;
@@ -108,20 +115,22 @@ abstract class course_selector_base {
      * @var array JavaScript YUI3 Module definition
      */
     protected static $jsmodule = [
-                'name' => 'course_selector',
-                'fullpath' => '/local/apllibs/classes/course/selector/module.js',
-                'requires'  => ['node', 'event-custom', 'datasource', 'json', 'moodle-core-notification'],
-                'strings' => [
-                    ['previouslyselectedcourses', 'local_vflibs', '%%SEARCHTERM%%'],
-                    ['nomatchingcourses', 'local_vflibs', '%%SEARCHTERM%%'],
-                    ['none', 'moodle']
-                ]];
+        'name' => 'course_selector',
+        'fullpath' => '/local/apllibs/classes/course/selector/module.js',
+        'requires'  => ['node', 'event-custom', 'datasource', 'json', 'moodle-core-notification'],
+        'strings' => [
+            ['previouslyselectedcourses', 'local_aplcore', '%%SEARCHTERM%%'],
+            ['nomatchingcourses', 'local_aplcore', '%%SEARCHTERM%%'],
+            ['none', 'moodle'],
+        ],
+    ];
 
     /**
      * @var int this is used to define maximum number of users visible in list
      */
     public $maxcoursesperpage = 200;
 
+    /** @var array */
     public $options;
 
     // Public API ==============================================================.
@@ -133,8 +142,8 @@ abstract class course_selector_base {
      * @param array $options other options needed to construct this selector.
      * You must be able to clone a courseselector by doing new get_class($us)($us->get_name(), $us->get_options());
      */
-    public function __construct($name, $options = array()) {
-        global $CFG, $PAGE;
+    public function __construct($name, $options = []) {
+        global $CFG;
 
         $this->options = $options;
 
@@ -157,7 +166,7 @@ abstract class course_selector_base {
         if (isset($options['extrafields'])) {
             $this->extrafields = $options['extrafields'];
         } else {
-            $this->extrafields = array();
+            $this->extrafields = [];
         }
         if (isset($options['exclude']) && is_array($options['exclude'])) {
             $this->exclude = $options['exclude'];
@@ -194,6 +203,8 @@ abstract class course_selector_base {
     }
 
     /**
+     * Returns course exclusions
+     *
      * @return array the list of course ids that this control will not select.
      */
     public function get_exclusions() {
@@ -201,9 +212,11 @@ abstract class course_selector_base {
     }
 
     /**
+     * Get course selection.
+     *
      * @return array of course objects. The courses that were selected. This is a more sophisticated version
-     * of optional_param($this->name, array(), PARAM_INT) that validates the
-     * returned list of ids against the rules for this ocurse selector.
+     * of optional_param($this->name, [], PARAM_INT) that validates the
+     * returned list of ids against the rules for this course selector.
      */
     public function get_selected_courses() {
         // Do a lazy load.
@@ -242,8 +255,9 @@ abstract class course_selector_base {
 
     /**
      * Output this course_selector as HTML.
-     * @param boolean $return if true, return the HTML as a string instead of outputting it.
+     * @param bool $return if true, return the HTML as a string instead of outputting it.
      * @return mixed if $return is true, returns the HTML as a string, otherwise returns nothing.
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function display($return = false) {
         global $PAGE;
@@ -279,16 +293,15 @@ abstract class course_selector_base {
         $output .= $this->name . '_clearbutton" value="' . get_string('clear') . '" />';
 
         // And the search options.
-        $optionsoutput = false;
         if (!self::$searchoptionsoutput) {
             $class = 'courseselector_optionscollapsed';
             $label = get_string('searchoptions');
             $output .= print_collapsible_region_start('', 'courseselector_options', $label, $class, true, true);
-            $label = get_string('courseselectorpreserveselected', 'local_vflibs');
+            $label = get_string('courseselectorpreserveselected', 'local_aplcore');
             $output .= $this->option_checkbox('preserveselected', $this->preserveselected, $label);
-            $label = get_string('courseselectorautoselectunique', 'local_vflibs');
+            $label = get_string('courseselectorautoselectunique', 'local_aplcore');
             $output .= $this->option_checkbox('autoselectunique', $this->autoselectunique, $label);
-            $label = get_string('courseselectorsearchanywhere', 'local_vflibs');
+            $label = get_string('courseselectorsearchanywhere', 'local_aplcore');
             $output .= $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
             $output .= print_collapsible_region_end(true);
 
@@ -318,7 +331,8 @@ abstract class course_selector_base {
     }
 
     /**
-     * @return integer the height this control will be displayed, in rows.
+     * Get rows to display.
+     * @return integer
      */
     public function get_rows() {
         return $this->rows;
@@ -334,6 +348,7 @@ abstract class course_selector_base {
     }
 
     /**
+     * Does the selector select multiple courses ?
      * @return boolean whether this control will allow selection of more than one course.
      */
     public function is_multiselect() {
@@ -341,7 +356,8 @@ abstract class course_selector_base {
     }
 
     /**
-     * @return string the id/name that this control will have in the HTML.
+     * Get the id/name that this control will have in the HTML.
+     * @return string
      */
     public function get_name() {
         return $this->name;
@@ -386,10 +402,9 @@ abstract class course_selector_base {
      *      that is true, then that option will be displayed greyed out, and
      *      will not be returned by get_selected_courses.
      */
-    public abstract function find_courses($search);
+    abstract public function find_courses($search);
 
     /**
-     *
      * Note: this function must be implemented if you use the search ajax field
      *       (e.g. set $options['file'] = '/admin/filecontainingyourclass.php';)
      * @return array the options needed to recreate this course_selector.
@@ -407,8 +422,10 @@ abstract class course_selector_base {
     // Inner workings ==========================================================.
 
     /**
-     * @return boolean if true, we are validating a list of selected courses,
-     *      rather than preparing a list of courses to choose from.
+     * If true, we are validating a list of selected courses,
+     * rather than preparing a list of courses to choose from.
+     *
+     * @return bool
      */
     protected function is_validating() {
         return !is_null($this->validatingcourseids);
@@ -419,13 +436,14 @@ abstract class course_selector_base {
      * validating the result.
      *
      * @return array of course objects.
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function load_selected_courses() {
         // See if we got anything.
         if ($this->multiselect) {
             $courseids = optional_param_array($this->name, [], PARAM_INT);
         } else if ($courseid = optional_param($this->name, 0, PARAM_INT)) {
-            $courseids = array($courseid);
+            $courseids = [$courseid];
         }
         // If there are no courses there is nobody to load.
         if (empty($courseids)) {
@@ -438,7 +456,7 @@ abstract class course_selector_base {
         $this->validatingcourseids = null;
 
         // Aggregate the resulting list back into a single one.
-        $courses = array();
+        $courses = [];
         foreach ($groupedcourses as $group) {
             foreach ($group as $course) {
                 if (!isset($courses[$course->id]) && in_array($course->id, $courseids)) {
@@ -456,9 +474,11 @@ abstract class course_selector_base {
     }
 
     /**
-     * @param string $u the table alias for the course table in the query being
+     * Gets the fragment of SQL to go in the select list of the query.
+     *
+     * @param string $c the table alias for the course table in the query being
      *      built. May be ''.
-     * @return string fragment of SQL to go in the select list of the query.
+     * @return string
      */
     protected function required_fields_sql($c) {
         // Raw list of fields.
@@ -476,6 +496,8 @@ abstract class course_selector_base {
     }
 
     /**
+     * Builds the SQL search query.
+     *
      * @param string $search the text to search for.
      * @param string $u the table alias for the course table in the query being
      *      built. May be ''.
@@ -517,6 +539,7 @@ abstract class course_selector_base {
      *
      * @param array $groupedcourses an array, as returned by find_courses.
      * @return string HTML code.
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
     protected function output_options($groupedcourses, $search) {
         $output = '';
@@ -529,21 +552,21 @@ abstract class course_selector_base {
         }
 
         /*
-         * If $groupedcourses is empty, make a 'no matching courses' group. If there is
+         * If groupedcourses is empty, make a 'no matching courses' group. If there is
          * only one selected course, set a flag to select them if that option is turned on.
          */
         $select = false;
         if (empty($groupedcourses)) {
             if (!empty($search)) {
-                $groupedcourses = array(get_string('nomatchingcourses', 'local_aplcore', $search) => []);
+                $groupedcourses = [get_string('nomatchingcourses', 'local_aplcore', $search) => []];
             } else {
-                $groupedcourses = array(get_string('none') => array());
+                $groupedcourses = [get_string('none') => []];
             }
         } else if ($this->autoselectunique && count($groupedcourses) == 1 &&
                 count(reset($groupedcourses)) == 1) {
             $select = true;
             if (!$this->multiselect) {
-                $this->selected = array();
+                $this->selected = [];
             }
         }
 
@@ -571,10 +594,9 @@ abstract class course_selector_base {
      *
      * @param string $groupname the label for this optgroup.
      * @param array $courses the courses to put in this optgroup.
-     * @param boolean $select if true, select the courses in this group.
      * @return string HTML code.
      */
-    protected function output_optgroup($groupname, $courses, $select) {
+    protected function output_optgroup($groupname, $courses) {
         if (!empty($courses)) {
             $output = '  <optgroup label="' . htmlspecialchars($groupname) . ' (' . count($courses) . ')">' . "\n";
             foreach ($courses as $course) {
@@ -609,7 +631,7 @@ abstract class course_selector_base {
     public function output_course($course) {
         $out = $course->fullname;
         if ($this->extrafields) {
-            $displayfields = array();
+            $displayfields = [];
             foreach ($this->extrafields as $field) {
                 $displayfields[] = $course->{$field};
             }
@@ -619,7 +641,8 @@ abstract class course_selector_base {
     }
 
     /**
-     * @return string the caption for the search button.
+     * Returns the caption for the search button.
+     * @return string.
      */
     protected function search_button_caption() {
         return get_string('search');
@@ -659,11 +682,11 @@ abstract class course_selector_base {
     }
 
     /**
-     * @param boolean $optiontracker if true, initialise JavaScript for updating the course prefs.
-     * @return any HTML needed here.
+     * Initialise JavaScript for updating the course prefs.
+     * @param string $search
      */
     protected function initialise_javascript($search) {
-        global $USER, $PAGE, $OUTPUT;
+        global $USER, $PAGE;
         $output = '';
 
         // Put the options into the session, to allow search.php to respond to the ajax requests.
@@ -672,7 +695,7 @@ abstract class course_selector_base {
         $USER->courseselectors[$hash] = $options;
 
         // Initialise the selector.
-        $params = array($this->name, $hash, $this->extrafields, $search);
+        $params = [$this->name, $hash, $this->extrafields, $search];
         $PAGE->requires->js_init_call('M.core_course.init_course_selector', $params, false, self::$jsmodule);
         return $output;
     }
@@ -702,9 +725,10 @@ abstract class course_selector_base {
  * @return array an array with two elements, a fragment of SQL to go in the
  *     where clause the query, and an associative array containing any required
  *     parameters (using named placeholders).
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $extrafields = [],
-                            array $exclude = null, array $includeonly = null) {
+                            array $exclude = [], array $includeonly = []) {
     global $DB;
 
     $params = [];
@@ -717,7 +741,7 @@ function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $ex
     // If we have a $search string, put a field LIKE '$search%' condition on each field.
     if ($search) {
         $conditions = [
-            $conditions[] = $c . 'fullname'
+            $conditions[] = $c . 'fullname',
         ];
         foreach ($extrafields as $field) {
             $conditions[] = $c . $field;

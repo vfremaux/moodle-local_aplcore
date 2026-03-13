@@ -1,5 +1,5 @@
 <?php
-// This file is NOT part of Moodle - http://moodle.org/
+// This file is part of Moodle - http://moodle.org/
 //
 // Moodle is free software: you can redistribute it and/or modify
 // it under the terms of the GNU General Public License as published by
@@ -23,19 +23,29 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL
  */
 
-define('LOCAL_APLCORE_TRACE_ERRORS', 1); // Errors should be always traced when trace is on.
-define('LOCAL_APLCORE_TRACE_NOTICE', 3); // Notices are important notices in normal execution.
-define('LOCAL_APLCORE_TRACE_DEBUG', 5); // Debug are debug time notices that should be burried in debug_fine level when debug is ok.
-define('LOCAL_APLCORE_TRACE_DATA', 8); // Data level is when requiring to see data structures content.
-define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10); // Debug fine are control points we want to keep when code is refactored and debug needs to be reactivated.
+// phpcs:disable moodle.Commenting.ValidTags.Invalid
+
+// Errors should be always traced when trace is on.
+define('LOCAL_APLCORE_TRACE_ERRORS', 1);
+// Notices are important notices in normal execution.
+define('LOCAL_APLCORE_TRACE_NOTICE', 3);
+// Debug are debug time notices that should be burried in debug_fine level when debug is ok.
+define('LOCAL_APLCORE_TRACE_DEBUG', 5);
+// Data level is when requiring to see data structures content.
+define('LOCAL_APLCORE_TRACE_DATA', 8);
+// Debug fine are control points we want to keep when code is refactored and debug needs to be reactivated.
+define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10);
 
 /**
  * Tells which features are supported against distribution.
  * @param string $feature
  * @param bool $getsupported
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 function local_aplcore_supports_feature($feature = null, $getsupported = false) {
-    global $CFG;
+
     static $supports;
 
     if (!during_initial_install()) {

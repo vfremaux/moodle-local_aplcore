@@ -9,12 +9,12 @@
  * @package   core_form
  */
 
-namespace local_vflibs\moogwai\form\elements;
+namespace local_aplcore\moogwai\form\elements;
 
 defined('MOOGWAI_INTERNAL') || die();
 
 use stdClass;
-use local_vflibs\moogwai\core\output\templatable;
+use local_aplcore\moogwai\core\output\templatable;
 use core\output\renderer_base;
 use MoodleQuickForm;
 

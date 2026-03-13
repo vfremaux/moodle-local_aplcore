@@ -14,37 +14,41 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * OrderedSelect form element
  *
  * Contains HTML class for an ordered select type element
  *
- * @package   local_vflibs
- * @subpackage  form
- * @copyright 2020 Valery Fremaux <valery.fremaux@gmail.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_aplcore
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
+// This is because this file is a Pear/Quickform cross integration file.
+// phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 
 if (!class_exists('MoodleQuickForm_orderedselect')) {
+
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/orderedselect.php')) {
-        require_once ("HTML/QuickForm/orderedselect.php");
+        require_once("HTML/QuickForm/orderedselect.php");
     } else {
-        require_once ($CFG->dirroot."/local/vflibs/form/HTML/QuickForm/orderedselect.php");
+        require_once($CFG->dirroot."/local/aplcore/form/HTML/QuickForm/orderedselect.php");
     }
 
-/**
- * HTML class for a orderedselect type element
- *
- * Overloaded {@link HTML_QuickForm_select} to add help button
- *
- * @package   local_vflibs
- * @category  form
- * @copyright 2020 Valery Fremaux <valery.fremaux@gmail.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
+    /**
+     * HTML class for a orderedselect type element
+     *
+     * Overloaded {@link HTML_QuickForm_select} to add help button
+     *
+     * @package   local_aplcore
+     * @author    Valery Fremaux <valery.fremaux@gmail.com>
+     * @copyright 2020 Valery Fremaux <valery.fremaux@gmail.com>
+     * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
 
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
@@ -54,7 +58,7 @@ class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
          *
          * @return string html for help button
          */
-        function getHelpButton() {
+        public function getHelpButton() {
             return $this->_helpbutton;
         }
 
@@ -63,8 +67,8 @@ class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
          *
          * @return string
          */
-        function getElementTemplateType() {
-            if ($this->_flagFrozen){
+        public function getElementTemplateType() {
+            if ($this->_flagFrozen) {
                 return 'nodisplay';
             } else {
                 return 'default';
@@ -74,10 +78,9 @@ class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
         /**
          * Returns Html for the element
          *
-         * @access      public
          * @return      string
          */
-        function toHtml(){
+        public function toHtml() {
             global $PAGE;
 
             $PAGE->requires->js_call_amd('local_vflibs/orderedselect', 'init');
@@ -87,8 +90,10 @@ class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
     }
 
     if (file_exists($CFG->libdir.'/form/orderedselect.php')) {
-        MoodleQuickForm::registerElementType('orderedselect', "$CFG->libdir/form/orderedselect.php", 'MoodleQuickForm_orderedselect');
+        $file = "$CFG->libdir/form/orderedselect.php";
+        MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     } else {
-        MoodleQuickForm::registerElementType('orderedselect', $CFG->dirroot.'/local/vflibs/form/orderedselect.php', 'MoodleQuickForm_orderedselect');
+        $file = $CFG->dirroot.'/local/aplcore/form/orderedselect.php';
+        MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     }
 }

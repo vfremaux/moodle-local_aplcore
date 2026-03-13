@@ -1,6 +1,6 @@
 <?php
 
-namespace local_vflibs\moogwai\core\output;
+namespace local_aplcore\moogwai\core\output;
 
 use templatable as moodle_templatable;
 

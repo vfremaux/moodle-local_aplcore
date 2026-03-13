@@ -10,9 +10,9 @@
  * @package   core_form
  */
 
-namespace local_vflibs\moogwai\form\elements;
+namespace local_aplcore\moogwai\form\elements;
 
-require_once($CFG->dirroot.'/local/vflibs/pear/HTML/QuickForm/elementgrid.php');
+require_once($CFG->dirroot.'/local/aplcore/pear/HTML/QuickForm/elementgrid.php');
 
 defined('MOOGWAI_INTERNAL') || die();
 

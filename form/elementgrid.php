@@ -14,45 +14,52 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-
 /**
- * Button form element
+ * Element grid form element
  *
- * Contains HTML class for a button type element
+ * Contains HTML class for a grid of other form elements
  *
- * @package   core_form
- * @copyright 2007 Jamie Pratt <me@jamiep.org>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_aplcore
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   2020 Valery Fremaux <valery.fremaux@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
+// This is because this file is a Pear/Quickform cross integration file.
+// phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {
-        require_once ("HTML/QuickForm/elementgrid.php");
+        require_once("HTML/QuickForm/elementgrid.php");
     } else {
-        require_once ($CFG->dirroot."/local/vmoodle/__other/HTML/QuickForm/elementgrid.php");
+        require_once($CFG->dirroot."/local/aplcore/HTML/QuickForm/elementgrid.php");
     }
 
-/**
- * HTML class for a button type element
- *
- * Overloaded {@link HTML_QuickForm_button} to add help button
- *
- * @package   core_form
- * @category  form
- * @copyright 2007 Jamie Pratt <me@jamiep.org>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
+    /**
+     * HTML class for a button type element
+     *
+     * Overloaded {@link HTML_QuickForm_button} to add help button
+     *
+     * @package     local_aplcore
+     * @author      Valery Fremaux <valery.fremaux@gmail.com>
+     * @copyright   2020 Valery Fremaux <valery.fremaux@gmail.com>
+     * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
 
-        /** @var string html for help button, if empty then no help */
-        var $_helpbutton='';
+        /**
+         * @var string html for help button, if empty then no help.
+         */
+        public $_helpbutton = '';
 
         /**
          * get html for help button
          *
          * @return string html for help button
          */
-        function getHelpButton() {
+        public function getHelpButton() {
             return $this->_helpbutton;
         }
 
@@ -61,8 +68,8 @@ class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
          *
          * @return string
          */
-        function getElementTemplateType(){
-            if ($this->_flagFrozen){
+        public function getElementTemplateType() {
+            if ($this->_flagFrozen) {
                 return 'nodisplay';
             } else {
                 return 'default';
@@ -72,16 +79,14 @@ class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
         /**
          * Returns Html for the element
          *
-         * @access      public
          * @return      string
          */
-        function toHtml(){
+        public function toHtml() {
 
             $table = new html_table();
-            // $table->updateAttributes($this->getAttributes());
 
             $col = 0;
-            $header = array();
+            $header = [];
             if ($this->_columnNames) {
                 foreach ($this->_columnNames as $key => $value) {
                     ++$col;
@@ -90,10 +95,10 @@ class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
             }
             $table->head = $header;
 
-            $data = array();
+            $data = [];
             foreach (array_keys($this->_rows) as $key) {
                 $col = 0;
-                $row = array();
+                $row = [];
                 foreach (array_keys($this->_rows[$key]) as $key2) {
                     ++$col;
                     $row[] = $this->_rows[$key][$key2]->toHTML();
@@ -108,8 +113,10 @@ class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
     }
 
     if (file_exists($CFG->libdir.'/form/elementgrid.php')) {
-        MoodleQuickForm::registerElementType('elementgrid', "$CFG->libdir/form/elementgrid.php", 'MoodleQuickForm_elementgrid');
+        $file = "$CFG->libdir/form/elementgrid.php";
+        MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     } else {
-        MoodleQuickForm::registerElementType('elementgrid', $CFG->dirroot.'/local/vmoodle/__other/elementgrid.php', 'MoodleQuickForm_elementgrid');
+        $file = $CFG->dirroot.'/local/aplcore/form/elementgrid.php';
+        MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     }
 }

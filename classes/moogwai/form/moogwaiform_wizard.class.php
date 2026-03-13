@@ -1,13 +1,13 @@
 <?php
 // This file is part of Moogwai - private project
 
-namespace local_vflibs\moogwai\form;
+namespace local_aplcore\moogwai\form;
 
 defined('MOOGWAI_INTERNAL') || die();
 
 use stdClass;
-use local_vflibs\moogwai\moogwai_url;
-use local_vflibs\moogwai\exceptions\CodingException;
+use local_aplcore\moogwai\moogwai_url;
+use local_aplcore\moogwai\exceptions\CodingException;
 
 /**
  * This is a modified version of the moogwaiform base form, 
