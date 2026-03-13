@@ -1,9 +1,9 @@
 <?php
 // This file is part of Moogwai - private project
 
-namespace local_vflibs\moogwai\form\elements;
+namespace local_aplcore\moogwai\form\elements;
 
-use local_vflibs\moogwai\exceptions\CodingException;
+use local_aplcore\moogwai\exceptions\CodingException;
 use core\output\renderer_base;
 
 /**

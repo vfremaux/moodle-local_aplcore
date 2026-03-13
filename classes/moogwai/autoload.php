@@ -9,15 +9,17 @@
  */
 
 defined('MOODLE_INTERNAL') || die;
-define('MOOGWAI_INTERNAL', true);
+if (!defined('MOOGWAI_INTERNAL')) {
+    define('MOOGWAI_INTERNAL', true);
+}
 
 spl_autoload_register(function($classname) {
     global $CFG;
 
-    if (strpos($classname, 'local_vflibs\\moogwai') === 0) {
-        $classshort = str_replace('local_vflibs\\moogwai\\', '', $classname);
+    if (strpos($classname, 'local_aplcore\\moogwai') === 0) {
+        $classshort = str_replace('local_aplcore\\moogwai\\', '', $classname);
         $classpath = str_replace('\\', '/', $classshort);
-        $classfile = $CFG->dirroot.'/local/vflibs/classes/moogwai/'.$classpath.'.class.php';
+        $classfile = $CFG->dirroot.'/local/aplcore/classes/moogwai/'.$classpath.'.class.php';
         if (file_exists($classfile)) {
             include_once($classfile);
             return true;

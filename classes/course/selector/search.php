@@ -17,9 +17,10 @@
 /**
  * Code to search for courses in response to an ajax call from a course selector.
  *
- * @package core_course
- * @copyright 1999 Martin Dougiamas  http://dougiamas.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package local_aplcore
+ * @author Valery Fremaux valery.fremaux@gmail.com
+ * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 
 define('AJAX_SCRIPT', true);

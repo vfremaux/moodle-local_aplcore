@@ -1,6 +1,6 @@
 <?php
 
-namespace local_vflibs\moogwai\form;
+namespace local_aplcore\moogwai\form;
 
 use moodleform;
 

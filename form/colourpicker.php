@@ -14,57 +14,48 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-defined('MOODLE_INTERNAL') || die();
-
 /**
  * ColourPicker form element
  *
  * Contains HTML class for a colourpicker type element
  *
- * @package   local_vflibs
- * @copyright 2020 Valery Fremaux <valery.fremaux@gmail.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @package     local_aplcore
+ * @author      Valery Fremaux <valery.fremaux@gmail.com>
+ * @copyright   2020 Valery Fremaux <valery.fremaux@gmail.com>
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
+
+defined('MOODLE_INTERNAL') || die();
+
+// This is because this file is a Pear/Quickform cross integration file.
+// phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 
 require_once($CFG->dirroot.'/lib/pear/HTML/QuickForm.php');
 
 if (!class_exists('MoodleQuickForm_colourpicker')) {
-    require_once ($CFG->dirroot."/local/vflibs/form/HTML/QuickForm/colourpicker.php");
+    require_once($CFG->dirroot."/local/aplcore/form/HTML/QuickForm/colourpicker.php");
 
-/**
- * HTML class for a colourpicker type element
- *
- * Overloaded {@link HTML_QuickForm_button} to add help button
- *
- * @package   local_vflibs
- * @category  form
- * @copyright 2020 Valery Fremaux <valery.fremaux@gmail.com>
- * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
- */
-class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
+    /**
+     * HTML class for a colourpicker type element
+     *
+     * Overloaded {@link HTML_QuickForm_button} to add help button
+     *
+     * @package     local_aplcore
+     * @author      Valery Fremaux <valery.fremaux@gmail.com>
+     * @copyright   2020 Valery Fremaux <valery.fremaux@gmail.com>
+     * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+     */
+    class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
 
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
-
-        /**
-         * Constructor
-         *
-         * @param string $elementName name of the colourpicker text element
-         * @param string $elementLabel (optional) colourpicker label
-         * @param string $options
-         * @param mixed $attributes (optional) Either a typical HTML attribute string
-         *              or an associative array
-         */
-        public function __construct($elementName=null, $elementLabel=null, $options=null, $attributes=null) {
-            parent::__construct($elementName, $elementLabel, $options, $attributes);
-        }
 
         /**
          * get html for help button
          *
          * @return string html for help button
          */
-        function getHelpButton() {
+        public function getHelpButton() {
             return $this->_helpbutton;
         }
 
@@ -73,8 +64,8 @@ class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
          *
          * @return string
          */
-        function getElementTemplateType() {
-            if ($this->_flagFrozen){
+        public function getElementTemplateType() {
+            if ($this->_flagFrozen) {
                 return 'nodisplay';
             } else {
                 return 'default';
@@ -84,24 +75,25 @@ class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
         /**
          * Returns Html for the element
          *
-         * @access      public
          * @return      string
          */
-        function toHtml(){
+        public function toHtml() {
             global $PAGE, $OUTPUT;
 
             $str = '<div class="form-colourpicker defaultsnext '.$this->getAttribute('class').'">';
             $str .= '    <div class="admin_colourpicker clearfix">';
             $str .= $OUTPUT->pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
             $str .= '    </div>';
-            $str .= '    <input name="'.$this->_name.'" type="text" '.$this->_getAttrString($this->_attributes).' size="12" class="text-ltr">';
+            $attrs = $this->_getAttrString($this->_attributes);
+            $str .= '    <input name="'.$this->_name.'" type="text" '.$attrs.' size="12" class="text-ltr">';
             $str .= '</div>';
 
-            $PAGE->requires->js_init_call('M.util.init_colour_picker', array($this->getAttribute('id'), null));
+            $PAGE->requires->js_init_call('M.util.init_colour_picker', [$this->getAttribute('id'), null]);
 
             return $str;
         }
     }
 
-    MoodleQuickForm::registerElementType('colourpicker', $CFG->dirroot.'/local/vflibs/form/colourpicker.php', 'MoodleQuickForm_colourpicker');
+    $file = $CFG->dirroot.'/local/aplcore/form/colourpicker.php';
+    MoodleQuickForm::registerElementType('colourpicker', $file, 'MoodleQuickForm_colourpicker');
 }

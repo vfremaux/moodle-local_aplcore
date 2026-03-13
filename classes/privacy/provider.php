@@ -14,10 +14,19 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
+/**
+ * Privacy Subsystem.
+ *
+ * @package     local_aplcore
+ * @author      Valery Fremaux (valery.fremaux@gmail.com)
+ * @copyright   2017 Valery Fremaux (activeprolearn.com)
+ * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ */
 namespace local_aplcore\privacy;
 
-defined('MOODLE_INTERNAL') || die();
-
+/**
+ * Null provider class.
+ */
 class provider implements \core_privacy\local\metadata\null_provider {
     /**
      * Get the language string identifier with the component's language

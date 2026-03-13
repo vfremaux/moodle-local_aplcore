@@ -7,7 +7,7 @@
  * @package     moogwai_backoffice
  */
 
-namespace local_vflibs\moogwai;
+namespace local_aplcore\moogwai;
 
 defined('MOOGWAI_INTERNAL') || die();
 

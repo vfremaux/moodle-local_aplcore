@@ -15,9 +15,12 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
+ * Zabbix indicators for APL Core
+ *
+ * @package local_aplcore
  * @author Valery Fremaux valery.fremaux@gmail.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package report_zabbix
+ * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 namespace report_zabbix\indicators;
 
@@ -25,31 +28,43 @@ use moodle_exception;
 use coding_exception;
 use StdClass;
 
+defined('MOODLE_INTERNAL') || die();
+
 require_once($CFG->dirroot.'/local/aplcore/lib.php');
 require_once($CFG->dirroot.'/report/zabbix/classes/indicator.class.php');
 
+/**
+ * Plugin's indicators.
+ */
 class aplcore_indicator extends zabbix_indicator {
 
-    static $submodes = '';
+    /** @var string $submodes */
+    static public $submodes = '';
 
-    protected $bench;
+    /** @var $states a cache for licensed plugin states */
+    protected $states;
 
-    protected $results;
+    /** @var array $licenseproviders a cache for licensed providers */
+    protected $licensedproviders;
 
-    protected $total;
+    /** @var array $licenseplugins a cache for licensed plugins */
+    protected $licensedplugins;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         global $DB;
 
         parent::__construct();
         $this->key = 'moodle.aplcore';
 
-        $licencedplugins = $DB->get_records('config_plugins', ['name' => 'licensekey'], '', 'plugin,value');
-        $this->licenceproviders = $DB->get_records('config_plugins', ['name' => 'licenseprovider'], '', 'plugin,value');
+        $this->licensedplugins = $DB->get_records('config_plugins', ['name' => 'licensekey'], '', 'plugin,value');
+        $this->licenseproviders = $DB->get_records('config_plugins', ['name' => 'licenseprovider'], '', 'plugin,value');
 
         $teststates = [];
-        foreach($licensedplugins as $lp) {
-            if (!in_array($lp->plugin, array_keys($licenceproviders))) {
+        foreach ($this->licensedplugins as $lp) {
+            if (!in_array($lp->plugin, array_keys($this->licenseproviders))) {
                 // May use a licensekey but not APLCore.
                 continue;
             }
@@ -58,9 +73,9 @@ class aplcore_indicator extends zabbix_indicator {
         }
 
         $licenseends = [];
-        foreach($licensedplugins as $lp) {
-            if (!in_array($lp->plugin, array_keys($licenceproviders))) {
-                // May use a licensekey but not VFCore.
+        foreach ($this->licensedplugins as $lp) {
+            if (!in_array($lp->plugin, array_keys($this->licenseproviders))) {
+                // May use a licensekey but not APLCore.
                 continue;
             }
             $licenseends[] = '['.$lp->plugin.'.end]';
@@ -79,11 +94,10 @@ class aplcore_indicator extends zabbix_indicator {
     }
 
     /**
-     * the function that contains the logic to acquire the indicator instant value.
-     * @param string $submode to target an aquisition to an explicit submode, elsewhere 
+     * The function that contains the logic to acquire the indicator instant value.
+     * @param string $submode to target an aquisition to an explicit submode
      */
     public function acquire_submode($submode) {
-        global $DB, $CFG;
 
         if (!is_object($this->value)) {
             $this->value = new Stdclass;
@@ -107,7 +121,7 @@ class aplcore_indicator extends zabbix_indicator {
     }
 
     /**
-     *
+     * Load licensed plugins status values.
      */
     protected function load_states() {
         global $CFG;
@@ -130,14 +144,15 @@ class aplcore_indicator extends zabbix_indicator {
 
     /**
      * Get some information about license ending horizon.
-     */    
+     * @param $plugin
+     */
     protected function get_end($plugin) {
 
         $status = $this->states[$plugin]->licensestatus;
         $status = preg_replace('/(SET|CHECK) OK/', '', $status);
         $status = trim($status);
 
-        switch($dstatus) {
+        switch ($status) {
 
             case '-30d': {
                 break;
@@ -150,7 +165,6 @@ class aplcore_indicator extends zabbix_indicator {
             case '-5d': {
                 break;
             }
-
         }
     }
 }
