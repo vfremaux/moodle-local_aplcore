@@ -6,7 +6,7 @@
  *
  * Contains HTML class for a select type element
  *
- * @package   core_form
+ * @package   local_aplcore
  */
 
 namespace local_aplcore\moogwai\form\elements;
@@ -24,7 +24,7 @@ use MoodleQuickForm;
  *
  * HTML class for a visualselect type element
  *
- * @package   core_form
+ * @package   local_aplcore
  */
 class visualselect extends select implements templatable {
 
@@ -313,4 +313,4 @@ class visualselect extends select implements templatable {
 
 }
 
-MoodleQuickForm::registerElementType('visualselect', $CFG->dirroot.'/local/vflibs/classes/moogwai/form/elements/visualselect.class.php', '\\local_vflibs\\moogwai\\form\\elements\\visualselect');
+MoodleQuickForm::registerElementType('visualselect', $CFG->dirroot.'/local/aplcore/classes/moogwai/form/elements/visualselect.class.php', '\\local_aplcore\\moogwai\\form\\elements\\visualselect');

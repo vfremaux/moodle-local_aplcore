@@ -32,14 +32,15 @@ if ($hassiteconfig) {
     $key = 'local_aplcore/docbaseurl';
     $label = get_string('configdocbaseurl', 'local_aplcore');
     $desc = get_string('configdocbaseurl_desc', 'local_aplcore');
-    $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
+    $default = 'https://docs{lang}.activeprolearn.com';
+    $settings->add(new admin_setting_configtext($key, $label, $desc, $default));
 
-    $key = 'local_vflibs/doccustomerid';
+    $key = 'local_aplcore/doccustomerid';
     $label = get_string('configdoccustomerid', 'local_aplcore');
     $desc = get_string('configdoccustomerid_desc', 'local_aplcore');
     $settings->add(new admin_setting_configtext($key, $label, $desc, ''));
 
-    $key = 'local_vflibs/doccustomerpublickey';
+    $key = 'local_aplcore/doccustomerpublickey';
     $label = get_string('configdoccustomerpublickey', 'local_aplcore');
     $desc = get_string('configdoccustomerpublickey_desc', 'local_aplcore');
     $settings->add(new admin_setting_configtextarea($key, $label, $desc, ''));

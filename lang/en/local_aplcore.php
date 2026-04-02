@@ -36,6 +36,7 @@ $string['configdoccustomerpublickey_desc'] = 'A PEM public key for encrypting th
 $string['configeditorplugins'] = 'Editor plugins for extra documentation';
 $string['configeditorplugins_desc'] = '';
 $string['continue'] = 'Continue';
+$string['editname'] = 'Edit name';
 $string['emulatecommunity'] = '<a name="getsupportlicense"></a>Emulate the community version.';
 $string['emulatecommunity_desc'] = 'Switches the code to the community version. The result will be more compatible, but some features will not be available anymore.';
 $string['erroremptypartnerkey'] = 'Distributor/partner key is empty';
@@ -47,6 +48,8 @@ $string['errornooptions'] = 'Error : No activation options found.';
 $string['errorresponse'] = 'Error : Provider response is valid but remote error : {$a}';
 $string['getlicensekey'] = 'Get support license key';
 $string['getlicensekey_desc'] = 'In some case, integrators (or administrators) can self-register the support license of the pro part of this plugin. <br><a href="{$a}">Goto register form</a>';
+$string['helponblock'] = 'Help on the block';
+$string['helponmodule'] = 'Help on the course module';
 $string['licensekey'] = 'Pro license key';
 $string['licensekey_desc'] = 'Input here the product license key you got from your provider';
 $string['licenseprovider'] = 'Pro License provider';

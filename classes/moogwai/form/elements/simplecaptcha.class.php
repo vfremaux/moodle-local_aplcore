@@ -107,4 +107,4 @@ class simplecaptcha extends HTML_QuickForm_input implements templatable {
 
 }
 
-MoodleQuickForm::registerElementType('simplecaptcha', $CFG->dirroot.'/local/vflibs/classes/moogwai/form/elements/simplecaptcha.class.php', '\\local_vflibs\\moogwai\\form\\elements\\simplecaptcha');
+MoodleQuickForm::registerElementType('simplecaptcha', $CFG->dirroot.'/local/aplcore/classes/moogwai/form/elements/simplecaptcha.class.php', '\\local_aplcore\\moogwai\\form\\elements\\simplecaptcha');

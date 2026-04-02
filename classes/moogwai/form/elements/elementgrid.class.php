@@ -20,7 +20,7 @@ use html_writer;
 use html_table;
 use core\output\templatable;
 use core\output\renderer_base;
-use HTML_QuickForm_elementgrid;
+use HTML_QuickForm_ElementGrid;
 use MoodleQuickForm;
 
 /**
@@ -109,4 +109,4 @@ class elementgrid extends HTML_QuickForm_elementgrid {
     }
 }
 
-MoodleQuickForm::registerElementType('elementgrid', $CFG->dirroot.'/local/vflibs/classes/moogwai/form/elements/elementgrid.class.php', '\\local_vflibs\\moogwai\\form\\elements\\elementgrid');
+MoodleQuickForm::registerElementType('elementgrid', $CFG->dirroot.'/local/aplcore/classes/moogwai/form/elements/elementgrid.class.php', '\\local_aplcore\\moogwai\\form\\elements\\elementgrid');
