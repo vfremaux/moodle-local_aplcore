@@ -1359,7 +1359,7 @@ class block_manager {
                 global $PAGE;
                 $PAGE->requires->js_call_amd('local/aplcore', 'init');
                 $str = get_string('helponblock', 'local_aplcore');
-                $url = new moodle_url('/local/vflibs/docwrap.php', ['url' => $docurl]);
+                $url = new moodle_url('/local/aplcore/docwrap.php', ['url' => $docurl]);
                 $controls[] = new action_menu_link_primary(
                     $url,
                     new pix_icon('help', $str, 'moodle', ['class' => 'iconsmall', 'title' => '']),

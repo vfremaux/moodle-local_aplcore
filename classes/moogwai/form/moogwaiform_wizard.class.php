@@ -214,13 +214,13 @@ abstract class moogwaiform_wizard extends moogwaiform {
                 // When more than one element we need a group
                 $buttonarray = [];
                 if (in_array('previous', $buttons)) {
-                    $buttonarray[] = &$mform->createElement('submit', 'previous', get_string('previousstep', 'local_vflibs'));
+                    $buttonarray[] = &$mform->createElement('submit', 'previous', get_string('previousstep', 'local_aplcore'));
                 }
                 if (in_array('cancel', $buttons)) {
                     $buttonarray[] = &$mform->createElement('cancel');
                 }
                 if (in_array('next', $buttons)) {
-                    $buttonarray[] = &$mform->createElement('submit', 'next', get_string('nextstep', 'local_vflibs'));
+                    $buttonarray[] = &$mform->createElement('submit', 'next', get_string('nextstep', 'local_aplcore'));
                 }
                 if (in_array('save', $buttons)) {
                     $buttonarray[] = &$mform->createElement('submit', 'submitbutton', $submitlabel);

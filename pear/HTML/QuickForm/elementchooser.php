@@ -212,7 +212,7 @@ class HTML_QuickForm_ElementChooser extends HTML_QuickForm_element {
     public function toHtml() {
         global $OUTPUT;
 
-        return $OUTPUT->render_from_template('local_vflibs/form/elements/element-elementchooser', $this->export_for_template());
+        return $OUTPUT->render_from_template('local_aplcore/form/elements/element-elementchooser', $this->export_for_template());
     }
 }
 

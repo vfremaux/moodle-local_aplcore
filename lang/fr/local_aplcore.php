@@ -64,5 +64,7 @@ $string['provider'] = 'Fournisseur de support';
 $string['provider_help'] = 'Code du fournisseur du support. Ce code identifie le prestataire fournissant le support de niveau 3 et la garantie de continuité du plugin.';
 $string['specificprosettings'] = 'Réglages spécifiques version "pro"';
 $string['start'] = 'Identification du distributeur';
+$string['nextstep'] = 'Etape suivante';
+$string['prevstep'] = 'Etape précédente';
 
 require(__DIR__.'/pro_additional_strings.php');

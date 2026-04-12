@@ -78,7 +78,7 @@ class simplecaptcha extends HTML_QuickForm_input implements templatable {
      */
     public function verify($responsestr) {
         global $CFG;
-        require_once($CFG->dirroot.'/local/vflibs/simplecaptchalib.php');
+        require_once($CFG->dirroot.'/local/aplcore/simplecaptchalib.php');
 
         $response = simplecaptcha_check_response($responsestr);
         if (!$response['isvalid']) {

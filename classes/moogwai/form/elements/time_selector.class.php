@@ -19,7 +19,7 @@ use MoodleQuickform;
 use MoodleQuickform_group;
 use HTML_QuickForm_Element;
 use HTML_QuickForm_Renderer_Default;
-use local_vflibs\moogwai\form\MoogwaiForm;
+use local_aplcore\moogwai\form\MoogwaiForm;
 use renderer_base;
 use core_calendar\type_factory;
 use html_writer;

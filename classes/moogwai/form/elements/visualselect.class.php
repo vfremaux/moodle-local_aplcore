@@ -114,7 +114,7 @@ class visualselect extends select implements templatable {
         $template = new StdClass;
         $elmtemplate = $this->export_for_template($OUTPUT);
         $template->element = $elmtemplate;
-        $html .= $OUTPUT->render_from_template('local_vflibs/moogwai/form/element-visualselect', $template);
+        $html .= $OUTPUT->render_from_template('local_aplcore/moogwai/form/element-visualselect', $template);
 
         return $html;
     }
@@ -255,7 +255,7 @@ class visualselect extends select implements templatable {
                         // insert a "more..." item.
                         $moreoption = new StdClass;
                         $moreoption->ismore = true;
-                        $moreoption->value = get_string('more', 'local_vflibs');
+                        $moreoption->value = get_string('more', 'local_aplcore');
                         $rawoptions[] = $moreoption;
                     }
                     if ($ix >= $this->_hideafter) {
@@ -271,7 +271,7 @@ class visualselect extends select implements templatable {
                 // insert a "less..." item.
                 $lessoption = new StdClass;
                 $lessoption->isless = true;
-                $lessoption->value = get_string('less', 'local_vflibs');
+                $lessoption->value = get_string('less', 'local_aplcore');
                 $rawoptions[] = $lessoption;
             }
 
@@ -303,7 +303,7 @@ class visualselect extends select implements templatable {
         } else {
             $context['value'] = implode(',', $this->_values);
         }
-        $context['nooptions'] = $output->notification(get_string('nooptions', 'local_vflibs'), 'warning');
+        $context['nooptions'] = $output->notification(get_string('nooptions', 'local_aplcore'), 'warning');
         $context['optionrows'] = $optionrows;
         $context['hasoptions'] = !empty($optionrows);
         $context['nameraw'] = $this->getName();

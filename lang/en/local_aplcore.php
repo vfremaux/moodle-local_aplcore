@@ -59,11 +59,13 @@ $string['noproaccess'] = 'This is the "pro" zone. "Pro" zone is NOT activated.';
 $string['options'] = 'Activation options';
 $string['partnerkey'] = 'Distributor Partner Key';
 $string['partnerkey_help'] = 'The partner key has been given to the technical staff responsible of the plugin\'s installation and activation.';
-$string['pluginname'] = 'Extra core add-ons VF plugins';
-$string['privacy:metadata'] = 'The Local VFLibs plugin does not store any personal data about any user.';
+$string['pluginname'] = 'Extra core add-ons APL plugins';
+$string['privacy:metadata'] = 'The Local APLCore plugin does not store any personal data about any user.';
 $string['provider'] = 'Support provider';
 $string['provider_help'] = 'Support provider ID. This ID identifies the support provider provinding level3 support and mid/long term continuity warranty.';
 $string['specificprosettings'] = 'Specific pro settings';
 $string['start'] = 'Distributor identification';
+$string['nextstep'] = 'Next step';
+$string['prevstep'] = 'Previous step';
 
 require(__DIR__.'/pro_additional_strings.php');
