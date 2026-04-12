@@ -72,4 +72,4 @@ class elementchooser extends HTML_QuickForm_ElementChooser {
 
 }
 
-MoodleQuickForm::registerElementType('elementchooser', $CFG->dirroot.'/local/vflibs/classes/moogwai/form/elements/elementchooser.class.php', '\\local_vflibs\\moogwai\\form\\elements\\elementchooser');
+MoodleQuickForm::registerElementType('elementchooser', $CFG->dirroot.'/local/aplcore/classes/moogwai/form/elements/elementchooser.class.php', '\\local_aplcore\\moogwai\\form\\elements\\elementchooser');

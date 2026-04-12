@@ -47,7 +47,6 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
             var cautionicon = ' <img class="icon" src="' + cfg.wwwroot + '/pix/i/warning.svg' + '">';
             var invalidicon = ' <img class="icon" src="' + cfg.wwwroot + '/pix/i/invalid.svg' + '">';
             var waiticon = ' <img class="icon" src="' + cfg.wwwroot + '/pix/i/loading.svg' + '">';
-            var found;
 
             if (crc === calculated) {
                 var url = cfg.wwwroot + '/' + localaplcorepro.componentpath + '/pro/ajax/services.php?';
@@ -61,7 +60,7 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
 
                 $.get(url, function(data) {
                     if (data.match(/(SET|CHECK) OK/)) {
-                        if (found = data.match(/-\d+.*$/)) {
+                        if (data.match(/-\d+.*$/)) {
                             $(licensekeyid + ' + img').remove();
                             $(licensekeyid).after(cautionicon);
                         } else {

@@ -83,7 +83,7 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
         public function toHtml() {
             global $PAGE;
 
-            $PAGE->requires->js_call_amd('local_vflibs/orderedselect', 'init');
+            $PAGE->requires->js_call_amd('local_aplcore/orderedselect', 'init');
 
             return parent::toHtml();
         }

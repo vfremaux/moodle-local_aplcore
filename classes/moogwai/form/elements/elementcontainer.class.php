@@ -91,8 +91,8 @@ class elementcontainer extends HTML_QuickForm_ElementContainer {
             $template->titlelevel = $this->_options['titleLevel'] ?? 2;
             $template->name = $name;
         }
-        return $OUTPUT->render_from_template('local_vflibs/form/elements/element-elementcontainer', $template);
+        return $OUTPUT->render_from_template('local_aplcore/form/elements/element-elementcontainer', $template);
     }
 }
 
-MoodleQuickForm::registerElementType('elementcontainer', $CFG->dirroot.'/local/vflibs/classes/moogwai/form/elements/elementcontainer.class.php', '\\local_vflibs\\moogwai\\form\\elements\\elementcontainer');
+MoodleQuickForm::registerElementType('elementcontainer', $CFG->dirroot.'/local/aplcore/classes/moogwai/form/elements/elementcontainer.class.php', '\\local_aplcore\\moogwai\\form\\elements\\elementcontainer');

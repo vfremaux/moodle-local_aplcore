@@ -1353,13 +1353,13 @@ class block_manager {
         if (file_exists($CFG->dirroot.'/local/aplcore/apldoclib.php')) {
             // Adds block editor documentation icon.
             include_once($CFG->dirroot.'/local/aplcore/apldoclib.php');
-            $docurl = local_vflibs_make_doc_url('block_'.$block->instance->blockname);
+            $docurl = local_aplcore_make_doc_url('block_'.$block->instance->blockname);
 
             if ($docurl) {
                 global $PAGE;
                 $PAGE->requires->js_call_amd('local/aplcore', 'init');
                 $str = get_string('helponblock', 'local_aplcore');
-                $url = new moodle_url('/local/vflibs/docwrap.php', ['url' => $docurl]);
+                $url = new moodle_url('/local/aplcore/docwrap.php', ['url' => $docurl]);
                 $controls[] = new action_menu_link_primary(
                     $url,
                     new pix_icon('help', $str, 'moodle', ['class' => 'iconsmall', 'title' => '']),
