@@ -25,7 +25,7 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
 
         init: function() {
 
-            var licensekeyid = '#id_s_' + localvfcorepro.shortcomponent + '_licensekey';
+            var licensekeyid = '#id_s_' + localaplcorepro.shortcomponent + '_licensekey';
             $(licensekeyid).bind('change', this.check_product_key);
             $(licensekeyid).trigger('change');
             log.debug('AMD Pro js initialized for ' + localaplcorepro.component + ' system');

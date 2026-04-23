@@ -65,6 +65,6 @@ $string['provider_help'] = 'Code du fournisseur du support. Ce code identifie le
 $string['specificprosettings'] = 'Réglages spécifiques version "pro"';
 $string['start'] = 'Identification du distributeur';
 $string['nextstep'] = 'Etape suivante';
-$string['prevstep'] = 'Etape précédente';
+$string['previousstep'] = 'Etape précédente';
 
 require(__DIR__.'/pro_additional_strings.php');
