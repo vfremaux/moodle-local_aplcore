@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <libraries>
   <library>
+    <location>pro</location>
+    <name>Apl Pro addons</name>
+    <license>APL</license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+  <library>
     <location>__reference</location>
     <name>Moodle core reference code</name>
     <license>GPL</license>
