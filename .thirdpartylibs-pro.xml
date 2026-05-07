@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<libraries>
+  <library>
+    <location>pro</location>
+    <name>Apl Pro addons</name>
+    <license>APL</license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+  <library>
+    <location>__reference</location>
+    <name>Moodle core reference code</name>
+    <license>GPL</license>
+    <version>3.0</version>
+    <licenseversion>3.0</licenseversion>
+  </library>
+  <library>
+    <location>__patch</location>
+    <name>Moodle core patchs</name>
+    <license>GPL</license>
+    <version>3.0</version>
+    <licenseversion>3.0</licenseversion>
+  </library>
+  <library>
+    <location>pear/HTML</location>
+    <name>Pear extensions</name>
+    <license>GPL</license>
+    <version>3.0</version>
+    <licenseversion>3.0</licenseversion>
+  </library>
+  <library>
+    <location>moogwai</location>
+    <name>Moogwai crosssports</name>
+    <license></license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+  <library>
+    <location>classes/moogwai</location>
+    <name>Moogwai crosssports</name>
+    <license></license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+  <library>
+    <location>form/HTML</location>
+    <name>Quickform extensions</name>
+    <license></license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+</libraries>
