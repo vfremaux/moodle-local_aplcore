@@ -54,17 +54,17 @@ $string['licensekey_desc'] = 'Entrez ici la clef de produit que vous avez reçu 
 $string['licenseprovider'] = 'Fournisseur version Pro';
 $string['licenseprovider_desc'] = 'Entrez la clef de votre distributeur.';
 $string['licensestatus'] = 'Etat de license pro';
+$string['nextstep'] = 'Etape suivante';
 $string['noproaccess'] = 'Ceci est une partie "pro" limitée du plugin qui n\'est pas activée.';
 $string['options'] = 'Options d\'activation';
 $string['partnerkey'] = 'Clef distributeur partenaire';
 $string['partnerkey_help'] = 'La clef partenaire a été fournie à l\'acteur désigné pour installer le plugin.';
 $string['pluginname'] = 'Surcharges core pour les plugins APL';
+$string['previousstep'] = 'Etape précédente';
 $string['privacy:metadata'] = 'Le plugin APLCore ne détient pas de données utilisateur.';
 $string['provider'] = 'Fournisseur de support';
 $string['provider_help'] = 'Code du fournisseur du support. Ce code identifie le prestataire fournissant le support de niveau 3 et la garantie de continuité du plugin.';
 $string['specificprosettings'] = 'Réglages spécifiques version "pro"';
 $string['start'] = 'Identification du distributeur';
-$string['nextstep'] = 'Etape suivante';
-$string['prevstep'] = 'Etape précédente';
 
 require(__DIR__.'/pro_additional_strings.php');

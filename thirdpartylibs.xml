@@ -23,14 +23,14 @@
   </library>
   <library>
     <location>moogwai</location>
-    <name>Moogwai crosssports</name>
+    <name>Moogwai crossports</name>
     <license></license>
     <version></version>
     <licenseversion></licenseversion>
   </library>
   <library>
     <location>classes/moogwai</location>
-    <name>Moogwai crosssports</name>
+    <name>Moogwai loadable classes crossports</name>
     <license></license>
     <version></version>
     <licenseversion></licenseversion>
