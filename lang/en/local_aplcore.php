@@ -66,6 +66,6 @@ $string['provider_help'] = 'Support provider ID. This ID identifies the support 
 $string['specificprosettings'] = 'Specific pro settings';
 $string['start'] = 'Distributor identification';
 $string['nextstep'] = 'Next step';
-$string['prevstep'] = 'Previous step';
+$string['previousstep'] = 'Previous step';
 
 require(__DIR__.'/pro_additional_strings.php');
