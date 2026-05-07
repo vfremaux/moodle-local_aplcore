@@ -17,21 +17,21 @@
 /**
  * Zabbix indicators for APL Core
  *
- * @package local_aplcore
- * @author Valery Fremaux valery.fremaux@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     local_aplcore
+ * @author      Valery Fremaux valery.fremaux@gmail.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
-namespace report_zabbix\indicators;
+namespace report_zabbix\indicators\daily;
 
 use moodle_exception;
 use coding_exception;
 use StdClass;
+use report_zabbix\zabbix_indicator;
 
 defined('MOODLE_INTERNAL') || die();
 
 require_once($CFG->dirroot.'/local/aplcore/lib.php');
-require_once($CFG->dirroot.'/report/zabbix/classes/indicator.class.php');
 
 /**
  * Plugin's indicators.
