@@ -27,15 +27,15 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// This is because this file is a Pear/Quickform cross integration file.
+// These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
 if (!class_exists('MoodleQuickForm_orderedselect')) {
-
-    if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/orderedselect.php')) {
+    if (file_exists($CFG->libdir . '/pear/HTML/QuickForm/orderedselect.php')) {
         require_once("HTML/QuickForm/orderedselect.php");
     } else {
-        require_once($CFG->dirroot."/local/aplcore/form/HTML/QuickForm/orderedselect.php");
+        require_once($CFG->dirroot . "/local/aplcore/form/HTML/QuickForm/orderedselect.php");
     }
 
     /**
@@ -49,7 +49,6 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
      * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
-
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
 
@@ -89,11 +88,11 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
         }
     }
 
-    if (file_exists($CFG->libdir.'/form/orderedselect.php')) {
+    if (file_exists($CFG->libdir . '/form/orderedselect.php')) {
         $file = "$CFG->libdir/form/orderedselect.php";
         MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     } else {
-        $file = $CFG->dirroot.'/local/aplcore/form/orderedselect.php';
+        $file = $CFG->dirroot . '/local/aplcore/form/orderedselect.php';
         MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     }
 }

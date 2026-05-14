@@ -27,13 +27,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-// This is because this file is a Pear/Quickform cross integration file.
+// These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
-require_once($CFG->dirroot.'/lib/pear/HTML/QuickForm.php');
+require_once($CFG->dirroot . '/lib/pear/HTML/QuickForm.php');
 
 if (!class_exists('MoodleQuickForm_colourpicker')) {
-    require_once($CFG->dirroot."/local/aplcore/form/HTML/QuickForm/colourpicker.php");
+    require_once($CFG->dirroot . "/local/aplcore/form/HTML/QuickForm/colourpicker.php");
 
     /**
      * HTML class for a colourpicker type element
@@ -46,7 +47,6 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
      * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
-
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
 
@@ -80,12 +80,12 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
         public function toHtml() {
             global $PAGE, $OUTPUT;
 
-            $str = '<div class="form-colourpicker defaultsnext '.$this->getAttribute('class').'">';
+            $str = '<div class="form-colourpicker defaultsnext ' . $this->getAttribute('class') . '">';
             $str .= '    <div class="admin_colourpicker clearfix">';
             $str .= $OUTPUT->pix_icon('i/loading', get_string('loading', 'admin'), 'moodle', ['class' => 'loadingicon']);
             $str .= '    </div>';
             $attrs = $this->_getAttrString($this->_attributes);
-            $str .= '    <input name="'.$this->_name.'" type="text" '.$attrs.' size="12" class="text-ltr">';
+            $str .= '    <input name="' . $this->_name . '" type="text" ' . $attrs . ' size="12" class="text-ltr">';
             $str .= '</div>';
 
             $PAGE->requires->js_init_call('M.util.init_colour_picker', [$this->getAttribute('id'), null]);
@@ -94,6 +94,6 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
         }
     }
 
-    $file = $CFG->dirroot.'/local/aplcore/form/colourpicker.php';
+    $file = $CFG->dirroot . '/local/aplcore/form/colourpicker.php';
     MoodleQuickForm::registerElementType('colourpicker', $file, 'MoodleQuickForm_colourpicker');
 }

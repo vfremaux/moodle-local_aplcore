@@ -30,15 +30,14 @@ function local_aplcore_doc_make_ticket() {
 
     $config = get_config('local_aplcore');
 
-    $ticket = new StdClass;
+    $ticket = new StdClass();
     $ticket->clientid = $config->doccustomerid ?? 0;
     $ticket->date = time();
 
     if (!empty($config->doccustomerpublickey)) {
-
         $res = openssl_get_publickey($config->doccustomerpublickey);
         if (!$res) {
-            echo " --FAILED GETTING KEY-- ";
+            echo get_string('dockeyfailure', 'local_aplcore');
         }
 
         $decrypted = json_encode($ticket);
@@ -79,7 +78,7 @@ function local_aplcore_make_doc_url($pluginname) {
 
     if (strpos($pluginname, '_') === false) {
         // Normalize name.
-        $pluginname = 'mod_'.$pluginname;
+        $pluginname = 'mod_' . $pluginname;
     }
 
     if (!in_array($pluginname, $editorplugins)) {
@@ -93,7 +92,7 @@ function local_aplcore_make_doc_url($pluginname) {
     // Process plugin name for dokuwikis.
     $pluginnamearr = explode('_', $pluginname);
     $first = array_shift($pluginnamearr);
-    $pluginpath = $first.':'.implode('', $pluginnamearr);
+    $pluginpath = $first . ':' . implode('', $pluginnamearr);
 
-    return $docbaseurl.$pluginpath.':userguide&cryptoken='.$ticket;
+    return $docbaseurl . $pluginpath . ':userguide&cryptoken=' . $ticket;
 }

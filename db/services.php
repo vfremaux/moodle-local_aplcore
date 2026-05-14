@@ -15,24 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details.
+ * APLCore external functions and service definitions.
  *
- * @package     local_aplcore
- * @author      Valery Fremaux <valery.fremaux@gmail.com>
- * @copyright   2014 onwards Valery Fremaux (https://www.activeprolearn.com)
+ * @package     local_shop
+ * @author      Valery Fremaux (valery.fremaux@gmail.com)
+ * @copyright   2017 Valery Fremaux <valery.fremaux@gmail.com> (activeprolearn.com)
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2026041302;   // The (date) version of this plugin.
-$plugin->requires = 2022112801;   // Requires this Moodle version.
-$plugin->component = 'local_aplcore';
-$plugin->release = '5.1.0 (Build 2026041302)';   // Release.
-$plugin->maturity = MATURITY_STABLE;
-$plugin->supported = [500, 503];
-// Optional dependency to report_zabbix when installed for zabbix reporting.
-
-// Non moodle attributes.
-$plugin->codeincrement = '5.1.0004';
-$plugin->privacy = 'dualrelease';
+$functions = [
+    'local_aplcore_coursesearch' => [
+        'classname' => 'local_aplcore_external',
+        'methodname' => 'coursesearch',
+        'classpath' => 'local/shop/classes/external.php',
+        'description' => 'Search courses',
+        'type' => 'read',
+    ],
+];

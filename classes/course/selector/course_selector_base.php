@@ -17,11 +17,12 @@
 /**
  * Modified version of course selector
  *
- * @package local_aplcore
- * @author Valery Fremaux valery.fremaux@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     local_aplcore
+ * @author      Valery Fremaux valery.fremaux@gmail.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
+namespace local_aplcore\course\selector;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
 
@@ -40,7 +41,6 @@ define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class course_selector_base {
-
     /**
      * @var string $name The control name (and id) in the HTML.
      */
@@ -116,7 +116,7 @@ abstract class course_selector_base {
      */
     protected static $jsmodule = [
         'name' => 'course_selector',
-        'fullpath' => '/local/apllibs/classes/course/selector/module.js',
+        'fullpath' => '/local/aplcore/classes/course/selector/module.js',
         'requires'  => ['node', 'event-custom', 'datasource', 'json', 'moodle-core-notification'],
         'strings' => [
             ['previouslyselectedcourses', 'local_aplcore', '%%SEARCHTERM%%'],
@@ -260,58 +260,57 @@ abstract class course_selector_base {
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function display($return = false) {
-        global $PAGE;
+        global $PAGE, $OUTPUT;
+
+        $template = new StdClass();
 
         // Get the list of requested courses.
-        $search = optional_param($this->name . '_searchtext', '', PARAM_RAW);
+        $search = optional_param($this->name . '_searchtext', '', PARAM_TEXT);
         if (optional_param($this->name . '_clearbutton', false, PARAM_BOOL)) {
             $search = '';
         }
         $groupedcourses = $this->find_courses($search);
 
         // Output the select.
-        $name = $this->name;
-        $multiselect = '';
+        $template->name = $this->name;
+        $template->selectname = $this->name;
+        $template->multiselect = '';
         if ($this->multiselect) {
-            $name .= '[]';
-            $multiselect = 'multiple="multiple" ';
+            $template->selectname .= '[]';
+            $template->multiselect = 'multiple="multiple" ';
         }
-        $output = '<div class="courseselector" id="' . $this->name . '_wrapper">' . "\n" .
-                '<select name="' . $name . '" id="' . $this->name . '" ' .
-                $multiselect . 'size="' . $this->rows . '">' . "\n";
+        $template->rows = $this->rows;
 
         // Populate the select.
-        $output .= $this->output_options($groupedcourses, $search);
+        $template->selectoptions = $this->output_options($groupedcourses, $search);
 
         // Output the search controls.
-        $output .= "</select>\n<div>\n";
-        $output .= '<input type="text" name="' . $this->name . '_searchtext" id="';
-        $output .= $this->name . '_searchtext" size="15" value="' . s($search) . '" />';
-        $output .= '<input type="submit" name="' . $this->name . '_searchbutton" id="';
-        $output .= $this->name . '_searchbutton" value="' . $this->search_button_caption() . '" />';
-        $output .= '<input type="submit" name="' . $this->name . '_clearbutton" id="';
-        $output .= $this->name . '_clearbutton" value="' . get_string('clear') . '" />';
+        $template->search = s($search);
+        $template->caption = $this->search_button_caption();
 
+        $template->searchoptionsoutput = self::$searchoptionsoutput;
         // And the search options.
         if (!self::$searchoptionsoutput) {
             $class = 'courseselector_optionscollapsed';
             $label = get_string('searchoptions');
-            $output .= print_collapsible_region_start('', 'courseselector_options', $label, $class, true, true);
+            $id = 'courseselector_options';
+            $template->collapsibleregionstart = print_collapsible_region_start('', $id, $label, $class, true, true);
             $label = get_string('courseselectorpreserveselected', 'local_aplcore');
-            $output .= $this->option_checkbox('preserveselected', $this->preserveselected, $label);
+            $template->preserveselected = $this->option_checkbox('preserveselected', $this->preserveselected, $label);
             $label = get_string('courseselectorautoselectunique', 'local_aplcore');
-            $output .= $this->option_checkbox('autoselectunique', $this->autoselectunique, $label);
+            $template->autoselectunique = $this->option_checkbox('autoselectunique', $this->autoselectunique, $label);
             $label = get_string('courseselectorsearchanywhere', 'local_aplcore');
-            $output .= $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
-            $output .= print_collapsible_region_end(true);
+            $template->searchanywherecheck = $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
+            $template->collapsibleregionend = print_collapsible_region_end(true);
 
             $PAGE->requires->js_init_call('M.core_course.init_course_selector_options_tracker', [], false, self::$jsmodule);
             self::$searchoptionsoutput = true;
         }
-        $output .= "</div>\n</div>\n\n";
 
         // Initialise the ajax functionality.
-        $output .= $this->initialise_javascript($search);
+        $template->searchjs = $this->initialise_javascript($search);
+
+        $output = $OUTPUT->render_from_template('local_aplcore/course_selector', $template);
 
         // Return or output it.
         if ($return) {
@@ -506,8 +505,14 @@ abstract class course_selector_base {
      *      this uses ? style placeholders.
      */
     protected function search_sql($search, $c) {
-        return courses_search_sql($search, $c, $this->searchanywhere, $this->extrafields,
-                $this->exclude, $this->validatingcourseids);
+        return courses_search_sql(
+            $search,
+            $c,
+            $this->searchanywhere,
+            $this->extrafields,
+            $this->exclude,
+            $this->validatingcourseids
+        );
     }
 
     /**
@@ -521,7 +526,7 @@ abstract class course_selector_base {
      */
     protected function too_many_results($search, $count) {
         if ($search) {
-            $a = new stdClass;
+            $a = new stdClass();
             $a->count = $count;
             $a->search = $search;
             return [get_string('toomanycoursesmatchsearch', 'local_aplcore', $a) => [],
@@ -562,8 +567,10 @@ abstract class course_selector_base {
             } else {
                 $groupedcourses = [get_string('none') => []];
             }
-        } else if ($this->autoselectunique && count($groupedcourses) == 1 &&
-                count(reset($groupedcourses)) == 1) {
+        } else if (
+            $this->autoselectunique && count($groupedcourses) == 1 &&
+                count(reset($groupedcourses)) == 1
+        ) {
             $select = true;
             if (!$this->multiselect) {
                 $this->selected = [];
@@ -727,8 +734,14 @@ abstract class course_selector_base {
  *     parameters (using named placeholders).
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $extrafields = [],
-                            array $exclude = [], array $includeonly = []) {
+function courses_search_sql(
+    $search,
+    $c = 'c',
+    $searchanywhere = true,
+    array $extrafields = [],
+    array $exclude = [],
+    array $includeonly = []
+) {
     global $DB;
 
     $params = [];
@@ -747,9 +760,9 @@ function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $ex
             $conditions[] = $c . $field;
         }
         if ($searchanywhere) {
-            $searchparam = '%'.$search.'%';
+            $searchparam = '%' . $search . '%';
         } else {
-            $searchparam = $search.'%';
+            $searchparam = $search . '%';
         }
         $i = 0;
         foreach ($conditions as $key => $condition) {
@@ -757,20 +770,20 @@ function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $ex
             $params["con{$i}00"] = $searchparam;
             $i++;
         }
-        $tests[] = '('.implode(' OR ', $conditions).')';
+        $tests[] = '(' . implode(' OR ', $conditions) . ')';
     }
 
     // If we are being asked to exclude any users, do that.
     if (!empty($exclude)) {
-        list($coursetest, $courseparams) = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
-        $tests[] = $c.'id '.$coursetest;
+        [$coursetest, $courseparams] = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
+        $tests[] = $c . 'id ' . $coursetest;
         $params = array_merge($params, $courseparams);
     }
 
     // If we are validating a set list of courseids, add an id IN (...) test.
     if (!empty($includeonly)) {
-        list($coursesql, $courseparams) = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
-        $tests[] = $c.'id '.$coursesql;
+        [$coursesql, $courseparams] = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
+        $tests[] = $c . 'id ' . $coursesql;
         $params = array_merge($params, $courseparams);
     }
 

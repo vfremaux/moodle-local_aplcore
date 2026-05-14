@@ -1,6 +1,13 @@
 <?xml version="1.0"?>
 <libraries>
   <library>
+    <location>pro</location>
+    <name>Apl Pro addons</name>
+    <license>APL</license>
+    <version></version>
+    <licenseversion></licenseversion>
+  </library>
+  <library>
     <location>__reference</location>
     <name>Moodle core reference code</name>
     <license>GPL</license>
@@ -23,14 +30,14 @@
   </library>
   <library>
     <location>moogwai</location>
-    <name>Moogwai crossports</name>
+    <name>Moogwai crosssports</name>
     <license></license>
     <version></version>
     <licenseversion></licenseversion>
   </library>
   <library>
     <location>classes/moogwai</location>
-    <name>Moogwai loadable classes crossports</name>
+    <name>Moogwai crosssports</name>
     <license></license>
     <version></version>
     <licenseversion></licenseversion>
