@@ -150,7 +150,7 @@ abstract class moogwaiform_wizard extends moogwaiform {
      * @return bool true if a previous button has been pressed
      */
     function is_backdrawn() {
-        if ($this->optional_param('previous', 0, PARAM_RAW)) {
+        if ($this->optional_param('previous', 0, PARAM_TEXT)) {
             return true;
         }
         return false;

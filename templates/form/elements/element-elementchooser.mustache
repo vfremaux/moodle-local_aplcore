@@ -1,6 +1,41 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
 
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
 
-<!-- form/elements/element-elementchooser -->
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_aplplot/form/elements/element-elementchooser
+
+    Chart rendering.
+
+    Example context (json):
+    {
+        "iscard" : true,
+        "idnumber" : "",
+        "hasicon" : false,
+        "pixicon" : "",
+        "titlelevel": "3",
+        "ismodinstance": false,
+        "modtype": "",
+        "subtype": "",
+        "instancename": "",
+        "description": "",
+        "outgoingurl": "https://",
+        "instanceurl": "https://",
+    }
+}}
+<!-- local_aplcore/form/elements/element-elementchooser -->
 {{#iscard}}
 <div class="card elementchooser-element"  style="min-height: 180px; max-width: 280px">
     {{#idnumber}}
@@ -24,9 +59,9 @@
         {{{description}}}
     </div>
     <div class="mt-auto pt-2 text-center">
-        <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_vflibs{{/str}}</a>
+        <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_aplcore{{/str}}</a>
         {{#ismodinstance}}
-        <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_vflibs{{/str}}</a>
+        <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_aplcore{{/str}}</a>
         {{/ismodinstance}}
     </div>
 </div>
@@ -59,12 +94,12 @@
     </td>
     <td>
         <div class="pt-2 text-right">
-            <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_vflibs{{/str}}</a>
+            <a href="{{{outgoingurl}}}" class="btn btn-primary">{{#str}}addelement, local_aplcore{{/str}}</a>
             {{#ismodinstance}}
-            <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_vflibs{{/str}}</a>
+            <a href="{{{instanceurl}}}" target="_blank" class="btn btn-primary">{{#str}}viewelement, local_aplcore{{/str}}</a>
             {{/ismodinstance}}
         </div>
     </td>
 </tr>
 {{/iscard}}
-<!-- /form/elements/element-elementchooser -->
+<!-- local_aplcore/form/elements/element-elementchooser -->
