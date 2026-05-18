@@ -23,7 +23,7 @@
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 
-// Abusive PSR12 rule : adds useless spaces in string concatenation
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 

@@ -25,7 +25,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Abusive PSR12 rule : adds useless spaces in string concatenation
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 

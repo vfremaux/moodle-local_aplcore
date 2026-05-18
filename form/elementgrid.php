@@ -25,7 +25,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-// Abusive PSR12 rule : adds useless spaces in string concatenation
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
@@ -34,6 +34,7 @@ defined('MOODLE_INTERNAL') || die();
 // These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+// phpcs:disable Universal.Lists.DisallowLongListSyntax.Found
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {
