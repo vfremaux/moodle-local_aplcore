@@ -78,7 +78,7 @@ function local_aplcore_make_doc_url($pluginname) {
 
     if (strpos($pluginname, '_') === false) {
         // Normalize name.
-        $pluginname = 'mod_' . $pluginname;
+        $pluginname = 'mod_'.$pluginname;
     }
 
     if (!in_array($pluginname, $editorplugins)) {
@@ -92,7 +92,7 @@ function local_aplcore_make_doc_url($pluginname) {
     // Process plugin name for dokuwikis.
     $pluginnamearr = explode('_', $pluginname);
     $first = array_shift($pluginnamearr);
-    $pluginpath = $first . ':' . implode('', $pluginnamearr);
+    $pluginpath = $first.':'.implode('', $pluginnamearr);
 
-    return $docbaseurl . $pluginpath . ':userguide&cryptoken=' . $ticket;
+    return $docbaseurl.$pluginpath.':userguide&cryptoken='.$ticket;
 }

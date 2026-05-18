@@ -262,7 +262,7 @@ abstract class course_selector_base {
     public function display($return = false) {
         global $PAGE, $OUTPUT;
 
-        $template = new StdClass();
+        $template = new StdClass;
 
         // Get the list of requested courses.
         $search = optional_param($this->name . '_searchtext', '', PARAM_TEXT);
@@ -526,7 +526,7 @@ abstract class course_selector_base {
      */
     protected function too_many_results($search, $count) {
         if ($search) {
-            $a = new stdClass();
+            $a = new stdClass;
             $a->count = $count;
             $a->search = $search;
             return [get_string('toomanycoursesmatchsearch', 'local_aplcore', $a) => [],
@@ -760,9 +760,9 @@ function courses_search_sql(
             $conditions[] = $c . $field;
         }
         if ($searchanywhere) {
-            $searchparam = '%' . $search . '%';
+            $searchparam = '%'.$search.'%';
         } else {
-            $searchparam = $search . '%';
+            $searchparam = $search.'%';
         }
         $i = 0;
         foreach ($conditions as $key => $condition) {
@@ -770,20 +770,20 @@ function courses_search_sql(
             $params["con{$i}00"] = $searchparam;
             $i++;
         }
-        $tests[] = '(' . implode(' OR ', $conditions) . ')';
+        $tests[] = '('.implode(' OR ', $conditions).')';
     }
 
     // If we are being asked to exclude any users, do that.
     if (!empty($exclude)) {
-        [$coursetest, $courseparams] = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
-        $tests[] = $c . 'id ' . $coursetest;
+        list($coursetest, $courseparams) = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
+        $tests[] = $c.'id '.$coursetest;
         $params = array_merge($params, $courseparams);
     }
 
     // If we are validating a set list of courseids, add an id IN (...) test.
     if (!empty($includeonly)) {
-        [$coursesql, $courseparams] = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
-        $tests[] = $c . 'id ' . $coursesql;
+        list($coursesql, $courseparams) = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
+        $tests[] = $c.'id '.$coursesql;
         $params = array_merge($params, $courseparams);
     }
 

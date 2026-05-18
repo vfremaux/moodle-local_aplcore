@@ -32,10 +32,10 @@ defined('MOODLE_INTERNAL') || die();
 // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
-    if (file_exists($CFG->libdir . '/pear/HTML/QuickForm/elementgrid.php')) {
+    if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {
         require_once("HTML/QuickForm/elementgrid.php");
     } else {
-        require_once($CFG->dirroot . "/local/aplcore/HTML/QuickForm/elementgrid.php");
+        require_once($CFG->dirroot."/local/aplcore/HTML/QuickForm/elementgrid.php");
     }
 
     /**
@@ -49,6 +49,7 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
      * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
+
         /**
          * @var string html for help button, if empty then no help.
          */
@@ -111,11 +112,11 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
         }
     }
 
-    if (file_exists($CFG->libdir . '/form/elementgrid.php')) {
+    if (file_exists($CFG->libdir.'/form/elementgrid.php')) {
         $file = "$CFG->libdir/form/elementgrid.php";
         MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     } else {
-        $file = $CFG->dirroot . '/local/aplcore/form/elementgrid.php';
+        $file = $CFG->dirroot.'/local/aplcore/form/elementgrid.php';
         MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     }
 }

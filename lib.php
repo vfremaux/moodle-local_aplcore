@@ -67,7 +67,7 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
     }
 
     // Check existance of the 'pro' dir in plugin.
-    if (is_dir(__DIR__ . '/pro')) {
+    if (is_dir(__DIR__.'/pro')) {
         if ($feature == 'emulate/community') {
             return 'pro';
         }
@@ -85,7 +85,7 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
         return $versionkey;
     }
 
-    [$feat, $subfeat] = explode('/', $feature);
+    list($feat, $subfeat) = explode('/', $feature);
 
     if (!array_key_exists($feat, $supports[$versionkey])) {
         return false;
