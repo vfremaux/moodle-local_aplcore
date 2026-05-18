@@ -25,6 +25,10 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 defined('MOODLE_INTERNAL') || die();
 
 // These are because this file is a Pear/Quickform cross integration file.
@@ -39,7 +43,7 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
     /**
      * HTML class for a colourpicker type element
      *
-     * Overloaded {@link HTML_QuickForm_button} to add help button
+     * Overloaded to add help button
      *
      * @package     local_aplcore
      * @author      Valery Fremaux <valery.fremaux@gmail.com>

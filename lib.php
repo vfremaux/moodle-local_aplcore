@@ -24,6 +24,9 @@
  */
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 // Errors should be always traced when trace is on.
 define('LOCAL_APLCORE_TRACE_ERRORS', 1);

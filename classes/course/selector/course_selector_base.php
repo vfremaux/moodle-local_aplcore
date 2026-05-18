@@ -25,6 +25,9 @@
 namespace local_aplcore\course\selector;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 /*
  * The default size of a course selector.
@@ -262,7 +265,7 @@ abstract class course_selector_base {
     public function display($return = false) {
         global $PAGE, $OUTPUT;
 
-        $template = new StdClass;
+        $template = new StdClass();
 
         // Get the list of requested courses.
         $search = optional_param($this->name . '_searchtext', '', PARAM_TEXT);
@@ -498,7 +501,7 @@ abstract class course_selector_base {
      * Builds the SQL search query.
      *
      * @param string $search the text to search for.
-     * @param string $u the table alias for the course table in the query being
+     * @param string $c the table alias for the course table in the query being
      *      built. May be ''.
      * @return array an array with two elements, a fragment of SQL to go in the
      *      where clause the query, and an array containing any required parameters.
@@ -526,7 +529,7 @@ abstract class course_selector_base {
      */
     protected function too_many_results($search, $count) {
         if ($search) {
-            $a = new stdClass;
+            $a = new stdClass()
             $a->count = $count;
             $a->search = $search;
             return [get_string('toomanycoursesmatchsearch', 'local_aplcore', $a) => [],
@@ -543,6 +546,7 @@ abstract class course_selector_base {
      * course_selector.prototype.handle_response.
      *
      * @param array $groupedcourses an array, as returned by find_courses.
+     * @param string $search the search sring.
      * @return string HTML code.
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
@@ -659,6 +663,8 @@ abstract class course_selector_base {
      * Initialise one of the option checkboxes, either from
      * the request, or failing that from the course_preferences table, or
      * finally from the given default.
+     * @param string $name option name
+     * @param string $default default value
      */
     private function initialise_option($name, $default) {
         $param = optional_param($name, null, PARAM_BOOL);
@@ -672,6 +678,9 @@ abstract class course_selector_base {
 
     /**
      * Output one of the options checkboxes.
+     * @param string $name selector name
+     * @param bool $on if on or off
+     * @param string $label the checkbox label
      */
     private function option_checkbox($name, $on, $label) {
         if ($on) {
