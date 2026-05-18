@@ -784,14 +784,14 @@ function courses_search_sql(
 
     // If we are being asked to exclude any users, do that.
     if (!empty($exclude)) {
-        list($coursetest, $courseparams) = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
+        [$coursetest, $courseparams] = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
         $tests[] = $c.'id '.$coursetest;
         $params = array_merge($params, $courseparams);
     }
 
     // If we are validating a set list of courseids, add an id IN (...) test.
     if (!empty($includeonly)) {
-        list($coursesql, $courseparams) = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
+        [$coursesql, $courseparams] = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
         $tests[] = $c.'id '.$coursesql;
         $params = array_merge($params, $courseparams);
     }
