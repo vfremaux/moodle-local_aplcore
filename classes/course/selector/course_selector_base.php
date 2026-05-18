@@ -25,7 +25,7 @@
 namespace local_aplcore\course\selector;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
-// Abusive PSR12 rule : adds useless spaces in string concatenation
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
@@ -529,7 +529,7 @@ abstract class course_selector_base {
      */
     protected function too_many_results($search, $count) {
         if ($search) {
-            $a = new stdClass()
+            $a = new stdClass();
             $a->count = $count;
             $a->search = $search;
             return [get_string('toomanycoursesmatchsearch', 'local_aplcore', $a) => [],
@@ -730,7 +730,7 @@ abstract class course_selector_base {
  * There are examples of basic usage in the unit test for this function.
  *
  * @param string $search the text to search for (empty string = find all)
- * @param string $u the table alias for the user table in the query being
+ * @param string $c the table alias for the user table in the query being
  *     built. May be ''.
  * @param bool $searchanywhere If true (default), searches in the middle of
  *     names, otherwise only searches at start
