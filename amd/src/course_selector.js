@@ -13,7 +13,8 @@
 // You should have received a copy of the GNU General Public License
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
-// jshint undef:false, unused:false, scripturl:true, camelcase:false
+// jshint undef:false, unused:false, scripturl:true
+// eslint-disable camelcase
 
 /**
  * JavaScript for the course selectors.
@@ -142,7 +143,9 @@ define(['jquery', 'core/str'], function($, corestr) {
                 this.clearbutton = $('<input type="button" value="' + clearbtn.val() + '" />');
                 this.clearbutton.attr('id', this.name + '_clearbutton');
                 clearbtn.replaceWith(this.clearbutton);
-                this.clearbutton.on('click', function() { self.handle_clear(); });
+                this.clearbutton.on('click', function() {
+                    self.handle_clear();
+                });
                 this.clearbutton.prop('disabled', (this.get_search_text() === ''));
 
                 this.send_query(false);
@@ -180,7 +183,9 @@ define(['jquery', 'core/str'], function($, corestr) {
                 var self = this;
                 // Trigger an ajax search after a delay.
                 this.cancel_timeout();
-                this.timeoutid = setTimeout(function() { self.send_query(false); }, self.querydelay * 1000);
+                this.timeoutid = setTimeout(function() {
+                        self.send_query(false);
+                    }, self.querydelay * 1000);
 
                 // Enable or disable the clear button.
                 this.clearbutton.prop('disabled', (this.get_search_text() === ''));
@@ -224,9 +229,10 @@ define(['jquery', 'core/str'], function($, corestr) {
 
             /**
              * Fires off the ajax search request.
+             * @param {bool} forcesearch
              */
             send_query: function(forceresearch) {
-                var self = this;
+
                 // Cancel any pending timeout.
                 this.cancel_timeout();
 
@@ -252,10 +258,11 @@ define(['jquery', 'core/str'], function($, corestr) {
                             return new M.core.ajaxException(data);
                         }
                         this.output_options(data);
+                        return response;
                     } catch (e) {
                         this.searchfield.addClass('error');
                         return new M.core.exception(e);
-                    };
+                    }
                 };
                 // Store all asyncs so we can clear pending when searching again.
                 this.iotransactions[xhr.id] = xhr;
@@ -276,8 +283,8 @@ define(['jquery', 'core/str'], function($, corestr) {
                     $(this).find('option').each(function() {
                         if ($(this).prop('selected')) {
                             selectedcourses[$(this).val()] = {
-                                id : $(this).val(),
-                                name : $(this).text(),
+                                id: $(this).val(),
+                                name: $(this).text(),
                                 disabled: $(this).prop('disabled')
                             };
                         }
@@ -296,12 +303,12 @@ define(['jquery', 'core/str'], function($, corestr) {
                 }
                 if (!count) {
                     if (this.lastsearch !== '') {
-                        corestr.get_string('nomatchingcourses', 'local_aplcore').then(function(str) {
-                            searchstr = this.insert_search_into_str(str, this.lastsearch);
+                        searchstr = corestr.get_string('nomatchingcourses', 'local_aplcore').then(function(str) {
+                            return this.insert_search_into_str(str, this.lastsearch);
                         });
                     } else {
-                        corestr.get_string('none', 'local_aplcore').then(function(str) {
-                            searchstr = str;
+                        searchstr = corestr.get_string('none', 'local_aplcore').then(function(str) {
+                            return str;
                         });
                     }
                     this.output_group(searchstr, {}, selectedcourses, true);
@@ -309,10 +316,10 @@ define(['jquery', 'core/str'], function($, corestr) {
 
                 // If there were previously selected courses who do not match the search, show them too.
                 if (this.get_option('preserveselected') && selectedcourses) {
-                    corestr.get_string('previouslyselectedcourses', 'local_aplcore').then(function(str) {
-                        var searchstr = this.insert_search_into_str(str, this.lastsearch);
-                        this.output_group(searchstr, selectedcourses, true, false);
+                    var searchstr = corestr.get_string('previouslyselectedcourses', 'local_aplcore').then(function(str) {
+                        return this.insert_search_into_str(str, this.lastsearch);
                     });
+                    this.output_group(searchstr, selectedcourses, true, false);
                 }
                 this.handle_selection_change();
             },
