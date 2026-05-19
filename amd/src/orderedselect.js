@@ -108,8 +108,8 @@ define(['jquery', 'core/log'], function($, log) {
 
             if (that.attr('id') === orderedselect.captured) {
                 if (orderedselect.captured !== '') {
-                    // reposition
-                    // Test if need to be swapped : if
+                    // Reposition.
+                    // Test if need to be swapped.
                 }
             }
         },

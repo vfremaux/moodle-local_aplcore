@@ -35,6 +35,7 @@ defined('MOODLE_INTERNAL') || die();
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 // phpcs:disable Universal.Lists.DisallowLongListSyntax.Found
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {

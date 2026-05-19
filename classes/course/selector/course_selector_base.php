@@ -28,6 +28,7 @@ namespace local_aplcore\course\selector;
 // Abusive PSR12 rule : adds useless spaces in string concatenation.
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
 // phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 /*
  * The default size of a course selector.
