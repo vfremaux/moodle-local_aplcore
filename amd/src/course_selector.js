@@ -300,7 +300,7 @@ define(['jquery', 'core/str'], function($, corestr) {
                             searchstr = this.insert_search_into_str(str, this.lastsearch);
                         });
                     } else {
-                        searchstr = await corestr.get_string('none', 'local_aplcore');
+                        searchstr = corestr.get_string('none', 'local_aplcore');
                     }
                     this.output_group(searchstr, {}, selectedcourses, true);
                 }
