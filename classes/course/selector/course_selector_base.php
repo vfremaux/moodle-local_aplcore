@@ -45,6 +45,7 @@ define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class course_selector_base {
+
     /**
      * @var string $name The control name (and id) in the HTML.
      */

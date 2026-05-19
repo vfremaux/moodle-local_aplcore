@@ -1,8 +1,9 @@
 {{!
     This file is part of moogwai - Private project
+    Moogwai imports to Moodle.
 }}
 {{!
-    @template core_form/element-select
+    @template local_aplcore/moogwai/form/element-visualselect
 
     Simple select form element template.
 
@@ -58,28 +59,34 @@
                     "value": 0,
                     "selected": false,
                     "disabled": false,
-                    "optionattributes": ""
+                    "optionattributes": "",
+                    "isopt": true,
+                    "imgurl": ""
                 },
                 {
-                    "text": "Visible to everyone",
+                    "text": "Visible to everyone with image tag",
                     "value": 1,
                     "selected": true,
                     "disabled": false,
-                    "optionattributes": ""
+                    "optionattributes": "",
+                    "isopt": true,
+                    "img": "<img src="">"
                 },
                 {
-                    "text": "Allow only other course members to see my email address",
+                    "text": "Visible option with image url",
                     "value": 2,
                     "selected": false,
                     "disabled": false,
-                    "optionattributes": ""
+                    "optionattributes": "",
+                    "isopt": true,
+                    "imgurl": ""
                 }
             ]
         }
     }
 }}
 {{< core_form/element-template }}
-<!-- local_vflibs/moogwai/form/element-visualselect has_js -->
+<!-- local_aplcore/moogwai/form/element-visualselect has_js -->
     {{$element}}
         {{#element.multiple}}
             <input type="hidden" name="{{element.nameraw}}" value="_qf__force_multiselect_submission">
@@ -114,12 +121,12 @@
                 {{/isopt}}
                 {{#ismore}}
                 <div class="col visualselect-col d-flex align-items-center align-center visualselector more">
-                    <a id="more-{{element.id}}" class="visualselect-more">{{#str}}more, local_vflibs{{/str}}</a>
+                    <a id="more-{{element.id}}" class="visualselect-more">{{#str}}more, local_aplcore{{/str}}</a>
                 </div>
                 {{/ismore}}
                 {{#isless}}
                 <div class="col visualselect-col d-none align-items-center align-center visualselector less">
-                    <a id="less-{{element.id}}" class="visualselect-less">{{#str}}less, local_vflibs{{/str}}</a>
+                    <a id="less-{{element.id}}" class="visualselect-less">{{#str}}less, local_aplcore{{/str}}</a>
                 </div>
                 {{/isless}}
                 {{/options}}
@@ -135,7 +142,7 @@
             {{/element.hasoptions}}
         </div>
     {{/element}}
-<!-- /local_vflibs/moogwai/form/element-visualselect -->
+<!-- /local_aplcore/moogwai/form/element-visualselect -->
 {{/ core_form/element-template }}
 {{#js}}
 require(['jquery', 'core/log'], function($, log) {

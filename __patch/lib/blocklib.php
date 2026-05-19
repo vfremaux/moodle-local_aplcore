@@ -692,8 +692,8 @@ class block_manager {
         $requiredbythemeparams = array();
         $requiredbythemenotparams = array();
         if (!empty($requiredbytheme)) {
-            list($testsql, $requiredbythemeparams) = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED, 'requiredbytheme');
-            list($testnotsql, $requiredbythemenotparams) = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED,
+            [$testsql, $requiredbythemeparams] = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED, 'requiredbytheme');
+            [$testnotsql, $requiredbythemenotparams] = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED,
                                                                                 'notrequiredbytheme', false);
             $requiredbythemecheck = 'AND ((bi.blockname ' . $testsql . ' AND bi.requiredbytheme = 1) OR ' .
                                 ' (bi.blockname ' . $testnotsql . ' AND bi.requiredbytheme = 0))';
@@ -715,13 +715,13 @@ class block_manager {
         $parentcontextparams = array();
         $parentcontextids = $context->get_parent_context_ids();
         if ($parentcontextids) {
-            list($parentcontexttest, $parentcontextparams) =
+            [$parentcontexttest, $parentcontextparams] =
                     $DB->get_in_or_equal($parentcontextids, SQL_PARAMS_NAMED, 'parentcontext');
             $contexttest = "($contexttest OR (bi.showinsubcontexts = 1 AND bi.parentcontextid $parentcontexttest))";
         }
 
         $pagetypepatterns = matching_page_type_patterns($this->page->pagetype);
-        list($pagetypepatterntest, $pagetypepatternparams) =
+        [$pagetypepatterntest, $pagetypepatternparams] =
                 $DB->get_in_or_equal($pagetypepatterns, SQL_PARAMS_NAMED, 'pagetypepatterntest');
 
         $ccselect = ', ' . context_helper::get_preload_record_columns_sql('ctx');

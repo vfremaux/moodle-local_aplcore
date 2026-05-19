@@ -243,7 +243,7 @@ define(['jquery'], function($) {
                         this.searchfield.addClass('error');
                         return new M.core.exception(e);
                     };
-                });
+                };
                 // Store all asyncs so we can clear pending when searching again.
                 this.iotransactions[xhr.id] = xhr;
 

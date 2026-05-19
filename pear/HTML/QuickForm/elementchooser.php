@@ -75,7 +75,7 @@ class HTML_QuickForm_ElementChooser extends HTML_QuickForm_element {
 
             case 'createElement': {
 
-                list($name, $component, $options, $unused1, $unused2, $unused3) = $arg;
+                [$name, $component, $options, $unused1, $unused2, $unused3] = $arg;
 
                 if (is_array($options)) {
                     $this->_options = array_merge($this->_options, $options);
