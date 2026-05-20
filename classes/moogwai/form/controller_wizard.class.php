@@ -51,7 +51,7 @@ class controller_wizard extends controller_base {
         parent::receive($cmd, $data, $mform);
 
         if (!isset($this->data)) {
-            $this->data = new StdClass;
+            $this->data = new StdClass();
         }
 
         if (optional_param('next', false, PARAM_TEXT)) {

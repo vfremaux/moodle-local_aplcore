@@ -35,4 +35,4 @@ $plugin->supported = [500, 503];
 
 // Non moodle attributes.
 $plugin->codeincrement = '5.1.0005';
-$plugin->privacy = 'dualrelease';
+$plugin->privacy = 'private';

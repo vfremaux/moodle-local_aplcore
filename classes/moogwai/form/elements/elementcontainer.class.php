@@ -70,14 +70,14 @@ class elementcontainer extends HTML_QuickForm_ElementContainer {
 
         $id = 1;
         foreach ($this->_elements as $element) {
-            $elementtpl = new StdClass;
+            $elementtpl = new StdClass();
             $elementtpl->html = $element->toHTML();
             $elementtpl->id = 'elm'.$id;
             $elements[] = $elementtpl;
             $id++;
         }
 
-        $template = new StdClass;
+        $template = new StdClass();
         $name = $this->getName();
         $template->id = 'container'.uniqid();
         $template->elements = $elements;

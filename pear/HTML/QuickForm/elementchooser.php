@@ -163,7 +163,7 @@ class HTML_QuickForm_ElementChooser extends HTML_QuickForm_element {
      */
     public function export_for_template() {
 
-        $template = new StdClass;
+        $template = new StdClass();
         $template->name = $this->_name;
         $template->label = $this->_label;
         $template->outgoingurl = $this->_outgoingurl;
