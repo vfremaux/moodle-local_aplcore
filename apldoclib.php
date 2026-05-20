@@ -23,6 +23,10 @@
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 /**
  * Make an encrypted ticket to access to documentation.
  */
@@ -78,7 +82,7 @@ function local_aplcore_make_doc_url($pluginname) {
 
     if (strpos($pluginname, '_') === false) {
         // Normalize name.
-        $pluginname = 'mod_' . $pluginname;
+        $pluginname = 'mod_'.$pluginname;
     }
 
     if (!in_array($pluginname, $editorplugins)) {
@@ -92,7 +96,7 @@ function local_aplcore_make_doc_url($pluginname) {
     // Process plugin name for dokuwikis.
     $pluginnamearr = explode('_', $pluginname);
     $first = array_shift($pluginnamearr);
-    $pluginpath = $first . ':' . implode('', $pluginnamearr);
+    $pluginpath = $first.':'.implode('', $pluginnamearr);
 
-    return $docbaseurl . $pluginpath . ':userguide&cryptoken=' . $ticket;
+    return $docbaseurl.$pluginpath.':userguide&cryptoken='.$ticket;
 }

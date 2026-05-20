@@ -75,7 +75,7 @@ class HTML_QuickForm_ElementChooser extends HTML_QuickForm_element {
 
             case 'createElement': {
 
-                list($name, $component, $options, $unused1, $unused2, $unused3) = $arg;
+                [$name, $component, $options, $unused1, $unused2, $unused3] = $arg;
 
                 if (is_array($options)) {
                     $this->_options = array_merge($this->_options, $options);
@@ -163,7 +163,7 @@ class HTML_QuickForm_ElementChooser extends HTML_QuickForm_element {
      */
     public function export_for_template() {
 
-        $template = new StdClass;
+        $template = new StdClass();
         $template->name = $this->_name;
         $template->label = $this->_label;
         $template->outgoingurl = $this->_outgoingurl;

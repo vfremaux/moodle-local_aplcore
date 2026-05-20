@@ -25,23 +25,29 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 defined('MOODLE_INTERNAL') || die();
 
 // These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
 // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+// phpcs:disable Universal.Lists.DisallowLongListSyntax.Found
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
-    if (file_exists($CFG->libdir . '/pear/HTML/QuickForm/elementgrid.php')) {
+    if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {
         require_once("HTML/QuickForm/elementgrid.php");
     } else {
-        require_once($CFG->dirroot . "/local/aplcore/HTML/QuickForm/elementgrid.php");
+        require_once($CFG->dirroot."/local/aplcore/HTML/QuickForm/elementgrid.php");
     }
 
     /**
      * HTML class for a button type element
      *
-     * Overloaded {@link HTML_QuickForm_button} to add help button
+     * Overloaded to add help button
      *
      * @package     local_aplcore
      * @author      Valery Fremaux <valery.fremaux@gmail.com>
@@ -49,6 +55,7 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
      * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_elementgrid extends HTML_QuickForm_elementgrid {
+
         /**
          * @var string html for help button, if empty then no help.
          */
@@ -111,11 +118,11 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
         }
     }
 
-    if (file_exists($CFG->libdir . '/form/elementgrid.php')) {
+    if (file_exists($CFG->libdir.'/form/elementgrid.php')) {
         $file = "$CFG->libdir/form/elementgrid.php";
         MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     } else {
-        $file = $CFG->dirroot . '/local/aplcore/form/elementgrid.php';
+        $file = $CFG->dirroot.'/local/aplcore/form/elementgrid.php';
         MoodleQuickForm::registerElementType('elementgrid', $file, 'MoodleQuickForm_elementgrid');
     }
 }

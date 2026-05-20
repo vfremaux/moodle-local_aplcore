@@ -25,6 +25,10 @@
 namespace local_aplcore\course\selector;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 /*
  * The default size of a course selector.
@@ -41,6 +45,7 @@ define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
  * @SuppressWarnings(PHPMD.ExcessiveClassComplexity)
  */
 abstract class course_selector_base {
+
     /**
      * @var string $name The control name (and id) in the HTML.
      */
@@ -498,7 +503,7 @@ abstract class course_selector_base {
      * Builds the SQL search query.
      *
      * @param string $search the text to search for.
-     * @param string $u the table alias for the course table in the query being
+     * @param string $c the table alias for the course table in the query being
      *      built. May be ''.
      * @return array an array with two elements, a fragment of SQL to go in the
      *      where clause the query, and an array containing any required parameters.
@@ -543,6 +548,7 @@ abstract class course_selector_base {
      * course_selector.prototype.handle_response.
      *
      * @param array $groupedcourses an array, as returned by find_courses.
+     * @param string $search the search sring.
      * @return string HTML code.
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
@@ -659,6 +665,8 @@ abstract class course_selector_base {
      * Initialise one of the option checkboxes, either from
      * the request, or failing that from the course_preferences table, or
      * finally from the given default.
+     * @param string $name option name
+     * @param string $default default value
      */
     private function initialise_option($name, $default) {
         $param = optional_param($name, null, PARAM_BOOL);
@@ -672,6 +680,9 @@ abstract class course_selector_base {
 
     /**
      * Output one of the options checkboxes.
+     * @param string $name selector name
+     * @param bool $on if on or off
+     * @param string $label the checkbox label
      */
     private function option_checkbox($name, $on, $label) {
         if ($on) {
@@ -721,7 +732,7 @@ abstract class course_selector_base {
  * There are examples of basic usage in the unit test for this function.
  *
  * @param string $search the text to search for (empty string = find all)
- * @param string $u the table alias for the user table in the query being
+ * @param string $c the table alias for the user table in the query being
  *     built. May be ''.
  * @param bool $searchanywhere If true (default), searches in the middle of
  *     names, otherwise only searches at start
@@ -760,9 +771,9 @@ function courses_search_sql(
             $conditions[] = $c . $field;
         }
         if ($searchanywhere) {
-            $searchparam = '%' . $search . '%';
+            $searchparam = '%'.$search.'%';
         } else {
-            $searchparam = $search . '%';
+            $searchparam = $search.'%';
         }
         $i = 0;
         foreach ($conditions as $key => $condition) {
@@ -770,20 +781,20 @@ function courses_search_sql(
             $params["con{$i}00"] = $searchparam;
             $i++;
         }
-        $tests[] = '(' . implode(' OR ', $conditions) . ')';
+        $tests[] = '('.implode(' OR ', $conditions).')';
     }
 
     // If we are being asked to exclude any users, do that.
     if (!empty($exclude)) {
         [$coursetest, $courseparams] = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
-        $tests[] = $c . 'id ' . $coursetest;
+        $tests[] = $c.'id '.$coursetest;
         $params = array_merge($params, $courseparams);
     }
 
     // If we are validating a set list of courseids, add an id IN (...) test.
     if (!empty($includeonly)) {
         [$coursesql, $courseparams] = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
-        $tests[] = $c . 'id ' . $coursesql;
+        $tests[] = $c.'id '.$coursesql;
         $params = array_merge($params, $courseparams);
     }
 

@@ -29,6 +29,7 @@
 // phpcs:disable moodle.Files.LangFilesOrdering.UnexpectedComment
 // phpcs:disable moodle.Files.LangFilesOrdering.IncorrectOrder
 
+$string['addelement'] = 'Ajouter un élément';
 $string['configdocbaseurl'] = 'Url de base de la documentation';
 $string['configdocbaseurl_desc'] = 'Url de base du volume de documentation source.';
 $string['configdoccustomerid'] = 'ID d\'abonné à la documentation';
@@ -41,6 +42,8 @@ $string['dockeyfailure'] = 'La clef de documentation est vide ou n\'est pas une 
 $string['editname'] = 'Modifier le nom';
 $string['helponblock'] = 'Aide pour le bloc ';
 $string['helponmodule'] = 'Aide sur le module d\'activité ';
+$string['less'] = 'Moins...';
+$string['more'] = 'Plus...';
 $string['nextstep'] = 'Etape suivante';
 $string['pluginname'] = 'Surcharges core pour les plugins APL';
 $string['previousstep'] = 'Etape précédente';
