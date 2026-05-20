@@ -80,7 +80,7 @@ abstract class moogwaiform_wizard extends moogwaiform {
 
         // Put in session for next steps.
         if (!isset($SESSION->$uniqid)) {
-            $SESSION->$uniqid = new StdClass;
+            $SESSION->$uniqid = new StdClass();
         }
 
         foreach (($data ?? []) as $key => $value) {
@@ -100,13 +100,13 @@ abstract class moogwaiform_wizard extends moogwaiform {
         global $SESSION;
 
         // What comes from that step form.
-        $data = parent::get_data() ?? new Stdclass;
+        $data = parent::get_data() ?? new StdClass();
 
         $uniqid = $this->get_uniqueid();
 
         // Put in session for next steps.
         if (!isset($SESSION->$uniqid)) {
-            $SESSION->$uniqid = new StdClass;
+            $SESSION->$uniqid = new StdClass();
         }
 
         foreach ($data as $key => $value) {

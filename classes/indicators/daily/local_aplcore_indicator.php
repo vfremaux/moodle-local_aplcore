@@ -145,7 +145,7 @@ class aplcore_indicator extends zabbix_indicator {
 
     /**
      * Get some information about license ending horizon.
-     * @param $plugin
+     * @param string $plugin the plugin
      */
     protected function get_end($plugin) {
         $status = $this->states[$plugin]->licensestatus;

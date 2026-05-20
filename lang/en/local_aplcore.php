@@ -29,6 +29,7 @@
 // phpcs:disable moodle.Files.LangFilesOrdering.UnexpectedComment
 // phpcs:disable moodle.Files.LangFilesOrdering.IncorrectOrder
 
+$string['addelement'] = 'Add element';
 $string['configdocbaseurl'] = 'Documentation base url';
 $string['configdocbaseurl_desc'] = 'Base url for the remote documentation source';
 $string['configdoccustomerid'] = 'Documentation customer id';
@@ -41,6 +42,8 @@ $string['dockeyfailure'] = 'Key for documentation is missing or is not a public 
 $string['editname'] = 'Edit name';
 $string['helponblock'] = 'Help on the block';
 $string['helponmodule'] = 'Help on the course module';
+$string['less'] = 'More...';
+$string['more'] = 'Less...';
 $string['nextstep'] = 'Next step';
 $string['pluginname'] = 'Extra core add-ons APL plugins';
 $string['previousstep'] = 'Previous step';

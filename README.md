@@ -9,3 +9,8 @@ X.X.0003
 #######################################
 
 Add support to multi language distribution
+
+X.X.0005
+#######################################
+
+Transform to fit Moodle.org MarketPlace validation rules.

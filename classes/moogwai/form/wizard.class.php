@@ -201,7 +201,7 @@ class wizard {
 
         $wizardkey = $this->wizardname;
         if (!isset($SESSION->$wizardkey)) {
-            $SESSION->$wizardkey = new StdClass;
+            $SESSION->$wizardkey = new StdClass();
         }
         $SESSION->$wizardkey->$key = $value;
     }

@@ -24,6 +24,9 @@
  */
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 // Errors should be always traced when trace is on.
 define('LOCAL_APLCORE_TRACE_ERRORS', 1);
@@ -67,7 +70,7 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
     }
 
     // Check existance of the 'pro' dir in plugin.
-    if (is_dir(__DIR__ . '/pro')) {
+    if (is_dir(__DIR__.'/pro')) {
         if ($feature == 'emulate/community') {
             return 'pro';
         }

@@ -25,6 +25,11 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
+
 defined('MOODLE_INTERNAL') || die();
 
 // These are because this file is a Pear/Quickform cross integration file.
@@ -32,16 +37,16 @@ defined('MOODLE_INTERNAL') || die();
 // phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
 if (!class_exists('MoodleQuickForm_orderedselect')) {
-    if (file_exists($CFG->libdir . '/pear/HTML/QuickForm/orderedselect.php')) {
+    if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/orderedselect.php')) {
         require_once("HTML/QuickForm/orderedselect.php");
     } else {
-        require_once($CFG->dirroot . "/local/aplcore/form/HTML/QuickForm/orderedselect.php");
+        require_once($CFG->dirroot."/local/aplcore/form/HTML/QuickForm/orderedselect.php");
     }
 
     /**
      * HTML class for a orderedselect type element
      *
-     * Overloaded {@link HTML_QuickForm_select} to add help button
+     * Overloaded to add help button
      *
      * @package   local_aplcore
      * @author    Valery Fremaux <valery.fremaux@gmail.com>
@@ -88,11 +93,11 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
         }
     }
 
-    if (file_exists($CFG->libdir . '/form/orderedselect.php')) {
+    if (file_exists($CFG->libdir.'/form/orderedselect.php')) {
         $file = "$CFG->libdir/form/orderedselect.php";
         MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     } else {
-        $file = $CFG->dirroot . '/local/aplcore/form/orderedselect.php';
+        $file = $CFG->dirroot.'/local/aplcore/form/orderedselect.php';
         MoodleQuickForm::registerElementType('orderedselect', $file, 'MoodleQuickForm_orderedselect');
     }
 }
