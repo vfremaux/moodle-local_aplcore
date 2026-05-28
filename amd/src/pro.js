@@ -14,7 +14,6 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 // jshint unused: true, undef:true
-/* eslint-disable camelcase */
 
 define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
 
