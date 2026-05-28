@@ -21,22 +21,20 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-import {call as fetchMany} from 'core/ajax';
+define(['jquery', 'core/str', 'core/ajax'], function($, corestr, ajax) {
 
-const searchForCourses = (
-    selectorid,
-    search,
-    searchanywhere,
-) => fetchMany([{
-    methodname: 'local_aplcore_coursesearch',
-    args: {
+    const searchForCourses = (
         selectorid,
         search,
         searchanywhere,
-    },
-}])[0];
-
-define(['jquery', 'core/str'], function($, corestr) {
+    ) => ajax.call([{
+        methodname: 'local_aplcore_coursesearch',
+        args: {
+            selectorid,
+            search,
+            searchanywhere,
+        },
+    }])[0];
 
     /**
      * Retrieves an instantiated course selector or null if there isn't one by the requested name.
