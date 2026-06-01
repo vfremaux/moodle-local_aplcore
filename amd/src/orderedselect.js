@@ -38,13 +38,13 @@ define(['jquery', 'core/log'], function($, log) {
             $('.orderedselect-option').bind('mousedrag', this.drag);
             $('.orderedselect-option').bind('mouseup', this.releaseselecteditem);
 
-            this.selectedoptions = params['options'];
+            this.selectedoptions = params.options;
 
             log.debug("AMD AplCore orderedselect initialized");
         },
 
         /**
-         * select a new option in the list. Will append to the end of the ordrered list.
+         * Select a new option in the list. Will append to the end of the ordrered list.
          * we assume the calling object is the option element.
          */
         toggleoption: function() {
@@ -80,7 +80,7 @@ define(['jquery', 'core/log'], function($, log) {
         },
 
         /**
-         * starts dragging
+         * Starts dragging
          * @param {Event} e
          */
         captureselecteditem: function(e) {
@@ -96,7 +96,7 @@ define(['jquery', 'core/log'], function($, log) {
         },
 
         /**
-         * move dragged item on screen while it is held
+         * Move dragged item on screen while it is held
          * @param {Event} e
          */
         dragselecteditem: function(e) {
@@ -108,14 +108,14 @@ define(['jquery', 'core/log'], function($, log) {
 
             if (that.attr('id') === orderedselect.captured) {
                 if (orderedselect.captured !== '') {
-                    // reposition
-                    // Test if need to be swapped : if
+                    // Reposition.
+                    // Test if need to be swapped.
                 }
             }
         },
 
         /**
-         * updates the list and releases the held item.
+         * Updates the list and releases the held item.
          * @param {Event} e
          */
         releaseselecteditem: function(e) {
@@ -131,7 +131,7 @@ define(['jquery', 'core/log'], function($, log) {
         },
 
         /**
-         * clicked on the delete icon of the item.
+         * Clicked on the delete icon of the item.
          */
         removeselecteditem: function() {
 

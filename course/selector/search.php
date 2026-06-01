@@ -17,24 +17,25 @@
 /**
  * Code to search for courses in response to an ajax call from a course selector.
  *
- * @package local_aplcore
- * @author Valery Fremaux valery.fremaux@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     local_aplcore
+ * @author      Valery Fremaux valery.fremaux@gmail.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 
 define('AJAX_SCRIPT', true);
 
-require_once('../../../../../config.php');
-require_once($CFG->dirroot.'/local/aplcore/classes/course/selector/course_selector_base.php');
+require_once('../../../../config.php');
+
+use local_aplcore\course\selector\course_selector_base;
 
 // Get the search parameter.
-$search = required_param('search', PARAM_RAW);
+$search = required_param('search', PARAM_TEXT);
 $selectorhash = required_param('selectorid', PARAM_ALPHANUM);
 
 $PAGE->set_context(context_system::instance());
 $params = ['search' => $search, 'selectorid' => $selectorhash];
-$PAGE->set_url(new moodle_url('/local/aplcore/classes/course/selector/search.php', $params));
+$PAGE->set_url(new moodle_url('/local/aplcore/course/selector/search.php', $params));
 
 // Check access.
 require_login();
@@ -66,7 +67,7 @@ $json = [];
 foreach ($results as $groupname => $courses) {
     $groupdata = ['name' => $groupname, 'courses' => []];
     foreach ($courses as $course) {
-        $output = new stdClass;
+        $output = new stdClass();
         $output->id = $course->id;
         $output->name = $courseselector->output_course($course);
         if (!empty($course->disabled)) {

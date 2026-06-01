@@ -15,26 +15,21 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Privacy Subsystem.
+ * APLCore external functions and service definitions.
  *
- * @package     local_aplcore
+ * @package     local_shop
  * @author      Valery Fremaux (valery.fremaux@gmail.com)
- * @copyright   2017 Valery Fremaux (activeprolearn.com)
- * @license     https://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
+ * @copyright   2017 Valery Fremaux <valery.fremaux@gmail.com> (activeprolearn.com)
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
-namespace local_aplcore\privacy;
+defined('MOODLE_INTERNAL') || die();
 
-/**
- * Null provider class.
- */
-class provider implements \core_privacy\local\metadata\null_provider {
-    /**
-     * Get the language string identifier with the component's language
-     * file to explain why this plugin stores no data.
-     *
-     * @return  string
-     */
-    public static function get_reason(): string {
-        return 'privacy:metadata';
-    }
-}
+$functions = [
+    'local_aplcore_coursesearch' => [
+        'classname' => 'local_aplcore_external',
+        'methodname' => 'coursesearch',
+        'classpath' => 'local/shop/classes/external.php',
+        'description' => 'Search courses',
+        'type' => 'read',
+    ],
+];

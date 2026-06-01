@@ -23,6 +23,10 @@
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 /**
  * Make an encrypted ticket to access to documentation.
  */
@@ -30,15 +34,14 @@ function local_aplcore_doc_make_ticket() {
 
     $config = get_config('local_aplcore');
 
-    $ticket = new StdClass;
+    $ticket = new StdClass();
     $ticket->clientid = $config->doccustomerid ?? 0;
     $ticket->date = time();
 
     if (!empty($config->doccustomerpublickey)) {
-
         $res = openssl_get_publickey($config->doccustomerpublickey);
         if (!$res) {
-            echo " --FAILED GETTING KEY-- ";
+            echo get_string('dockeyfailure', 'local_aplcore');
         }
 
         $decrypted = json_encode($ticket);

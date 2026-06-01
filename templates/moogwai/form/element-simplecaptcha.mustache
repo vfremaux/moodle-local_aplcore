@@ -1,9 +1,13 @@
+{{!
+    This file is part of moogwai - Private project
+    Moogwai imports to Moodle.
+}}
 {{< core_form/element-template }}
-<!-- core_form/element-simplecaptcha hasjs -->
+<!-- local_aplcore/moogwai/form/element-simplecaptcha hasjs -->
     {{$element}}
         {{{element.html}}}
     {{/element}}
-<!-- /core_form/element-simplecaptcha -->
+<!-- /local_aplcore/moogwai/form/element-simplecaptcha -->
 {{/ core_form/element-template }}
 {{#js}}
 require(['core_form/simplecaptcha'], function(simplecaptcha) {

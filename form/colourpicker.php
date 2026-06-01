@@ -25,10 +25,16 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
+
 defined('MOODLE_INTERNAL') || die();
 
-// This is because this file is a Pear/Quickform cross integration file.
+// These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
 require_once($CFG->dirroot.'/lib/pear/HTML/QuickForm.php');
 
@@ -38,7 +44,7 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
     /**
      * HTML class for a colourpicker type element
      *
-     * Overloaded {@link HTML_QuickForm_button} to add help button
+     * Overloaded to add help button
      *
      * @package     local_aplcore
      * @author      Valery Fremaux <valery.fremaux@gmail.com>
@@ -46,7 +52,6 @@ if (!class_exists('MoodleQuickForm_colourpicker')) {
      * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_colourpicker extends HTML_QuickForm_ColourPicker {
-
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
 

@@ -17,18 +17,25 @@
 /**
  * Modified version of course selector
  *
- * @package local_aplcore
- * @author Valery Fremaux valery.fremaux@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     local_aplcore
+ * @author      Valery Fremaux valery.fremaux@gmail.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
+namespace local_aplcore\course\selector;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 /*
  * The default size of a course selector.
  */
 define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
+
+use StdClass;
 
 /**
  * Base class for course selectors.
@@ -103,7 +110,7 @@ abstract class course_selector_base {
     /**
      * @var mixed This is used by get selected users
      */
-    protected $validatingcourseids = null;
+    protected $validatingcourseids = [];
 
     /**
      * @var bool Used to ensure we only output the search options for one user selector on
@@ -116,7 +123,7 @@ abstract class course_selector_base {
      */
     protected static $jsmodule = [
         'name' => 'course_selector',
-        'fullpath' => '/local/apllibs/classes/course/selector/module.js',
+        'fullpath' => '/local/aplcore/classes/course/selector/module.js',
         'requires'  => ['node', 'event-custom', 'datasource', 'json', 'moodle-core-notification'],
         'strings' => [
             ['previouslyselectedcourses', 'local_aplcore', '%%SEARCHTERM%%'],
@@ -260,58 +267,57 @@ abstract class course_selector_base {
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function display($return = false) {
-        global $PAGE;
+        global $PAGE, $OUTPUT;
+
+        $template = new StdClass();
 
         // Get the list of requested courses.
-        $search = optional_param($this->name . '_searchtext', '', PARAM_RAW);
+        $search = optional_param($this->name . '_searchtext', '', PARAM_TEXT);
         if (optional_param($this->name . '_clearbutton', false, PARAM_BOOL)) {
             $search = '';
         }
         $groupedcourses = $this->find_courses($search);
 
         // Output the select.
-        $name = $this->name;
-        $multiselect = '';
+        $template->name = $this->name;
+        $template->selectname = $this->name;
+        $template->multiselect = '';
         if ($this->multiselect) {
-            $name .= '[]';
-            $multiselect = 'multiple="multiple" ';
+            $template->selectname .= '[]';
+            $template->multiselect = 'multiple="multiple" ';
         }
-        $output = '<div class="courseselector" id="' . $this->name . '_wrapper">' . "\n" .
-                '<select name="' . $name . '" id="' . $this->name . '" ' .
-                $multiselect . 'size="' . $this->rows . '">' . "\n";
+        $template->rows = $this->rows;
 
         // Populate the select.
-        $output .= $this->output_options($groupedcourses, $search);
+        $template->selectoptions = $this->output_options($groupedcourses, $search);
 
         // Output the search controls.
-        $output .= "</select>\n<div>\n";
-        $output .= '<input type="text" name="' . $this->name . '_searchtext" id="';
-        $output .= $this->name . '_searchtext" size="15" value="' . s($search) . '" />';
-        $output .= '<input type="submit" name="' . $this->name . '_searchbutton" id="';
-        $output .= $this->name . '_searchbutton" value="' . $this->search_button_caption() . '" />';
-        $output .= '<input type="submit" name="' . $this->name . '_clearbutton" id="';
-        $output .= $this->name . '_clearbutton" value="' . get_string('clear') . '" />';
+        $template->search = s($search);
+        $template->caption = $this->search_button_caption();
 
+        $template->searchoptionsoutput = self::$searchoptionsoutput;
         // And the search options.
         if (!self::$searchoptionsoutput) {
             $class = 'courseselector_optionscollapsed';
             $label = get_string('searchoptions');
-            $output .= print_collapsible_region_start('', 'courseselector_options', $label, $class, true, true);
+            $id = 'courseselector_options';
+            $template->collapsibleregionstart = print_collapsible_region_start('', $id, $label, $class, true, true);
             $label = get_string('courseselectorpreserveselected', 'local_aplcore');
-            $output .= $this->option_checkbox('preserveselected', $this->preserveselected, $label);
+            $template->preserveselected = $this->option_checkbox('preserveselected', $this->preserveselected, $label);
             $label = get_string('courseselectorautoselectunique', 'local_aplcore');
-            $output .= $this->option_checkbox('autoselectunique', $this->autoselectunique, $label);
+            $template->autoselectunique = $this->option_checkbox('autoselectunique', $this->autoselectunique, $label);
             $label = get_string('courseselectorsearchanywhere', 'local_aplcore');
-            $output .= $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
-            $output .= print_collapsible_region_end(true);
+            $template->searchanywherecheck = $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
+            $template->collapsibleregionend = print_collapsible_region_end(true);
 
             $PAGE->requires->js_init_call('M.core_course.init_course_selector_options_tracker', [], false, self::$jsmodule);
             self::$searchoptionsoutput = true;
         }
-        $output .= "</div>\n</div>\n\n";
 
         // Initialise the ajax functionality.
-        $output .= $this->initialise_javascript($search);
+        $template->searchjs = $this->initialise_javascript($search);
+
+        $output = $OUTPUT->render_from_template('local_aplcore/course_selector', $template);
 
         // Return or output it.
         if ($return) {
@@ -428,7 +434,7 @@ abstract class course_selector_base {
      * @return bool
      */
     protected function is_validating() {
-        return !is_null($this->validatingcourseids);
+        return !empty($this->validatingcourseids);
     }
 
     /**
@@ -453,7 +459,7 @@ abstract class course_selector_base {
         // If we did, use the find_courses method to validate the ids.
         $this->validatingcourseids = $courseids;
         $groupedcourses = $this->find_courses('');
-        $this->validatingcourseids = null;
+        $this->validatingcourseids = [];
 
         // Aggregate the resulting list back into a single one.
         $courses = [];
@@ -499,15 +505,21 @@ abstract class course_selector_base {
      * Builds the SQL search query.
      *
      * @param string $search the text to search for.
-     * @param string $u the table alias for the course table in the query being
+     * @param string $c the table alias for the course table in the query being
      *      built. May be ''.
      * @return array an array with two elements, a fragment of SQL to go in the
      *      where clause the query, and an array containing any required parameters.
      *      this uses ? style placeholders.
      */
     protected function search_sql($search, $c) {
-        return courses_search_sql($search, $c, $this->searchanywhere, $this->extrafields,
-                $this->exclude, $this->validatingcourseids);
+        return courses_search_sql(
+            $search,
+            $c,
+            $this->searchanywhere,
+            $this->extrafields,
+            $this->exclude,
+            $this->validatingcourseids
+        );
     }
 
     /**
@@ -521,7 +533,7 @@ abstract class course_selector_base {
      */
     protected function too_many_results($search, $count) {
         if ($search) {
-            $a = new stdClass;
+            $a = new stdClass();
             $a->count = $count;
             $a->search = $search;
             return [get_string('toomanycoursesmatchsearch', 'local_aplcore', $a) => [],
@@ -538,6 +550,7 @@ abstract class course_selector_base {
      * course_selector.prototype.handle_response.
      *
      * @param array $groupedcourses an array, as returned by find_courses.
+     * @param string $search the search sring.
      * @return string HTML code.
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
@@ -562,8 +575,10 @@ abstract class course_selector_base {
             } else {
                 $groupedcourses = [get_string('none') => []];
             }
-        } else if ($this->autoselectunique && count($groupedcourses) == 1 &&
-                count(reset($groupedcourses)) == 1) {
+        } else if (
+            $this->autoselectunique && count($groupedcourses) == 1 &&
+                count(reset($groupedcourses)) == 1
+        ) {
             $select = true;
             if (!$this->multiselect) {
                 $this->selected = [];
@@ -652,6 +667,8 @@ abstract class course_selector_base {
      * Initialise one of the option checkboxes, either from
      * the request, or failing that from the course_preferences table, or
      * finally from the given default.
+     * @param string $name option name
+     * @param string $default default value
      */
     private function initialise_option($name, $default) {
         $param = optional_param($name, null, PARAM_BOOL);
@@ -665,6 +682,9 @@ abstract class course_selector_base {
 
     /**
      * Output one of the options checkboxes.
+     * @param string $name selector name
+     * @param bool $on if on or off
+     * @param string $label the checkbox label
      */
     private function option_checkbox($name, $on, $label) {
         if ($on) {
@@ -714,7 +734,7 @@ abstract class course_selector_base {
  * There are examples of basic usage in the unit test for this function.
  *
  * @param string $search the text to search for (empty string = find all)
- * @param string $u the table alias for the user table in the query being
+ * @param string $c the table alias for the user table in the query being
  *     built. May be ''.
  * @param bool $searchanywhere If true (default), searches in the middle of
  *     names, otherwise only searches at start
@@ -727,8 +747,14 @@ abstract class course_selector_base {
  *     parameters (using named placeholders).
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
-function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $extrafields = [],
-                            array $exclude = [], array $includeonly = []) {
+function courses_search_sql(
+    $search,
+    $c = 'c',
+    $searchanywhere = true,
+    array $extrafields = [],
+    array $exclude = [],
+    array $includeonly = []
+) {
     global $DB;
 
     $params = [];
@@ -762,14 +788,14 @@ function courses_search_sql($search, $c = 'c', $searchanywhere = true, array $ex
 
     // If we are being asked to exclude any users, do that.
     if (!empty($exclude)) {
-        list($coursetest, $courseparams) = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
+        [$coursetest, $courseparams] = $DB->get_in_or_equal($exclude, SQL_PARAMS_NAMED, 'ex', false);
         $tests[] = $c.'id '.$coursetest;
         $params = array_merge($params, $courseparams);
     }
 
     // If we are validating a set list of courseids, add an id IN (...) test.
     if (!empty($includeonly)) {
-        list($coursesql, $courseparams) = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
+        [$coursesql, $courseparams] = $DB->get_in_or_equal($includeonly, SQL_PARAMS_NAMED, 'val');
         $tests[] = $c.'id '.$coursesql;
         $params = array_merge($params, $courseparams);
     }

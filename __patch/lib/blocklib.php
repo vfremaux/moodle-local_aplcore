@@ -65,7 +65,7 @@ class block_not_on_page_exception extends moodle_exception {
      * @param object $page the current page.
      */
     public function __construct($instanceid, $page) {
-        $a = new stdClass;
+        $a = new StdClass();
         $a->instanceid = $instanceid;
         $a->url = $page->url->out();
         parent::__construct('blockdoesnotexistonpage', '', $page->url->out(), $a);
@@ -692,8 +692,8 @@ class block_manager {
         $requiredbythemeparams = array();
         $requiredbythemenotparams = array();
         if (!empty($requiredbytheme)) {
-            list($testsql, $requiredbythemeparams) = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED, 'requiredbytheme');
-            list($testnotsql, $requiredbythemenotparams) = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED,
+            [$testsql, $requiredbythemeparams] = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED, 'requiredbytheme');
+            [$testnotsql, $requiredbythemenotparams] = $DB->get_in_or_equal($requiredbytheme, SQL_PARAMS_NAMED,
                                                                                 'notrequiredbytheme', false);
             $requiredbythemecheck = 'AND ((bi.blockname ' . $testsql . ' AND bi.requiredbytheme = 1) OR ' .
                                 ' (bi.blockname ' . $testnotsql . ' AND bi.requiredbytheme = 0))';
@@ -715,13 +715,13 @@ class block_manager {
         $parentcontextparams = array();
         $parentcontextids = $context->get_parent_context_ids();
         if ($parentcontextids) {
-            list($parentcontexttest, $parentcontextparams) =
+            [$parentcontexttest, $parentcontextparams] =
                     $DB->get_in_or_equal($parentcontextids, SQL_PARAMS_NAMED, 'parentcontext');
             $contexttest = "($contexttest OR (bi.showinsubcontexts = 1 AND bi.parentcontextid $parentcontexttest))";
         }
 
         $pagetypepatterns = matching_page_type_patterns($this->page->pagetype);
-        list($pagetypepatterntest, $pagetypepatternparams) =
+        [$pagetypepatterntest, $pagetypepatternparams] =
                 $DB->get_in_or_equal($pagetypepatterns, SQL_PARAMS_NAMED, 'pagetypepatterntest');
 
         $ccselect = ', ' . context_helper::get_preload_record_columns_sql('ctx');
@@ -842,7 +842,7 @@ class block_manager {
             }
         }
 
-        $blockinstance = new stdClass;
+        $blockinstance = new StdClass();
         $blockinstance->blockname = $blockname;
         $blockinstance->parentcontextid = $this->page->context->id;
         $blockinstance->showinsubcontexts = !empty($showinsubcontexts);
@@ -999,7 +999,7 @@ class block_manager {
                 (!$this->page->subpage || $bi->subpagepattern)) {
 
             // Set default position
-            $newbi = new stdClass;
+            $newbi = new StdClass();
             $newbi->id = $bi->id;
             $newbi->defaultregion = $newregion;
             $newbi->defaultweight = $newweight;
@@ -1007,7 +1007,7 @@ class block_manager {
             $DB->update_record('block_instances', $newbi);
 
             if ($bi->blockpositionid) {
-                $bp = new stdClass;
+                $bp = new StdClass();
                 $bp->id = $bi->blockpositionid;
                 $bp->region = $newregion;
                 $bp->weight = $newweight;
@@ -1016,7 +1016,7 @@ class block_manager {
 
         } else {
             // Just set position on this page.
-            $bp = new stdClass;
+            $bp = new StdClass();
             $bp->region = $newregion;
             $bp->weight = $newweight;
 
@@ -1216,7 +1216,7 @@ class block_manager {
         $systemcontext = context_system::instance();
         $defaultregion = $this->get_default_region();
         // Add a special system wide block instance only for themes that require it.
-        $blockinstance = new stdClass;
+        $blockinstance = new StdClass();
         $blockinstance->blockname = $blockname;
         $blockinstance->parentcontextid = $systemcontext->id;
         $blockinstance->showinsubcontexts = true;
@@ -1906,7 +1906,7 @@ class block_manager {
     public function save_block_data(block_base $block, stdClass $data): void {
         global $DB;
 
-        $bi = new stdClass;
+        $bi = new StdClass();
         $bi->id = $block->instance->id;
 
         // This may get overwritten by the special case handling below.
@@ -1984,7 +1984,7 @@ class block_manager {
         if (!empty($block->config)) {
             $config = clone($block->config);
         } else {
-            $config = new stdClass;
+            $config = new StdClass();
         }
         foreach ($data as $configfield => $value) {
             if (strpos($configfield, 'config_') !== 0) {
@@ -1995,7 +1995,7 @@ class block_manager {
         }
         $block->instance_config_save($config);
 
-        $bp = new stdClass;
+        $bp = new StdClass();
         $bp->visible = $data->bui_visible;
         $bp->region = $data->bui_region;
         $bp->weight = $data->bui_weight;
@@ -2653,7 +2653,7 @@ function blocks_set_visibility($instance, $page, $newvisibility) {
     }
 
     // Create a new block_positions record.
-    $bp = new stdClass;
+    $bp = new StdClass();
     $bp->blockinstanceid = $instance->id;
     $bp->contextid = $page->context->id;
     $bp->pagetype = $page->pagetype;

@@ -40,7 +40,7 @@ class controller_base implements controller {
             $this->received = true;
             return;
         } else {
-            $this->data = new StdClass;
+            $this->data = new StdClass();
         }
 
         $this->received = true;

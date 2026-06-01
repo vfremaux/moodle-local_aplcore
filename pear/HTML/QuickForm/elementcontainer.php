@@ -137,7 +137,7 @@ class HTML_QuickForm_ElementContainer extends HTML_QuickForm_element {
 
             case 'createElement': {
 
-                list($name, $component, $options, $unused1, $unused2, $unused3) = $arg;
+                [$name, $component, $options, $unused1, $unused2, $unused3] = $arg;
                 $this->_label = ''; // Do not use label.
                 $this->_name = $name;
                 $this->_component = $component;
