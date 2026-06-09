@@ -33,7 +33,10 @@ namespace local_aplcore\course\selector;
 /*
  * The default size of a course selector.
  */
-define('COURSE_SELECTOR_DEFAULT_ROWS', 20);
+define('LOCAL_APLCORE_CS_DEFAULT_ROWS', 20);
+define('LOCAL_APLCORE_CS_PER_PAGE', 200);
+
+use StdClass;
 
 /**
  * Base class for course selectors.
@@ -76,7 +79,7 @@ abstract class course_selector_base {
     /**
      * @var int The height this control should have, in rows.
      */
-    protected $rows = COURSE_SELECTOR_DEFAULT_ROWS;
+    protected $rows = LOCAL_APLCORE_CS_DEFAULT_ROWS;
 
     /**
      * @var array A list of userids that should not be returned by this control.
@@ -108,7 +111,7 @@ abstract class course_selector_base {
     /**
      * @var mixed This is used by get selected users
      */
-    protected $validatingcourseids = null;
+    protected $validatingcourseids = [];
 
     /**
      * @var bool Used to ensure we only output the search options for one user selector on
@@ -133,7 +136,7 @@ abstract class course_selector_base {
     /**
      * @var int this is used to define maximum number of users visible in list
      */
-    public $maxcoursesperpage = 200;
+    public $maxcoursesperpage = LOCAL_APLCORE_CS_PER_PAGE;
 
     /** @var array */
     public $options;
@@ -308,7 +311,7 @@ abstract class course_selector_base {
             $template->searchanywherecheck = $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
             $template->collapsibleregionend = print_collapsible_region_end(true);
 
-            $PAGE->requires->js_init_call('M.core_course.init_course_selector_options_tracker', [], false, self::$jsmodule);
+            $PAGE->requires->js_call_amd('local_aplcore/course_selector', 'init_course_selector', []);
             self::$searchoptionsoutput = true;
         }
 
@@ -432,7 +435,7 @@ abstract class course_selector_base {
      * @return bool
      */
     protected function is_validating() {
-        return !is_null($this->validatingcourseids);
+        return !empty($this->validatingcourseids);
     }
 
     /**
@@ -457,7 +460,7 @@ abstract class course_selector_base {
         // If we did, use the find_courses method to validate the ids.
         $this->validatingcourseids = $courseids;
         $groupedcourses = $this->find_courses('');
-        $this->validatingcourseids = null;
+        $this->validatingcourseids = [];
 
         // Aggregate the resulting list back into a single one.
         $courses = [];
@@ -705,7 +708,6 @@ abstract class course_selector_base {
      */
     protected function initialise_javascript($search) {
         global $USER, $PAGE;
-        $output = '';
 
         // Put the options into the session, to allow search.php to respond to the ajax requests.
         $options = $this->get_options();
@@ -714,8 +716,7 @@ abstract class course_selector_base {
 
         // Initialise the selector.
         $params = [$this->name, $hash, $this->extrafields, $search];
-        $PAGE->requires->js_init_call('M.core_course.init_course_selector', $params, false, self::$jsmodule);
-        return $output;
+        $PAGE->requires->js_call_amd('local_aplcore/course_selector', 'init_course_selector', $params);
     }
 }
 
