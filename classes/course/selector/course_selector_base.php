@@ -311,7 +311,7 @@ abstract class course_selector_base {
             $template->searchanywherecheck = $this->option_checkbox('searchanywhere', $this->searchanywhere, $label);
             $template->collapsibleregionend = print_collapsible_region_end(true);
 
-            $PAGE->requires->js_init_call('M.core_course.init_course_selector_options_tracker', [], false, self::$jsmodule);
+            $PAGE->requires->js_call_amd('local_aplcore/course_selector', 'init_course_selector', []);
             self::$searchoptionsoutput = true;
         }
 
@@ -708,7 +708,6 @@ abstract class course_selector_base {
      */
     protected function initialise_javascript($search) {
         global $USER, $PAGE;
-        $output = '';
 
         // Put the options into the session, to allow search.php to respond to the ajax requests.
         $options = $this->get_options();
@@ -717,8 +716,7 @@ abstract class course_selector_base {
 
         // Initialise the selector.
         $params = [$this->name, $hash, $this->extrafields, $search];
-        $PAGE->requires->js_init_call('M.core_course.init_course_selector', $params, false, self::$jsmodule);
-        return $output;
+        $PAGE->requires->js_call_amd('local_aplcore/course_selector', 'init_course_selector', $params);
     }
 }
 
