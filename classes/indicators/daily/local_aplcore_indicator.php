@@ -22,7 +22,7 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
-namespace report_zabbix\indicators\daily;
+namespace local_aplcore\indicators\daily;
 
 // False positive.
 // phpcs:disable PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase
@@ -34,7 +34,11 @@ use report_zabbix\zabbix_indicator;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once($CFG->dirroot . '/local/aplcore/lib.php');
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
+require_once($CFG->dirroot.'/local/aplcore/lib.php');
 
 /**
  * Plugin's indicators.
@@ -153,17 +157,14 @@ class aplcore_indicator extends zabbix_indicator {
         $status = trim($status);
 
         switch ($status) {
-            case '-30d': {
+            case '-30d':
                 break;
-            }
 
-            case '-15d': {
+            case '-15d':
                 break;
-            }
 
-            case '-5d': {
+            case '-5d':
                 break;
-            }
         }
     }
 }
