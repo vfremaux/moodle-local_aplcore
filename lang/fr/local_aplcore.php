@@ -74,6 +74,7 @@ $string['licensekey_desc'] = 'Entrez ici la clef de produit que vous avez reçu 
 $string['licenseprovider'] = 'Fournisseur version Pro';
 $string['licenseprovider_desc'] = 'Entrez la clef de votre fournisseur.';
 $string['licensestatus'] = 'Etat de license pro';
+$string['marketplaceonboarding'] = '<a target="_blank" href="https://ma.formation-enligne.com?local/marketplaceboarding/boarding.php?lang={$a}">J\'ai acheté le plugin sur la Marketplace Moodle</a>';
 $string['noproaccess'] = 'Ceci est une partie "pro" limitée du plugin qui n\'est pas activée.';
 $string['options'] = 'Options d\'activation';
 $string['partnerkey'] = 'Clef distributeur partenaire';

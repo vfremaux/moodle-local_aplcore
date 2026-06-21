@@ -75,6 +75,7 @@ $string['licensekey_desc'] = 'Input here the product license key you got from yo
 $string['licenseprovider'] = 'Pro License provider';
 $string['licenseprovider_desc'] = 'Input here your provider key';
 $string['licensestatus'] = 'Pro license status';
+$string['marketplaceonboarding'] = '<a target="_blank" href="https://ma.formation-enligne.com?local/marketplaceboarding/boarding.php?lang={$a}">I have got it from Moodle Marketplace</a>';
 $string['noproaccess'] = 'This is the "pro" zone. "Pro" zone is NOT activated.';
 $string['options'] = 'Activation options';
 $string['partnerkey'] = 'Distribution Partner key';
