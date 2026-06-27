@@ -34,6 +34,10 @@ use report_zabbix\zabbix_indicator;
 
 defined('MOODLE_INTERNAL') || die();
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 require_once($CFG->dirroot.'/local/aplcore/lib.php');
 
 /**
