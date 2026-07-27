@@ -100,8 +100,9 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
             };
 
             if (crc === calculated) {
-                var url = cfg.wwwroot + '/' + componentpath + '/pro/ajax/services.php?';
+                var url = cfg.wwwroot + '/local_aplcore/pro/ajax/services.php?';
                 url += 'what=license';
+                url += '&component=' + component;
                 url += '&service=check';
                 url += '&customerkey=' + $field.val();
                 url += '&provider=' + $('#id_s_' + shortcomponent + '_licenseprovider').val();
