@@ -30,6 +30,8 @@
 // phpcs:disable moodle.Files.LangFilesOrdering.IncorrectOrder
 
 $string['addelement'] = 'Add element';
+$string['configbackuppatchedfiles'] = 'do backup patched files when patching';
+$string['configbackuppatchedfiles_desc'] = 'Saves a backup files of the original file when patching';
 $string['configdocbaseurl'] = 'Documentation base url';
 $string['configdocbaseurl_desc'] = 'Base url for the remote documentation source';
 $string['configdoccustomerid'] = 'Documentation customer id';
@@ -38,6 +40,8 @@ $string['configdoccustomerpublickey'] = 'Documentation public key';
 $string['configdoccustomerpublickey_desc'] = 'A PEM public key for encrypting the documentation access token. It is given by the documentation provider.';
 $string['configeditorplugins'] = 'Editor plugins for extra documentation';
 $string['configeditorplugins_desc'] = '';
+$string['configsudoer'] = 'Sudoer user';
+$string['configsudoer_desc'] = 'A sudoer capable system user able to change the moodle code base';
 $string['courseselectorautoselectunique'] = 'Auto select unique result';
 $string['courseselectorpreserveselected'] = 'Preserve selection';
 $string['courseselectorsearchanywhere'] = 'Search anywhere';
@@ -49,6 +53,7 @@ $string['less'] = 'More...';
 $string['more'] = 'Less...';
 $string['nextstep'] = 'Next step';
 $string['nomatchingcourses'] = 'No courses matching';
+$string['nooptions'] = 'No options available';
 $string['pluginname'] = 'Extra core add-ons APL plugins';
 $string['previouslyselectedcourses'] = 'Previously selected courses';
 $string['previousstep'] = 'Previous step';
@@ -69,6 +74,7 @@ $string['errornodistributorkey'] = 'No distributor key provided';
 $string['errornokeygenerated'] = 'Error : No key generated';
 $string['errornooptions'] = 'Error : No activation options found.';
 $string['errorresponse'] = 'Error : Provider response is valid but remote error : {$a}';
+$string['forcingprofeature'] = 'Trying to use pro feature without enabling licenses';
 $string['getlicensekey'] = 'Get license key';
 $string['licensekey'] = 'Pro license key';
 $string['licensekey_desc'] = 'Input here the product license key you got from your provider';

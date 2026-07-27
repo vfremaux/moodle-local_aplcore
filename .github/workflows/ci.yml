@@ -6,7 +6,7 @@ env:
   GIST_ID: 3c8bbded8c63e01b0780fcb0d9596c51
 
 jobs:
-  test_501:
+  test_405:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -30,8 +30,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.2', '8.3']
-        moodle-branch: ['MOODLE_501_STABLE']
+        php: ['8.1', '8.2']
+        moodle-branch: ['MOODLE_405_STABLE']
         database: [pgsql, mariadb]
     steps:
       - name: Check out repository code
@@ -116,7 +116,7 @@ jobs:
         if: ${{ cancelled() }}
         run: exit 1
 
-  test_501_working:
+  test_405_working:
     runs-on: ubuntu-22.04
     services:
       postgres:
@@ -140,8 +140,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        php: ['8.2', '8.3']
-        moodle-branch: ['MOODLE_501_WORKING']
+        php: ['8.1', '8.2']
+        moodle-branch: ['MOODLE_405_WORKING']
         database: [pgsql, mariadb]
     steps:
       - name: Check out repository code
@@ -232,14 +232,14 @@ jobs:
         if: ${{ cancelled() }}
         run: exit 1
 
-  update-badge-501:
-    needs: test_501
+  update-badge-405:
+    needs: test_405
     if: always()
     runs-on: ubuntu-22.04
     steps:
-      - name: Update status badge MOODLE_501_STABLE
+      - name: Update status badge MOODLE_405_STABLE
         run: |
-          if [ "${{ needs.test_501.result }}" == "success" ]; then
+          if [ "${{ needs.test_405.result }}" == "success" ]; then
             COLOR="brightgreen"
             MESSAGE="passing"
           else
@@ -247,9 +247,9 @@ jobs:
             MESSAGE="failing"
           fi
 
-          CONTENT=$(jq -n --arg lbl "MOODLE_501_STABLE" --arg message "$MESSAGE" --arg color "$COLOR" '{"schemaVersion": 1, "label": $lbl, "message": $message, "color": $color}')
+          CONTENT=$(jq -n --arg lbl "MOODLE_405_STABLE" --arg message "$MESSAGE" --arg color "$COLOR" '{"schemaVersion": 1, "label": $lbl, "message": $message, "color": $color}')
 
-          PAYLOAD=$(jq -n --arg filename "status-${{ env.PLUGIN_NAME }}-MOODLE_501_STABLE.json" --arg content "$CONTENT" '{"files": {($filename): {"content": $content}}}')
+          PAYLOAD=$(jq -n --arg filename "status-${{ env.PLUGIN_NAME }}-MOODLE_405_STABLE.json" --arg content "$CONTENT" '{"files": {($filename): {"content": $content}}}')
 
           curl -s -X PATCH -H "Authorization: token ${{ secrets.GIST_CI }}" -H "Content-Type: application/json" https://api.github.com/gists/${{ env.GIST_ID }} -d "$PAYLOAD"
 

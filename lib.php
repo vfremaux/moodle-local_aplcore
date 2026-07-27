@@ -48,7 +48,6 @@ define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10);
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 function local_aplcore_supports_feature($feature = null, $getsupported = false) {
-
     static $supports;
 
     if (!during_initial_install()) {

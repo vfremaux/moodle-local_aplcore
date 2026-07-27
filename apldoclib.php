@@ -31,7 +31,6 @@
  * Make an encrypted ticket to access to documentation.
  */
 function local_aplcore_doc_make_ticket() {
-
     $config = get_config('local_aplcore');
 
     $ticket = new StdClass();
