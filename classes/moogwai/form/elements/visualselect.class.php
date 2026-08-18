@@ -111,7 +111,7 @@ class visualselect extends select implements templatable {
         }
         // $html .= parent::toHtml();
 
-        $template = new StdClass;
+        $template = new StdClass();
         $elmtemplate = $this->export_for_template($OUTPUT);
         $template->element = $elmtemplate;
         $html .= $OUTPUT->render_from_template('local_aplcore/moogwai/form/element-visualselect', $template);
@@ -253,7 +253,7 @@ class visualselect extends select implements templatable {
 
                     if ($ix == $this->_hideafter) {
                         // insert a "more..." item.
-                        $moreoption = new StdClass;
+                        $moreoption = new StdClass();
                         $moreoption->ismore = true;
                         $moreoption->value = get_string('more', 'local_aplcore');
                         $rawoptions[] = $moreoption;
@@ -269,7 +269,7 @@ class visualselect extends select implements templatable {
             }
             if ($this->_hideafter > 0) {
                 // insert a "less..." item.
-                $lessoption = new StdClass;
+                $lessoption = new StdClass();
                 $lessoption->isless = true;
                 $lessoption->value = get_string('less', 'local_aplcore');
                 $rawoptions[] = $lessoption;
@@ -281,7 +281,7 @@ class visualselect extends select implements templatable {
             foreach ($rawoptions as $o) {
                 $options[] = $o;
                 if (count($options) >= $this->_rowsize) {
-                    $optionrowtpl = new stdClass;
+                    $optionrowtpl = new StdClass();
                     $optionrowtpl->options = $options;
                     $optionrows[] = $optionrowtpl;
                     $options = []; // Reset options for next row.
@@ -290,10 +290,10 @@ class visualselect extends select implements templatable {
             if ($numlastrow = count($options)) {
                 // complete last row to _rowsize
                 for ($i = $numlastrow; $i < $this->_rowsize; $i++) {
-                    $options[] = new StdClass;
+                    $options[] = new StdClass();
                 }
                 // Add last row if not empty.
-                $optionrowtpl = new Stdclass;
+                $optionrowtpl = new StdClass();
                 $optionrowtpl->options = $options;
                 $optionrows[] = $optionrowtpl;
             }

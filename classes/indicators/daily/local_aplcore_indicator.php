@@ -17,29 +17,35 @@
 /**
  * Zabbix indicators for APL Core
  *
- * @package local_aplcore
- * @author Valery Fremaux valery.fremaux@gmail.com
- * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
+ * @package     local_aplcore
+ * @author      Valery Fremaux valery.fremaux@gmail.com
+ * @license     http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @copyright   2020 Valery Fremaux (https://www.activeprolearn.com)
  */
-namespace report_zabbix\indicators;
+namespace local_aplcore\indicators\daily;
+
+// False positive.
+// phpcs:disable PSR2.ControlStructures.SwitchDeclaration.WrongOpenercase
 
 use moodle_exception;
 use coding_exception;
 use StdClass;
+use report_zabbix\zabbix_indicator;
 
 defined('MOODLE_INTERNAL') || die();
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 require_once($CFG->dirroot.'/local/aplcore/lib.php');
-require_once($CFG->dirroot.'/report/zabbix/classes/indicator.class.php');
 
 /**
  * Plugin's indicators.
  */
 class aplcore_indicator extends zabbix_indicator {
-
     /** @var string $submodes */
-    static public $submodes = '';
+    public static $submodes = '';
 
     /** @var $states a cache for licensed plugin states */
     protected $states;
@@ -69,7 +75,7 @@ class aplcore_indicator extends zabbix_indicator {
                 continue;
             }
             $this->licencedplugins[$lp->plugin] = $lp; // Confirm in $this.
-            $teststates[] = '['.$lp->plugin.'.status]';
+            $teststates[] = '[' . $lp->plugin . '.status]';
         }
 
         $licenseends = [];
@@ -78,9 +84,9 @@ class aplcore_indicator extends zabbix_indicator {
                 // May use a licensekey but not APLCore.
                 continue;
             }
-            $licenseends[] = '['.$lp->plugin.'.end]';
+            $licenseends[] = '[' . $lp->plugin . '.end]';
         }
-        self::$submodes = implode(',', $teststates).','.implode(',', $licenseends);
+        self::$submodes = implode(',', $teststates) . ',' . implode(',', $licenseends);
 
         $this->states = $this->load_states();
     }
@@ -98,9 +104,8 @@ class aplcore_indicator extends zabbix_indicator {
      * @param string $submode to target an aquisition to an explicit submode
      */
     public function acquire_submode($submode) {
-
         if (!is_object($this->value)) {
-            $this->value = new Stdclass;
+            $this->value = new Stdclass();
         }
 
         if (is_null($submode)) {
@@ -132,7 +137,7 @@ class aplcore_indicator extends zabbix_indicator {
             return;
         }
 
-        include_once($CFG->dirroot.'/local/aplcore/pro/lib.php');
+        include_once($CFG->dirroot . '/local/aplcore/pro/lib.php');
 
         $licensemanager = \local_aplcore\license_manager::instance();
 
@@ -144,27 +149,22 @@ class aplcore_indicator extends zabbix_indicator {
 
     /**
      * Get some information about license ending horizon.
-     * @param $plugin
+     * @param string $plugin the plugin
      */
     protected function get_end($plugin) {
-
         $status = $this->states[$plugin]->licensestatus;
         $status = preg_replace('/(SET|CHECK) OK/', '', $status);
         $status = trim($status);
 
         switch ($status) {
-
-            case '-30d': {
+            case '-30d':
                 break;
-            }
 
-            case '-15d': {
+            case '-15d':
                 break;
-            }
 
-            case '-5d': {
+            case '-5d':
                 break;
-            }
         }
     }
 }

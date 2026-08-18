@@ -1,0 +1,59 @@
+{{!
+    This file is part of Moodle - http://moodle.org/
+    Moodle is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+    Moodle is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+    You should have received a copy of the GNU General Public License
+    along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
+}}
+{{!
+    @template local_aplcore/course_selector
+
+    Course selector base for several usages.
+
+    Example context (json):
+    {
+        "selectname": "auditquiz-result-selector",
+        "name": "auditquiz-result-selector",
+        "multiselect": "multiple=\"multiple\"",
+        "rows": "6",
+        "selectoptions": "<option id=\"2\">Course 2</option>",
+        "caption": "Choose courses",
+        "search": "",
+        "searchoptionsoutput": false,
+        "collapsibleregionstart": "",
+        "preserveselectedcheck": "",
+        "autoselectuniquecheck": "",
+        "searchanywherecheck": "",
+        "collapsibleregionend": ""
+    }
+}}
+
+<!-- local_aplcore/course_selector -->
+<div class="courseselector" id="{{name}}_wrapper">
+    <select name="{{selectname}}" id="{{name}}" {{{multiselect}}} size="{{rows}}">
+        {{{selectoptions}}}
+    </select>
+    <div>
+
+        <input type="text" name="{{name}}_searchtext" id="{{name}}_searchtext" size="15" value="{{search}}">
+        <input type="submit" name="{{name}}_searchbutton" id="{{name}}_searchbutton" value="{{caption}}">
+        <input type="submit" name="{{name}}_clearbutton" id="{{name}}_clearbutton" value="{{#str}}clear{{/str}}">
+
+        {{^searchoptionsoutput}}
+            {{{collapsibleregionstart}}}
+            {{{preserveselectedcheck}}}
+            {{{autoselectuniquecheck}}}
+            {{{searchanywherecheck}}}
+            {{{collapsibleregionend}}}
+        {{/searchoptionsoutput}}
+    </div>
+</div>
+
+{{{searchjs}}}
+<!-- /local_aplcore/course_selector -->

@@ -25,13 +25,18 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
+
 defined('MOODLE_INTERNAL') || die();
 
-// This is because this file is a Pear/Quickform cross integration file.
+// These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
 
 if (!class_exists('MoodleQuickForm_orderedselect')) {
-
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/orderedselect.php')) {
         require_once("HTML/QuickForm/orderedselect.php");
     } else {
@@ -41,7 +46,7 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
     /**
      * HTML class for a orderedselect type element
      *
-     * Overloaded {@link HTML_QuickForm_select} to add help button
+     * Overloaded to add help button
      *
      * @package   local_aplcore
      * @author    Valery Fremaux <valery.fremaux@gmail.com>
@@ -49,7 +54,6 @@ if (!class_exists('MoodleQuickForm_orderedselect')) {
      * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
      */
     class MoodleQuickForm_orderedselect extends HTML_QuickForm_OrderedSelect {
-
         /** @var string html for help button, if empty then no help */
         public $_helpbutton = '';
 

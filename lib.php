@@ -24,6 +24,9 @@
  */
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 // Errors should be always traced when trace is on.
 define('LOCAL_APLCORE_TRACE_ERRORS', 1);
@@ -45,7 +48,6 @@ define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10);
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 function local_aplcore_supports_feature($feature = null, $getsupported = false) {
-
     static $supports;
 
     if (!during_initial_install()) {
@@ -85,7 +87,7 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
         return $versionkey;
     }
 
-    list($feat, $subfeat) = explode('/', $feature);
+    [$feat, $subfeat] = explode('/', $feature);
 
     if (!array_key_exists($feat, $supports[$versionkey])) {
         return false;

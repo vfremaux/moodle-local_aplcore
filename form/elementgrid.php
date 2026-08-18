@@ -25,10 +25,17 @@
  * @license     http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
+
 defined('MOODLE_INTERNAL') || die();
 
-// This is because this file is a Pear/Quickform cross integration file.
+// These are because this file is a Pear/Quickform cross integration file.
 // phpcs:disable moodle.NamingConventions.ValidFunctionName.LowercaseMethod
+// phpcs:disable PSR2.Classes.PropertyDeclaration.Underscore
+// phpcs:disable Universal.Lists.DisallowLongListSyntax.Found
+// phpcs:disable PSR12.Classes.OpeningBraceSpace.Found
 
 if (!class_exists('MoodleQuickForm_elementgrid')) {
     if (file_exists($CFG->libdir.'/pear/HTML/QuickForm/elementgrid.php')) {
@@ -40,7 +47,7 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
     /**
      * HTML class for a button type element
      *
-     * Overloaded {@link HTML_QuickForm_button} to add help button
+     * Overloaded to add help button
      *
      * @package     local_aplcore
      * @author      Valery Fremaux <valery.fremaux@gmail.com>
@@ -108,7 +115,6 @@ if (!class_exists('MoodleQuickForm_elementgrid')) {
             $table->data = $data;
 
             return html_writer::table($table);
-
         }
     }
 
