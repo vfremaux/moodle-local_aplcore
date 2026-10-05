@@ -49,10 +49,13 @@ $string['less'] = 'Moins...';
 $string['more'] = 'Plus...';
 $string['nextstep'] = 'Etape suivante';
 $string['nomatchingcourses'] = 'Aucun cours correspondant';
+$string['nooptions'] = 'Pas d\'options';
+$string['notmanagedplugin'] = 'Ce plugin n\'est pas géré par le système de licence APL.';
 $string['pluginname'] = 'Surcharges core pour les plugins APL';
 $string['previouslyselectedcourses'] = 'Sélection précédente';
 $string['previousstep'] = 'Etape précédente';
 $string['privacy:metadata'] = 'Le plugin APLCore ne détient pas de données utilisateur.';
+$string['viewelement'] = 'Voir element';
 
 // APL Pro strings section.
 $string['activate'] = 'Activer';
@@ -68,6 +71,7 @@ $string['errornodistributorkey'] = 'Clef distributeru non fournie';
 $string['errornokeygenerated'] = 'Erreur : La clef n\'est pas générée ou n\'est pas conforme.';
 $string['errornooptions'] = 'Erreur : Aucune option d\'activation trouvée.';
 $string['errorresponse'] = 'Erreur : La réponse est valide mais en erreur : {$a}';
+$string['forcingprofeature'] = 'Vous essayez d\'utiliser une fonctionnalité pro sans clef de licence';
 $string['getlicensekey'] = 'Obtenir une clef de license support';
 $string['licensekey'] = 'Clef de license pro';
 $string['licensekey_desc'] = 'Entrez ici la clef de produit que vous avez reçu de votre distributeur.';

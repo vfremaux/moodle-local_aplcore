@@ -25,14 +25,14 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version  = 2026060901;   // The (date) version of this plugin.
+$plugin->version  = 2026071601;   // The (date) version of this plugin.
 $plugin->requires = 2022112801;   // Requires this Moodle version.
 $plugin->component = 'local_aplcore';
-$plugin->release = '5.1.0 (Build 2026060901)';   // Release.
+$plugin->release = '4.5.0 (Build 2026071601)';   // Release.
 $plugin->maturity = MATURITY_STABLE;
-$plugin->supported = [500, 503];
+$plugin->supported = [403, 405];
 // Optional dependency to report_zabbix when installed for zabbix reporting.
 
 // Non moodle attributes.
-$plugin->codeincrement = '5.1.0005';
+$plugin->codeincrement = '4.5.0009';
 $plugin->privacy = 'private';

@@ -48,11 +48,15 @@ define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10);
  * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
  */
 function local_aplcore_supports_feature($feature = null, $getsupported = false) {
-
     static $supports;
 
-    if (!during_initial_install()) {
-        $config = get_config('local_aplcore');
+    if ($getsupported) {
+        return $supports;
+    }
+
+    if (empty($feature)) {
+        // Now feature is required.
+        throw new moodle_exception("<plugin>_supports_feature needs now be called with an explicit feature key");
     }
 
     if (!isset($supports)) {
@@ -61,44 +65,24 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
                 'notify' => ['zabbix'],
             ],
             'community' => [
+                'notify' => ['zabbix'],
             ],
         ];
     }
 
-    if ($getsupported) {
-        return $supports;
+    if (array_key_exists($feat, $supports['community'])) {
+        if (in_array($subfeat, $supports['community'][$feat])) {
+            return 'community';
+        }
     }
 
-    // Check existance of the 'pro' dir in plugin.
-    if (is_dir(__DIR__.'/pro')) {
-        if ($feature == 'emulate/community') {
+    if (array_key_exists($feat, $supports['pro'])) {
+        if (in_array($subfeat, $supports['pro'][$feat])) {
             return 'pro';
         }
-        if (empty($config->emulatecommunity)) {
-            $versionkey = 'pro';
-        } else {
-            $versionkey = 'community';
-        }
-    } else {
-        $versionkey = 'community';
     }
 
-    if (empty($feature)) {
-        // Just return version.
-        return $versionkey;
-    }
-
-    [$feat, $subfeat] = explode('/', $feature);
-
-    if (!array_key_exists($feat, $supports[$versionkey])) {
-        return false;
-    }
-
-    if (!in_array($subfeat, $supports[$versionkey][$feat])) {
-        return false;
-    }
-
-    return $versionkey;
+    return false;
 }
 
 /**
