@@ -327,7 +327,7 @@ class patch_manager {
      * (via pre/post-pattern), checks the local divergence against
      * __reference, then applies the patch if relevant.
      *
-     * @param array $pathlines
+     * @param array $patchlines
      * @param array $block
      * @param array $corelines
      * @param array $referencelines
@@ -626,7 +626,7 @@ class patch_manager {
 
     /**
      * Add report entry to report.
-     * @param string $file
+     * @param string|null $file
      * @param string $status
      * @param string $message
      */
