@@ -337,8 +337,13 @@ class patch_manager {
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    protected function apply_block(array $patchlines, array $block, array $corelines,
-            ?array $referencelines, bool $hasreference): array {
+    protected function apply_block(
+        array $patchlines,
+        array $block,
+        array $corelines,
+        ?array $referencelines,
+        bool $hasreference
+    ): array {
         $pre = $this->build_unique_pattern($patchlines, $block['openidx'] - 1, -1, $block['lowerbound'], $corelines);
         $post = $this->build_unique_pattern($patchlines, $block['closeidx'] + 1, 1, $block['upperbound'], $corelines);
 
@@ -400,7 +405,8 @@ class patch_manager {
                 'status' => 'warning',
                 'message' => sprintf(
                     "local divergence from __reference too high (%.1f%% > threshold %.1f%%).",
-                    $divergence, $this->divergencethreshold
+                    $divergence,
+                    $this->divergencethreshold
                 ),
                 'lines' => $corelines,
             ];
