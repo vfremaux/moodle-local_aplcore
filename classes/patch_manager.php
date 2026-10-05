@@ -27,6 +27,9 @@
 namespace local_aplcore;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 use core_component;
 use core_text;
@@ -178,13 +181,19 @@ class patch_manager {
         if ($hasreference) {
             $referencelines = $this->read_lines($referencefile);
             if ($referencelines === null) {
-                $this->add_report_entry($relpath, 'warning',
-                    "__reference file present but unreadable: {$referencefile} (continuing without divergence check).");
+                $this->add_report_entry(
+                    $relpath,
+                    'warning',
+                    "__reference file present but unreadable: {$referencefile} (continuing without divergence check)."
+                );
                 $hasreference = false;
             }
         } else {
-            $this->add_report_entry($relpath, 'warning',
-                "No matching __reference file found (continuing without divergence check).");
+            $this->add_report_entry(
+                $relpath,
+                'warning',
+                "No matching __reference file found (continuing without divergence check)."
+            );
         }
 
         $blocks = $this->extract_patch_blocks($patchlines, $relpath);
@@ -201,11 +210,17 @@ class patch_manager {
             if ($result['applied']) {
                 $workinglines = $result['lines'];
                 $modified = true;
-                $this->add_report_entry($relpath, 'ok',
-                    "Patch applied [{$block['reason']}]: {$result['message']}");
+                $this->add_report_entry(
+                    $relpath,
+                    'ok',
+                    "Patch applied [{$block['reason']}]: {$result['message']}"
+                );
             } else {
-                $this->add_report_entry($relpath, $result['status'],
-                    "Patch skipped [{$block['reason']}]: {$result['message']}");
+                $this->add_report_entry(
+                    $relpath,
+                    $result['status'],
+                    "Patch skipped [{$block['reason']}]: {$result['message']}"
+                );
             }
         }
 
@@ -215,8 +230,11 @@ class patch_manager {
 
         if ($this->dobackup) {
             if (!$this->backup_corefile($corefile)) {
-                $this->add_report_entry($relpath, 'error',
-                    "Backup failed: writing the core file was cancelled for safety.");
+                $this->add_report_entry(
+                    $relpath,
+                    'error',
+                    "Backup failed: writing the core file was cancelled for safety."
+                );
                 return;
             }
         }
@@ -273,17 +291,23 @@ class patch_manager {
             } else if (preg_match($openpattern, $line, $m)) {
                 // Nested blocks are not supported by the convention: we report it and
                 // restart from the new marker (the previous, unclosed block is discarded).
-                $this->add_report_entry($relpath, 'warning',
-                    "Nested PATCH+ marker detected at line " . ($idx + 1) .
-                    "; block opened at line " . ($openidx + 1) . " discarded.");
+                $this->add_report_entry(
+                    $relpath,
+                    'warning',
+                    "Nested PATCH+ marker detected at line ".($idx + 1).
+                    "; block opened at line " . ($openidx + 1) . " discarded."
+                );
                 $openidx = $idx;
                 $reason = trim($m[1]);
             }
         }
 
         if ($openidx !== null) {
-            $this->add_report_entry($relpath, 'error',
-                "PATCH+ marker without a matching PATCH- (line " . ($openidx + 1) . ").");
+            $this->add_report_entry(
+                $relpath,
+                'error',
+                "PATCH+ marker without a matching PATCH- (line " . ($openidx + 1) . ")."
+            );
         }
 
         // Bounds: a block cannot pick its context beyond a neighbouring block.
@@ -315,7 +339,6 @@ class patch_manager {
      */
     protected function apply_block(array $patchlines, array $block, array $corelines,
             ?array $referencelines, bool $hasreference): array {
-
         $pre = $this->build_unique_pattern($patchlines, $block['openidx'] - 1, -1, $block['lowerbound'], $corelines);
         $post = $this->build_unique_pattern($patchlines, $block['closeidx'] + 1, 1, $block['upperbound'], $corelines);
 
@@ -413,9 +436,13 @@ class patch_manager {
      * @param int   $boundary    bound not to exceed (inclusive index).
      * @param array $targetlines lines in which to look for a unique match.
      */
-    protected function build_unique_pattern(array $sourcelines, int $anchoridx, int $direction,
-            int $boundary, array $targetlines): array {
-
+    protected function build_unique_pattern(
+        array $sourcelines,
+        int $anchoridx,
+        int $direction,
+        int $boundary,
+        array $targetlines
+    ): array {
         $pattern = [];
         $n = 0;
 
@@ -506,13 +533,17 @@ class patch_manager {
             return null;
         }
         $content = file_get_contents($path);
+
         if ($content === false) {
             return null;
         }
+
         $lines = preg_split('/(?<=\n)/', $content);
+
         if ($lines === false) {
             return null;
         }
+
         if (count($lines) && $lines[count($lines) - 1] === '') {
             array_pop($lines);
         }
@@ -537,14 +568,18 @@ class patch_manager {
      */
     protected function write_corefile(string $corefile, string $content): bool {
         $tmpfile = tempnam(sys_get_temp_dir(), 'aplpatch_');
+
         if ($tmpfile === false) {
             return false;
         }
+
         $ok = file_put_contents($tmpfile, $content);
+
         if ($ok === false) {
             @unlink($tmpfile);
             return false;
         }
+
         $result = $this->sudo_copy($tmpfile, $corefile);
         @unlink($tmpfile);
         return $result;
@@ -571,8 +606,11 @@ class patch_manager {
 
         exec($cmd, $output, $returncode);
         if ($returncode !== 0) {
-            $this->add_report_entry(null, 'error',
-                "System copy to {$destination} failed: " . implode(' ', $output));
+            $this->add_report_entry(
+                null,
+                'error',
+                "System copy to {$destination} failed: " . implode(' ', $output)
+            );
             return false;
         }
         return true;
@@ -610,7 +648,7 @@ class patch_manager {
         foreach ($this->report as $entry) {
             $lines[] = sprintf(
                 '[%s] %s: %s',
-                strtoupper($entry['status']),
+                core_text::strtoupper($entry['status']),
                 $entry['file'] ?? '(global)',
                 $entry['message']
             );
