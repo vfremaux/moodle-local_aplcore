@@ -481,6 +481,8 @@ class patch_manager {
      * Searches for all the positions where the line sequence $pattern
      * appears consecutively in $haystack (exact comparison, line endings
      * ignored).
+     * @param array $haystack
+     * @param array $pattern
      */
     protected function find_pattern_occurrences(array $haystack, array $pattern): array {
         $positions = [];
