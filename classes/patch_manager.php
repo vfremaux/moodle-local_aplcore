@@ -330,8 +330,8 @@ class patch_manager {
      * @param array $patchlines
      * @param array $block
      * @param array $corelines
-     * @param array $referencelines
-     * @param array $hasreference
+     * @param array|null $referencelines
+     * @param bool $hasreference
      * @return array ['applied' => bool, 'status' => string, 'message' => string, 'lines' => array]
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
