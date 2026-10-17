@@ -27,6 +27,9 @@
 namespace local_aplcore;
 
 // phpcs:disable moodle.Commenting.ValidTags.Invalid
+// Abusive PSR12 rule : adds useless spaces in string concatenation.
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceBefore
+// phpcs:disable PSR12.Operators.OperatorSpacing.NoSpaceAfter
 
 use core_component;
 use core_text;
@@ -178,13 +181,19 @@ class patch_manager {
         if ($hasreference) {
             $referencelines = $this->read_lines($referencefile);
             if ($referencelines === null) {
-                $this->add_report_entry($relpath, 'warning',
-                    "__reference file present but unreadable: {$referencefile} (continuing without divergence check).");
+                $this->add_report_entry(
+                    $relpath,
+                    'warning',
+                    "__reference file present but unreadable: {$referencefile} (continuing without divergence check)."
+                );
                 $hasreference = false;
             }
         } else {
-            $this->add_report_entry($relpath, 'warning',
-                "No matching __reference file found (continuing without divergence check).");
+            $this->add_report_entry(
+                $relpath,
+                'warning',
+                "No matching __reference file found (continuing without divergence check)."
+            );
         }
 
         $blocks = $this->extract_patch_blocks($patchlines, $relpath);
@@ -201,11 +210,17 @@ class patch_manager {
             if ($result['applied']) {
                 $workinglines = $result['lines'];
                 $modified = true;
-                $this->add_report_entry($relpath, 'ok',
-                    "Patch applied [{$block['reason']}]: {$result['message']}");
+                $this->add_report_entry(
+                    $relpath,
+                    'ok',
+                    "Patch applied [{$block['reason']}]: {$result['message']}"
+                );
             } else {
-                $this->add_report_entry($relpath, $result['status'],
-                    "Patch skipped [{$block['reason']}]: {$result['message']}");
+                $this->add_report_entry(
+                    $relpath,
+                    $result['status'],
+                    "Patch skipped [{$block['reason']}]: {$result['message']}"
+                );
             }
         }
 
@@ -215,8 +230,11 @@ class patch_manager {
 
         if ($this->dobackup) {
             if (!$this->backup_corefile($corefile)) {
-                $this->add_report_entry($relpath, 'error',
-                    "Backup failed: writing the core file was cancelled for safety.");
+                $this->add_report_entry(
+                    $relpath,
+                    'error',
+                    "Backup failed: writing the core file was cancelled for safety."
+                );
                 return;
             }
         }
@@ -273,17 +291,23 @@ class patch_manager {
             } else if (preg_match($openpattern, $line, $m)) {
                 // Nested blocks are not supported by the convention: we report it and
                 // restart from the new marker (the previous, unclosed block is discarded).
-                $this->add_report_entry($relpath, 'warning',
-                    "Nested PATCH+ marker detected at line " . ($idx + 1) .
-                    "; block opened at line " . ($openidx + 1) . " discarded.");
+                $this->add_report_entry(
+                    $relpath,
+                    'warning',
+                    "Nested PATCH+ marker detected at line ".($idx + 1).
+                    "; block opened at line " . ($openidx + 1) . " discarded."
+                );
                 $openidx = $idx;
                 $reason = trim($m[1]);
             }
         }
 
         if ($openidx !== null) {
-            $this->add_report_entry($relpath, 'error',
-                "PATCH+ marker without a matching PATCH- (line " . ($openidx + 1) . ").");
+            $this->add_report_entry(
+                $relpath,
+                'error',
+                "PATCH+ marker without a matching PATCH- (line " . ($openidx + 1) . ")."
+            );
         }
 
         // Bounds: a block cannot pick its context beyond a neighbouring block.
@@ -303,19 +327,23 @@ class patch_manager {
      * (via pre/post-pattern), checks the local divergence against
      * __reference, then applies the patch if relevant.
      *
-     * @param array $pathlines
+     * @param array $patchlines
      * @param array $block
      * @param array $corelines
-     * @param array $referencelines
-     * @param array $hasreference
+     * @param array|null $referencelines
+     * @param bool $hasreference
      * @return array ['applied' => bool, 'status' => string, 'message' => string, 'lines' => array]
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    protected function apply_block(array $patchlines, array $block, array $corelines,
-            ?array $referencelines, bool $hasreference): array {
-
+    protected function apply_block(
+        array $patchlines,
+        array $block,
+        array $corelines,
+        ?array $referencelines,
+        bool $hasreference
+    ): array {
         $pre = $this->build_unique_pattern($patchlines, $block['openidx'] - 1, -1, $block['lowerbound'], $corelines);
         $post = $this->build_unique_pattern($patchlines, $block['closeidx'] + 1, 1, $block['upperbound'], $corelines);
 
@@ -377,7 +405,8 @@ class patch_manager {
                 'status' => 'warning',
                 'message' => sprintf(
                     "local divergence from __reference too high (%.1f%% > threshold %.1f%%).",
-                    $divergence, $this->divergencethreshold
+                    $divergence,
+                    $this->divergencethreshold
                 ),
                 'lines' => $corelines,
             ];
@@ -413,9 +442,13 @@ class patch_manager {
      * @param int   $boundary    bound not to exceed (inclusive index).
      * @param array $targetlines lines in which to look for a unique match.
      */
-    protected function build_unique_pattern(array $sourcelines, int $anchoridx, int $direction,
-            int $boundary, array $targetlines): array {
-
+    protected function build_unique_pattern(
+        array $sourcelines,
+        int $anchoridx,
+        int $direction,
+        int $boundary,
+        array $targetlines
+    ): array {
         $pattern = [];
         $n = 0;
 
@@ -448,6 +481,8 @@ class patch_manager {
      * Searches for all the positions where the line sequence $pattern
      * appears consecutively in $haystack (exact comparison, line endings
      * ignored).
+     * @param array $haystack
+     * @param array $pattern
      */
     protected function find_pattern_occurrences(array $haystack, array $pattern): array {
         $positions = [];
@@ -506,13 +541,17 @@ class patch_manager {
             return null;
         }
         $content = file_get_contents($path);
+
         if ($content === false) {
             return null;
         }
+
         $lines = preg_split('/(?<=\n)/', $content);
+
         if ($lines === false) {
             return null;
         }
+
         if (count($lines) && $lines[count($lines) - 1] === '') {
             array_pop($lines);
         }
@@ -529,58 +568,114 @@ class patch_manager {
     }
 
     /**
-     * Rewrites the core file with the new content, going through a
-     * temporary file copied via sudo (or directly if no sudoer is
-     * configured).
+     * Rewrites the core file with the new content atomically.
+     * The temporary file is created in the same directory as $corefile so
+     * that rename() is guaranteed to be atomic (same filesystem).
+     * Original file permissions are preserved on the replacement.
      * @param string $corefile
      * @param string $content
      */
     protected function write_corefile(string $corefile, string $content): bool {
-        $tmpfile = tempnam(sys_get_temp_dir(), 'aplpatch_');
+        // tmpfile in the same directory → atomic rename() on the same filesystem.
+        $tmpfile = tempnam(dirname($corefile), 'aplpatch_');
+
         if ($tmpfile === false) {
             return false;
         }
-        $ok = file_put_contents($tmpfile, $content);
-        if ($ok === false) {
+
+        if (file_put_contents($tmpfile, $content) === false) {
             @unlink($tmpfile);
             return false;
         }
-        $result = $this->sudo_copy($tmpfile, $corefile);
-        @unlink($tmpfile);
-        return $result;
+
+        // Preserve the original file's permissions on the tmpfile before rename.
+        $perms = fileperms($corefile);
+        if ($perms !== false) {
+            chmod($tmpfile, $perms & 0777);
+        }
+
+        // Atomic replace: rename() on the same filesystem is a POSIX-guaranteed
+        // atomic operation — safer than copy() which leaves a window with partial content.
+        if (!rename($tmpfile, $corefile)) {
+            @unlink($tmpfile);
+            $this->add_report_entry(null, 'error', "rename() failed: {$tmpfile} → {$corefile}");
+            return false;
+        }
+
+        return true;
     }
 
     /**
-     * Copies $source to $destination via sudo -n -u <sudoer> if
-     * local_aplcore/sudoer is configured, otherwise attempts a direct copy
-     * (case where the web server already owns the core sources).
+     * Copies $source to $destination using pure-PHP functions (no shell exec).
+     *
+     * exec() and its equivalents (shell_exec, proc_open …) are forbidden by
+     * Moodle coding standards and may be disabled via php.ini disable_functions.
+     * The previous sudo-based implementation is therefore replaced by a direct
+     * PHP copy that preserves file permissions and modification time (cp -p
+     * behaviour).
+     *
+     * If the web-server user does not own the destination file, configure the
+     * operating system so it can write there (ACL, setgid directory, or correct
+     * ownership) and leave the 'sudoer' setting empty.
+     *
      * @param string $source
      * @param string $destination
+     * @return bool true on success, false on failure (error added to report).
      */
     protected function sudo_copy(string $source, string $destination): bool {
         if ($this->sudoeruser !== '') {
-            $cmd = sprintf(
-                'sudo -n -u %s cp -p %s %s 2>&1',
-                escapeshellarg($this->sudoeruser),
-                escapeshellarg($source),
-                escapeshellarg($destination)
+            // Privileged copy via exec(sudo …) is not supported: exec() is
+            // forbidden by Moodle coding standards.  Clear the 'sudoer' setting
+            // and configure filesystem permissions (ACL, ownership or setgid) so
+            // the web-server user can write directly to Moodle's dirroot.
+            $this->add_report_entry(
+                null,
+                'error',
+                "Privileged copy is not supported: exec() is forbidden in Moodle plugins. " .
+                "Clear the 'sudoer' setting and configure filesystem permissions (ACL, " .
+                "ownership or setgid) so the web-server user can write to Moodle's dirroot."
             );
-        } else {
-            $cmd = sprintf('cp -p %s %s 2>&1', escapeshellarg($source), escapeshellarg($destination));
-        }
-
-        exec($cmd, $output, $returncode);
-        if ($returncode !== 0) {
-            $this->add_report_entry(null, 'error',
-                "System copy to {$destination} failed: " . implode(' ', $output));
             return false;
         }
+
+        if (!is_readable($source)) {
+            $this->add_report_entry(null, 'error', "Source file is not readable: {$source}");
+            return false;
+        }
+
+        $destdir = dirname($destination);
+        $destexists = file_exists($destination);
+        if (!($destexists ? is_writable($destination) : is_writable($destdir))) {
+            $this->add_report_entry(
+                null,
+                'error',
+                "Destination is not writable by the web-server user: {$destination}. " .
+                "Configure filesystem permissions so the web-server user can write to Moodle's dirroot."
+            );
+            return false;
+        }
+
+        if (!copy($source, $destination)) {
+            $this->add_report_entry(null, 'error', "copy() failed: {$source} → {$destination}");
+            return false;
+        }
+
+        // Preserve permissions and modification time (equivalent of cp -p).
+        $perms = fileperms($source);
+        if ($perms !== false) {
+            chmod($destination, $perms & 0777);
+        }
+        $mtime = filemtime($source);
+        if ($mtime !== false) {
+            touch($destination, $mtime);
+        }
+
         return true;
     }
 
     /**
      * Add report entry to report.
-     * @param string $file
+     * @param string|null $file
      * @param string $status
      * @param string $message
      */
@@ -610,7 +705,7 @@ class patch_manager {
         foreach ($this->report as $entry) {
             $lines[] = sprintf(
                 '[%s] %s: %s',
-                strtoupper($entry['status']),
+                core_text::strtoupper($entry['status']),
                 $entry['file'] ?? '(global)',
                 $entry['message']
             );

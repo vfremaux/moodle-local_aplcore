@@ -87,6 +87,9 @@ $string['provider'] = 'Fournisseur de support';
 $string['specificprosettings'] = 'Réglages spécifiques version "pro"';
 $string['start'] = 'Identification du distributeur';
 
+$string['emptysupportlicensemessage'] = '<div class="licensing">-- Version Pro --<br/>Ce plugin est utilisé
+sans clef de license de support à titre de démonstration. Ses fonctionnalités sont réduites.</div>';
+
 $string['plugindist_desc'] = '
 <p>Ce plugin est distribué dans la communauté Moodle pour l\'évaluation de ses fonctions centrales
 correspondant à une utilisation courante du plugin. Une version "professionnelle" de ce plugin existe et est distribuée

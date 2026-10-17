@@ -55,10 +55,10 @@ $string['previousstep'] = 'Previous step';
 $string['privacy:metadata'] = 'The Local APLCore plugin does not store any personal data about any user.';
 $string['viewelement'] = 'View element';
 
+// phpcs:disable moodle.Files.LangFilesOrdering.UnexpectedComment
 // Abusive rules for langage files. If fits for very simple plugins, does NOT fit for complex
 // highly architectured plugins.
 // Needed for separating string sections.
-// phpcs:disable moodle.Files.LangFilesOrdering.UnexpectedComment
 // phpcs:disable moodle.Files.LangFilesOrdering.IncorrectOrder
 
 // Pro APL String section.

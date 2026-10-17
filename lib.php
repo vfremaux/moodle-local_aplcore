@@ -63,6 +63,7 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
         $supports = [
             'pro' => [
                 'notify' => ['zabbix'],
+                'emulate' => ['community'],
             ],
             'community' => [
                 'notify' => ['zabbix'],
