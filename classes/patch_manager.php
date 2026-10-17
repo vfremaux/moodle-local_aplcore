@@ -568,59 +568,108 @@ class patch_manager {
     }
 
     /**
-     * Rewrites the core file with the new content, going through a
-     * temporary file copied via sudo (or directly if no sudoer is
-     * configured).
+     * Rewrites the core file with the new content atomically.
+     * The temporary file is created in the same directory as $corefile so
+     * that rename() is guaranteed to be atomic (same filesystem).
+     * Original file permissions are preserved on the replacement.
      * @param string $corefile
      * @param string $content
      */
     protected function write_corefile(string $corefile, string $content): bool {
-        $tmpfile = tempnam(sys_get_temp_dir(), 'aplpatch_');
+        // Tmpfile in the same directory → atomic rename() on the same filesystem.
+        $tmpfile = tempnam(dirname($corefile), 'aplpatch_');
 
         if ($tmpfile === false) {
             return false;
         }
 
-        $ok = file_put_contents($tmpfile, $content);
-
-        if ($ok === false) {
+        if (file_put_contents($tmpfile, $content) === false) {
             @unlink($tmpfile);
             return false;
         }
 
-        $result = $this->sudo_copy($tmpfile, $corefile);
-        @unlink($tmpfile);
-        return $result;
+        // Preserve the original file's permissions on the tmpfile before rename.
+        $perms = fileperms($corefile);
+        if ($perms !== false) {
+            chmod($tmpfile, $perms & 0777);
+        }
+
+        // Atomic replace: rename() on the same filesystem is a POSIX-guaranteed
+        // atomic operation — safer than copy() which leaves a window with partial content.
+        if (!rename($tmpfile, $corefile)) {
+            @unlink($tmpfile);
+            $this->add_report_entry(null, 'error', "rename() failed: {$tmpfile} → {$corefile}");
+            return false;
+        }
+
+        return true;
     }
 
     /**
-     * Copies $source to $destination via sudo -n -u <sudoer> if
-     * local_aplcore/sudoer is configured, otherwise attempts a direct copy
-     * (case where the web server already owns the core sources).
+     * Copies $source to $destination using pure-PHP functions (no shell exec).
+     *
+     * exec() and its equivalents (shell_exec, proc_open …) are forbidden by
+     * Moodle coding standards and may be disabled via php.ini disable_functions.
+     * The previous sudo-based implementation is therefore replaced by a direct
+     * PHP copy that preserves file permissions and modification time (cp -p
+     * behaviour).
+     *
+     * If the web-server user does not own the destination file, configure the
+     * operating system so it can write there (ACL, setgid directory, or correct
+     * ownership) and leave the 'sudoer' setting empty.
+     *
      * @param string $source
      * @param string $destination
+     * @return bool true on success, false on failure (error added to report).
      */
     protected function sudo_copy(string $source, string $destination): bool {
         if ($this->sudoeruser !== '') {
-            $cmd = sprintf(
-                'sudo -n -u %s cp -p %s %s 2>&1',
-                escapeshellarg($this->sudoeruser),
-                escapeshellarg($source),
-                escapeshellarg($destination)
-            );
-        } else {
-            $cmd = sprintf('cp -p %s %s 2>&1', escapeshellarg($source), escapeshellarg($destination));
-        }
-
-        exec($cmd, $output, $returncode);
-        if ($returncode !== 0) {
+            // Privileged copy via exec(sudo …) is not supported: exec() is
+            // forbidden by Moodle coding standards.  Clear the 'sudoer' setting
+            // and configure filesystem permissions (ACL, ownership or setgid) so
+            // the web-server user can write directly to Moodle's dirroot.
             $this->add_report_entry(
                 null,
                 'error',
-                "System copy to {$destination} failed: " . implode(' ', $output)
+                "Privileged copy is not supported: exec() is forbidden in Moodle plugins. " .
+                "Clear the 'sudoer' setting and configure filesystem permissions (ACL, " .
+                "ownership or setgid) so the web-server user can write to Moodle's dirroot."
             );
             return false;
         }
+
+        if (!is_readable($source)) {
+            $this->add_report_entry(null, 'error', "Source file is not readable: {$source}");
+            return false;
+        }
+
+        $destdir = dirname($destination);
+        $destexists = file_exists($destination);
+        if (!($destexists ? is_writable($destination) : is_writable($destdir))) {
+            $this->add_report_entry(
+                null,
+                'error',
+                "Destination is not writable by the web-server user: {$destination}. " .
+                "Configure filesystem permissions so the web-server user can write to Moodle's dirroot."
+            );
+            return false;
+        }
+
+        if (!copy($source, $destination)) {
+            $this->add_report_entry(null, 'error', "copy() failed: {$source} → {$destination}");
+            return false;
+        }
+
+        // Preserve permissions and modification time (equivalent of cp -p).
+        $perms = fileperms($source);
+        if ($perms !== false) {
+            chmod($destination, $perms & 0777);
+        }
+        $mtime = filemtime($source);
+        if ($mtime !== false) {
+            touch($destination, $mtime);
+        }
+
         return true;
     }
 
