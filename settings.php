@@ -60,4 +60,16 @@ block_data_behaviour,block_quiz_behaviour,block_groupspecifichtml,block_rolespec
 block_profileselectorhtml,block_o365_links,block_userquiz_monitor,block_userquiz_limits
 ";
     $settings->add(new admin_setting_configtextarea($key, $label, $desc, $defaultlist));
+
+    $key = 'local_aplcore/backuppatchedfiles';
+    $label = get_string('configbackuppatchedfiles', 'local_aplcore');
+    $desc = get_string('configbackuppatchedfiles_desc', 'local_aplcore');
+    $default = 1;
+    $settings->add(new admin_setting_configcheckbox($key, $label, $desc, $default));
+
+    $key = 'local_aplcore/sudoer';
+    $label = get_string('configsudoer', 'local_aplcore');
+    $desc = get_string('configsudoer_desc', 'local_aplcore');
+    $default = '';
+    $settings->add(new admin_setting_configtext($key, $label, $desc, $default));
 }

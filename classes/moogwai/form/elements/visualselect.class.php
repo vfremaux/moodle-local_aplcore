@@ -235,7 +235,6 @@ class visualselect extends select implements templatable {
         $ix = 0;
         if (!empty($this->visualoptions)) {
             foreach ($this->visualoptions as $option) {
-
                 if (is_array($this->_values) && in_array( (string) $option->value, $this->_values)) {
                     $this->_updateAttrArray($option->attr, ['selected' => 'selected']);
                 }
