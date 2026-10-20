@@ -133,7 +133,8 @@ class aplcore_indicator extends zabbix_indicator {
 
         $this->states = [];
 
-        if (!local_aplcore_supports_feature('notify/zabbix')) {
+        $promanager = pro_manager::instance();
+        if (!$promanager->require_pro('notify/zabbix')) {
             return;
         }
 
