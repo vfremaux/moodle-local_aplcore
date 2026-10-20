@@ -16,15 +16,12 @@
 // jshint unused: true, undef:true
 
 define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
-
     var localaplcorepro = {
-
         component: 'local_aplcore',
         shortcomponent: 'local_aplcore',
         componentpath: 'local/aplcore',
 
         init: function() {
-
             var licensekeyid = '#id_s_' + localaplcorepro.shortcomponent + '_licensekey';
             $(licensekeyid).bind('change', this.checkproductkey);
             $(licensekeyid).trigger('change');
@@ -32,7 +29,6 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
         },
 
         checkproductkey: function() {
-
             var licensekeyid = '#id_s_' + localaplcorepro.shortcomponent + '_licensekey';
 
             var that = $(this);
@@ -83,7 +79,6 @@ define(['jquery', 'core/log', 'core/config'], function($, log, cfg) {
          * @param {string} keypayload
          */
         checksum: function(keypayload) {
-
             var crcrange = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ';
             var crcrangearr = crcrange.split('');
             var crccount = crcrangearr.length;
