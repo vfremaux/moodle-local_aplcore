@@ -576,7 +576,7 @@ class patch_manager {
      * @param string $content
      */
     protected function write_corefile(string $corefile, string $content): bool {
-        // tmpfile in the same directory → atomic rename() on the same filesystem.
+        // Tmpfile in the same directory → atomic rename() on the same filesystem.
         $tmpfile = tempnam(dirname($corefile), 'aplpatch_');
 
         if ($tmpfile === false) {

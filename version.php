@@ -34,5 +34,5 @@ $plugin->supported = [403, 405];
 // Optional dependency to report_zabbix when installed for zabbix reporting.
 
 // Non moodle attributes.
-$plugin->codeincrement = '4.5.0009';
+$plugin->codeincrement = '4.5.0012';
 $plugin->privacy = 'private';

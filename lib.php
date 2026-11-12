@@ -50,10 +50,6 @@ define('LOCAL_APLCORE_TRACE_DEBUG_FINE', 10);
 function local_aplcore_supports_feature($feature = null, $getsupported = false) {
     static $supports;
 
-    if ($getsupported) {
-        return $supports;
-    }
-
     if (empty($feature)) {
         // Now feature is required.
         throw new moodle_exception("<plugin>_supports_feature needs now be called with an explicit feature key");
@@ -69,6 +65,10 @@ function local_aplcore_supports_feature($feature = null, $getsupported = false) 
                 'notify' => ['zabbix'],
             ],
         ];
+    }
+
+    if ($getsupported) {
+        return $supports;
     }
 
     if (array_key_exists($feat, $supports['community'])) {
